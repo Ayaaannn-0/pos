@@ -1,0 +1,1588 @@
+/* ==========================================================================
+   BIG LITTLE BOMBAYE — Soft UI Design System
+   Layer 1: design tokens, base styles, and utility classes.
+   Layer 2 (bottom of file): Home / Menu screen components.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Surfaces */
+  --bg-app: #F6F7F9;            /* soft off-white app background (never stark white) */
+  --surface-card: #FFFFFF;      /* pure white card surfaces */
+  --surface-sunken: #EEF0F4;    /* recessed areas: inputs, wells, chips */
+
+  /* Typography */
+  --font-display: "Poppins", "Nunito", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Nunito", "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --text-primary: #222222;      /* near-black headings & body */
+  --text-secondary: #999999;    /* muted grey captions & meta */
+
+  /* Accent colors */
+  --olive: #142841;             /* navy brand accent */
+  --olive-dark: #142841;
+  --olive-tint: rgba(20, 40, 65, 0.08);
+  --gold: #142841;              /* navy (was gold) */
+  --gold-dark: #142841;
+  --gold-tint: rgba(20, 40, 65, 0.08);
+
+  /* Lines */
+  --border-subtle: #ECEEF2;
+
+  /* Elevation — soft, diffused "floating" shadows */
+  --shadow-float: 0 15px 35px rgba(0, 0, 0, 0.04);
+  --shadow-float-lg: 0 25px 50px rgba(0, 0, 0, 0.06);
+  --shadow-chip: 0 6px 16px rgba(34, 34, 34, 0.05);
+
+  /* Border radius */
+  --radius-btn: 50px;           /* pills & buttons */
+  --radius-card: 24px;          /* large cards & sheets */
+  --radius-card-sm: 20px;       /* small cards & tiles */
+  --radius-input: 16px;         /* inputs & inner wells */
+}
+
+/* --------------------------------------------------------------------------
+   2. Base Styles
+   -------------------------------------------------------------------------- */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--text-primary);
+}
+
+::selection {
+  background: rgba(20, 40, 65, 0.08);
+  color: #142841;
+}
+
+:focus-visible {
+  outline: 2px solid #142841;
+  outline-offset: 2px;
+}
+
+/* Subtle scrollbar to match the soft aesthetic */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #DDDFE5;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   3. Utility Classes
+   -------------------------------------------------------------------------- */
+
+/* Surfaces */
+.bg-app {
+  background-color: var(--bg-app);
+}
+
+.surface-card {
+  background-color: var(--surface-card);
+}
+
+.surface-sunken {
+  background-color: var(--surface-sunken);
+}
+
+/* Elevation — the crucial soft "floating" shadow */
+.shadow-float {
+  box-shadow: var(--shadow-float);
+}
+
+.shadow-float-lg {
+  box-shadow: var(--shadow-float-lg);
+}
+
+.shadow-chip {
+  box-shadow: var(--shadow-chip);
+}
+
+/* Border radius */
+.radius-btn {
+  border-radius: var(--radius-btn);
+}
+
+.radius-card {
+  border-radius: var(--radius-card);
+}
+
+.radius-card-sm {
+  border-radius: var(--radius-card-sm);
+}
+
+.radius-input {
+  border-radius: var(--radius-input);
+}
+
+/* Text colors */
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-olive {
+  color: var(--olive-dark);
+}
+
+.text-gold {
+  color: var(--gold-dark);
+}
+
+/* Convenience composite — white card with float shadow & card radius */
+.soft-card {
+  background-color: var(--surface-card);
+  box-shadow: var(--shadow-float);
+  border-radius: var(--radius-card);
+}
+
+/* --------------------------------------------------------------------------
+   4. Component Layer — Home / Menu Screen
+   -------------------------------------------------------------------------- */
+
+/* Shell — centered, phone-width column */
+.app-shell {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 28px 20px 72px;
+}
+
+/* 4.1 Header */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.brand-dot {
+  color: #142841;
+}
+
+.avatar-btn {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface-card);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-chip);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.avatar-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-float);
+}
+
+/* Anchor for the floating cart badge */
+#cart-open.avatar-btn {
+  position: relative;
+  overflow: visible;
+}
+
+/* Cart item counter — small floating circle on the icon's top-right */
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #142841;
+  color: #FFFFFF;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 0 0 2px var(--bg-app), 0 4px 10px rgba(20, 40, 65, 0.25);
+}
+
+/* Tailwind's .hidden must always win while the count is zero */
+.cart-badge.hidden {
+  display: none !important;
+}
+
+/* 4.2 Hero banner — frosted glass with shapes tucked underneath */
+.hero-wrap {
+  position: relative;
+  margin-top: 28px;
+}
+
+.hero-shape {
+  position: absolute;
+  z-index: 0; /* painted below the glass, so the frost blurs them */
+  border-radius: 50%;
+}
+
+.hero-shape--olive {
+  top: -30px;
+  right: -16px;
+  width: 128px;
+  height: 128px;
+  background: radial-gradient(circle at 32% 30%, #2a5080 0%, #142841 45%, #0e1e2e 100%);
+  box-shadow: 0 18px 30px rgba(20, 40, 65, 0.22);
+}
+
+.hero-shape--gold {
+  bottom: -34px;
+  left: -16px;
+  width: 92px;
+  height: 92px;
+  background: radial-gradient(circle at 32% 30%, #3a6090 0%, #142841 50%, #0e1e2e 100%);
+  box-shadow: 0 14px 24px rgba(20, 40, 65, 0.22);
+}
+
+.hero-banner {
+  position: relative;
+  z-index: 1;
+  padding: 26px 24px 24px;
+  border-radius: var(--radius-card);
+  background: rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-float);
+}
+
+/* Crisp accents that overlap the glass edges (above the frost) */
+.hero-ring,
+.hero-dot {
+  position: absolute;
+  z-index: 2;
+  border-radius: 50%;
+}
+
+.hero-ring {
+  top: -11px;
+  left: 40px;
+  width: 24px;
+  height: 24px;
+  border: 5px solid #142841;
+}
+
+.hero-dot {
+  bottom: 18px;
+  right: -7px;
+  width: 14px;
+  height: 14px;
+  background: var(--olive);
+  box-shadow: 0 4px 8px rgba(34, 34, 34, 0.12);
+}
+
+.hero-eyebrow {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #142841;
+}
+
+.hero-star {
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+.hero-title {
+  margin: 12px 0 6px;
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+}
+
+.hero-desc {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.hero-foot {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-price {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+/* The frosted card is the ONLY surface here — text stays fully transparent */
+.hero-banner h2,
+.hero-banner p,
+.hero-banner .hero-eyebrow,
+.hero-banner .hero-title,
+.hero-banner .hero-desc,
+.hero-banner .hero-star,
+.hero-banner .hero-foot,
+.hero-banner .hero-price {
+  background-color: transparent !important;
+}
+
+.hero-cta {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface-card);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-chip);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-float);
+}
+
+/* 4.3 Search bar — pill-shaped white field */
+.search-bar {
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 20px;
+  border-radius: var(--radius-btn);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-float);
+  transition: box-shadow 200ms ease;
+}
+
+.search-bar:focus-within {
+  box-shadow: var(--shadow-float), 0 0 0 2px rgba(20, 40, 65, 0.20);
+}
+
+.search-bar svg {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+}
+
+.search-bar input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.search-bar input::placeholder {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* 4.4 Category rail — horizontal scroll of pills */
+.category-rail {
+  margin-top: 22px;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 2px 12px;
+  scrollbar-width: none;
+}
+
+.category-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.category-pill {
+  flex: 0 0 auto;
+  border: 0;
+  padding: 11px 20px;
+  border-radius: var(--radius-btn);
+  background: var(--surface-card);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: var(--shadow-chip);
+  cursor: pointer;
+  transition: transform 200ms ease, color 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
+}
+
+.category-pill:hover {
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+/* Active pill: bold label on a subtle navy wash */
+.category-pill.is-active {
+  background: rgba(20, 40, 65, 0.08);
+  color: #142841;
+  font-weight: 800;
+  box-shadow: 0 6px 16px rgba(20, 40, 65, 0.14);
+}
+
+/* 4.5 Menu list — standardized grid rows rendered by the JS builder
+   (.menu-item / .menu-item-img / .menu-item-info / .menu-item-action) */
+.menu-list {
+  margin-top: 26px;
+}
+
+.menu-list h2 {
+  color: var(--text-primary);
+}
+
+/* Card container — strict 3-column grid: thumb | text | action */
+.menu-item {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  background: #FFFFFF;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.menu-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.06);
+}
+
+.menu-item:active {
+  transform: scale(0.99);
+}
+
+/* Thumbnail — circular plate with its own floating shadow */
+.menu-item-img {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  background: var(--surface-sunken);
+}
+
+/* Text column — title, description and tags stack vertically, never truncated early */
+.menu-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.menu-item-info h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+.menu-item-info > p {
+  margin: 0;
+  font-style: normal;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+/* Action column — price(s) + "+" button, right-aligned on one line */
+.menu-item-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-end;
+  white-space: nowrap;
+}
+
+.menu-item .tabular-nums {
+  font-family: var(--font-display);
+  font-size: 16.5px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.menu-item .tracking-widest {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--text-secondary);
+}
+
+/* Plus button — floating circular add-to-cart */
+.add-to-cart-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: none;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--text-primary);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.add-to-cart-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.add-to-cart-btn:active {
+  transform: scale(0.92);
+}
+
+
+
+/* 4.6 Footer */
+.app-footer {
+  margin-top: 52px;
+}
+
+.tax-note {
+  margin: 28px 0 0;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #A8ABB5;
+}
+
+/* --------------------------------------------------------------------------
+   5. Component Layer — Cart / Order Preview Drawer
+   Bottom sheet on mobile, slide-out side drawer on desktop.
+   -------------------------------------------------------------------------- */
+
+/* Scrim — dims & blurs the menu behind the drawer */
+.cart-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: rgba(34, 34, 34, 0.35);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 320ms ease;
+}
+
+body.cart-open .cart-scrim {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Drawer shell */
+.cart-drawer {
+  position: fixed;
+  z-index: 80;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: min(90vh, 760px);
+  max-height: min(90dvh, 760px);
+  background: var(--surface-card); /* pure white */
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  box-shadow: 0 -24px 60px rgba(0, 0, 0, 0.16);
+  transform: translateY(100%);
+  visibility: hidden;
+  transition:
+    transform 380ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 380ms;
+}
+
+body.cart-open .cart-drawer {
+  transform: translateY(0);
+  visibility: visible;
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 640px) {
+  /* Desktop: slide out from the right edge */
+  .cart-drawer {
+    left: auto;
+    top: 0;
+    bottom: 0;
+    width: min(420px, 94vw);
+    max-height: none;
+    border-radius: 0;
+    box-shadow: -30px 0 70px rgba(0, 0, 0, 0.14);
+    transform: translateX(100%);
+  }
+
+  body.cart-open .cart-drawer {
+    transform: translateX(0);
+  }
+
+  .cart-grabber {
+    display: none;
+  }
+}
+
+.cart-grabber {
+  flex-shrink: 0;
+  width: 42px;
+  height: 5px;
+  margin: 10px auto 2px;
+  border-radius: 50px;
+  background: #E3E6EC;
+}
+
+/* Header — back arrow left, centered title */
+.cart-header {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 46px 1fr 46px;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px 10px;
+}
+
+.cart-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+/* Items list */
+.cart-items {
+  flex: 1;
+  min-height: 96px;
+  margin: 0;
+  padding: 6px 20px;
+  list-style: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+}
+
+.cart-item + .cart-item {
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* Floating plate image — same treatment as the menu rows */
+.cart-item img {
+  flex-shrink: 0;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 4px solid var(--surface-card);
+  background: var(--surface-card);
+  box-shadow:
+    0 16px 26px rgba(34, 34, 34, 0.2),
+    0 7px 10px rgba(34, 34, 34, 0.09);
+}
+
+.cart-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-item-info h3 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.cart-item-info p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Right column — qty pill, price, delete stacked neatly */
+.cart-item-side {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+/* Quantity stepper — soft grey pill */
+.qty-selector {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 12px;
+  border-radius: 50px;
+  background: #f0f0f0;
+  font-weight: bold;
+}
+
+.qty-btn {
+  border: 0;
+  padding: 0;
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 140ms ease, color 140ms ease;
+}
+
+.qty-btn:not(:disabled):hover {
+  color: #142841;
+}
+
+.qty-btn:not(:disabled):active {
+  transform: scale(0.85);
+}
+
+.qty-btn:disabled {
+  color: #C6C9D1;
+  cursor: default;
+}
+
+.qty-value {
+  min-width: 14px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 13px;
+}
+
+.cart-item-price {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.trash-btn {
+  border: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  color: #B9BCC6;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, transform 140ms ease;
+}
+
+.trash-btn:hover {
+  background: rgba(156, 59, 46, 0.08);
+  color: #9C3B2E;
+}
+
+.trash-btn:active {
+  transform: scale(0.9);
+}
+
+/* Empty state inside the items list */
+.cart-empty {
+  padding: 44px 12px;
+  text-align: center;
+}
+
+.cart-empty svg {
+  opacity: 0.45;
+}
+
+.cart-empty h3 {
+  margin: 14px 0 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.cart-empty p {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Footer — subtotal row + floating input pills */
+.cart-footer {
+  flex-shrink: 0;
+  padding: 16px 20px calc(20px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border-subtle);
+}
+
+.cart-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 4px 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px dashed var(--border-subtle);
+}
+
+.cart-total-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.cart-total-amount {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Floating white pill input cards */
+.summary-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  background: #FFFFFF;
+  border-radius: 50px;
+  border: none;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 200ms ease;
+}
+
+.summary-pill:focus-within {
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.05),
+    0 0 0 2px rgba(140, 166, 107, 0.3);
+}
+
+.summary-pill-icon {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+.summary-pill--gold .summary-pill-icon {
+  background: var(--gold-tint);
+  color: var(--gold-dark);
+}
+
+.summary-pill--olive .summary-pill-icon {
+  background: rgba(20, 40, 65, 0.08);
+  color: #142841;
+}
+
+.summary-pill input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.summary-pill input::placeholder {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+
+
+/* ==========================================================================
+   Dish Detail Modal — enforced full-screen opaque surface
+   (ID specificity overrides the Tailwind utilities on #item-modal)
+   ========================================================================== */
+#item-modal {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: #F6F7F9;
+  z-index: 9999;
+  overflow-y: auto;
+  padding: 20px 16px 40px;
+  box-sizing: border-box;
+}
+
+/* Floating circular back button (previously unstyled) */
+.dish-back-btn {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 0px) + 18px);
+  left: 16px;
+  z-index: 5;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface-card);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-chip);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.dish-back-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-float);
+}
+
+/* Hero — dedicated centering wrapper */
+.dish-hero {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 10px auto 20px;
+}
+
+/* Decorative orbs — absolutely positioned behind the image,
+   never participating in layout flow */
+.dish-hero-glow,
+.dish-hero-glow--olive,
+.dish-hero-glow--gold {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+}
+
+.dish-hero-glow--olive {
+  top: -20px;
+  right: 12%;
+  width: 130px;
+  height: 130px;
+  background: radial-gradient(circle, rgba(20, 40, 65, 0.35) 0%, transparent 70%);
+}
+
+.dish-hero-glow--gold {
+  bottom: -24px;
+  left: 10%;
+  width: 110px;
+  height: 110px;
+  background: radial-gradient(circle, rgba(20, 40, 65, 0.30) 0%, transparent 70%);
+}
+
+/* Hero plate image — centered circular dish photo */
+.dish-hero-plate-img {
+  position: relative;
+  z-index: 1;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  background: var(--surface-sunken);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.dish-name {
+  margin: 0 auto;
+  max-width: 24ch;
+  font-family: var(--font-display);
+  font-size: clamp(21px, 6vw, 25px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: var(--radius-btn);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.tag-chip--olive   { background: rgba(20, 40, 65, 0.08); color: #142841; }
+.tag-chip--terra   { background: rgba(156, 59, 46, 0.08); color: #9C3B2E; }
+.tag-chip--gold    { background: rgba(20, 40, 65, 0.08); color: #142841; }
+.tag-chip--neutral { background: var(--surface-sunken); color: var(--text-secondary); }
+
+.dish-price {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.dish-price-tier {
+  margin: 2px 0 0;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* Information grid — glassmorphic soft squares */
+.info-card {
+  padding: 14px 14px 13px;
+  border-radius: var(--radius-card-sm);
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: var(--shadow-float);
+}
+
+.info-card-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: var(--surface-sunken);
+  color: var(--text-primary);
+}
+
+.info-card[data-accent="olive"] .info-card-icon { background: rgba(20, 40, 65, 0.08); color: #142841; }
+.info-card[data-accent="gold"]  .info-card-icon { background: rgba(20, 40, 65, 0.08);  color: #142841; }
+.info-card[data-accent="terra"] .info-card-icon { background: rgba(156, 59, 46, 0.09); color: #9C3B2E; }
+
+.info-card-label {
+  margin: 10px 0 0;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.info-card-value {
+  margin: 3px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+/* AI Butler header */
+.butler-avatar {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(20, 40, 65, 0.08) 0%, rgba(20, 40, 65, 0.14) 100%);
+  color: #142841;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.8),
+    var(--shadow-chip);
+}
+
+.butler-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.butler-sub {
+  margin: 1px 0 0;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+
+/* Glassmorphic chat bubbles — fully rounded, never sharp */
+.chat-history {
+  min-height: 96px;
+}
+
+.bubble-row {
+  display: flex;
+}
+
+.bubble-row--user { justify-content: flex-end; }
+.bubble-row--ai   { justify-content: flex-start; }
+
+.bubble {
+  max-width: 84%;
+  padding: 11px 16px;
+  border-radius: 22px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  word-break: break-word;
+}
+
+.bubble--user {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-chip);
+}
+
+.bubble--ai {
+  background: rgba(20, 40, 65, 0.08);
+  border: 1px solid rgba(20, 40, 65, 0.12);
+  color: #142841;
+  box-shadow: 0 10px 24px rgba(20, 40, 65, 0.10);
+}
+
+.thinking-dots {
+  display: inline-flex;
+  gap: 4px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.thinking-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #142841;
+  animation: butler-bob 1s ease-in-out infinite;
+}
+
+.thinking-dot:nth-child(2) { animation-delay: 150ms; }
+.thinking-dot:nth-child(3) { animation-delay: 300ms; }
+
+@keyframes butler-bob {
+  0%, 100% { transform: translateY(0); opacity: 0.45; }
+  50%      { transform: translateY(-4px); opacity: 1; }
+}
+
+/* Composer — prompt pills + input pinned above safe area */
+.composer-bar {
+  background: rgba(246, 247, 249, 0.86);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 -18px 36px rgba(34, 34, 34, 0.05);
+  padding: 10px 16px calc(14px + env(safe-area-inset-bottom));
+}
+
+.prompt-rail {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 2px 4px;
+  scrollbar-width: none;
+  transition: opacity 200ms ease;
+}
+
+.prompt-rail::-webkit-scrollbar { display: none; }
+
+.prompt-rail.is-disabled {
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.prompt-pill {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  padding: 9px 15px;
+  border-radius: var(--radius-btn);
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: var(--shadow-chip);
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.prompt-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-float);
+}
+
+.prompt-pill:active {
+  transform: scale(0.96);
+}
+
+.prompt-pill-star {
+  color: #142841;
+  font-size: 11px;
+}
+
+.composer-form {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 9px;
+}
+
+.composer-input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  padding: 14px 20px;
+  border-radius: var(--radius-btn);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-chip);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: box-shadow 200ms ease;
+}
+
+.composer-input::placeholder {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.composer-input:focus {
+  box-shadow: var(--shadow-float), 0 0 0 2px rgba(20, 40, 65, 0.20);
+}
+
+.composer-send {
+  flex-shrink: 0;
+  width: 47px;
+  height: 47px;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #142841;
+  color: #FFFFFF;
+  box-shadow: 0 12px 24px rgba(20, 40, 65, 0.35);
+  cursor: pointer;
+  transition: transform 180ms ease, background-color 180ms ease, opacity 180ms ease;
+}
+
+.composer-send:hover {
+  background: #0f1f33;
+  transform: translateY(-2px);
+}
+
+.composer-send:active {
+  transform: scale(0.93);
+}
+
+.composer-send:disabled {
+  opacity: 0.55;
+  cursor: default;
+  transform: none;
+}
+
+/* --- Mobile Optimization for Modal --- */
+@media (max-width: 768px) {
+  /* Modal header compaction */
+  #item-modal header {
+    padding-top: 12px !important;
+  }
+
+  #modal-tags, #modal-pricing {
+    margin-top: 4px !important;
+  }
+  #item-modal h2 {
+    margin-bottom: 4px !important;
+  }
+
+  /* Compact info grid */
+  #item-modal section[aria-label="Dish information"] {
+    margin-top: 16px !important;
+  }
+
+  #modal-info-grid {
+    gap: 10px !important;
+  }
+
+  #modal-info-grid .info-card {
+    min-width: 0;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .info-card-label {
+    font-size: 10px !important;
+  }
+  .info-card-value {
+    font-size: 12px !important;
+    margin-top: 2px !important;
+  }
+
+  /* Ask the AI Butler section */
+  #item-modal section[aria-label="Ask the AI Butler"] {
+    margin-top: 16px !important;
+    padding-bottom: 16px !important;
+  }
+}
+
+
+/* =========================================================
+   CRITICAL FIX BLOCK — injected to restore premium styling
+   ========================================================= */
+
+/* Fix 1 — Hero card: guarantee transparent backgrounds on ALL child text */
+.hero-banner .hero-eyebrow,
+.hero-banner .hero-title,
+.hero-banner .hero-desc,
+.hero-banner .hero-price,
+.hero-banner .hero-star,
+.hero-banner .hero-foot {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Fix 2 — Cart badge: proper circular pill */
+.cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #142841;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  pointer-events: none;
+  box-shadow: 0 2px 6px rgba(20, 40, 65, 0.30);
+  border: 2px solid var(--surface-card);
+}
+.cart-badge.hidden { display: none; }
+
+/* Fix 3 — Cart qty selector: pill-shaped flex row */
+.qty-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #f0f0f0;
+  border-radius: 50px;
+  padding: 4px 12px;
+}
+
+.qty-btn {
+  border: 0;
+  background: transparent;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px 0;
+  transition: color 150ms ease, transform 150ms ease;
+  user-select: none;
+}
+.qty-btn:hover  { color: #142841; transform: scale(1.2); }
+.qty-btn:active { transform: scale(0.9); }
+.qty-btn:disabled { color: #C0C0C0; cursor: default; transform: none; }
+
+.qty-value {
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 20px;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.cart-item-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.cart-item-price {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.trash-btn {
+  border: 0;
+  background: transparent;
+  color: #C0C0C0;
+  cursor: pointer;
+  padding: 2px;
+  transition: color 150ms ease;
+}
+.trash-btn:hover { color: #E05252; }
+
+/* Fix 4 — Cart footer: subtotal row + soft pill inputs */
+.cart-footer {
+  flex-shrink: 0;
+  padding: 16px 20px calc(20px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cart-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: var(--surface-card);
+  border-radius: 18px;
+  box-shadow: 0 6px 16px rgba(34, 34, 34, 0.05);
+}
+
+.cart-total-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.cart-total-amount {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+}
+
+/* Summary pill inputs (Table Number, Order Notes) */
+.summary-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: #FFFFFF;
+  border-radius: 50px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  border: none;
+  width: 100%;
+  cursor: text;
+}
+
+.summary-pill--gold .summary-pill-icon { color: #142841; }
+.summary-pill--olive .summary-pill-icon { color: #142841; }
+
+.summary-pill-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.summary-pill input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.summary-pill input::placeholder {
+  color: var(--text-secondary);
+  font-weight: 500;
+}

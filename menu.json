@@ -1,0 +1,978 @@
+{
+  "restaurant_name": "Big Little Bombaye",
+  "menu_section": "FULL MENU",
+  "categories": [
+    {
+      "category_name": "PASTA",
+      "note": "Served with garlic bread",
+      "items": [
+        {
+          "item_name": "Penne Pink Sauce With Veggies Pasta",
+          "description": "Penne Pasta, Tangy Marinara Sauce, Fresh Cream with Broccoli, Baby Corn & Mushrooms",
+          "pricing": {
+            "Standard": 359
+          },
+          "tags": [
+            "Veg"
+          ],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Creamy Pesto with Cherry Tomatoes Pasta",
+          "description": "Creamy Pasta with our Pesto Sauce cooked with Cherry Tomatoes, Olives & Broccoli served with butter garlic Baguettes Slices",
+          "pricing": {
+            "Standard": 359
+          },
+          "tags": [
+            "Veg"
+          ],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Alfredo with Mushrooms Pasta",
+          "description": "Penne Pasta cooked with Mushrooms, Baby Corn, Alfredo Sauce and served with Garlic Baguette Slices",
+          "pricing": {
+            "Standard": 359
+          },
+          "tags": [
+            "Veg",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Creamy Pesto with Chicken Pasta",
+          "description": "Creamy Penne Pasta with our Pesto sauce cooked with Chicken Chunks, and Cherry Tomatoes, & olives served with Garlic Baguette Slices",
+          "pricing": {
+            "Standard": 359
+          },
+          "tags": [
+            "Non Vegetarian",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Penne Pink Sauce Chicken Pasta",
+          "description": "Penne Pasta, Tangy Marinara Sauce, Fresh Cream, Chicken Chunks, Broccoli, Baby Corn & Mushrooms",
+          "pricing": {
+            "Standard": 359
+          },
+          "tags": [
+            "Non Vegetarian"
+          ],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Alfredo with Chicken Pasta",
+          "description": "Penne Pasta cooked with Chicken Chunks, Mushrooms, Broccoli, Alfredo Sauce served with Garlic Baguette Slices",
+          "pricing": {
+            "Standard": 359
+          },
+          "tags": [
+            "Non Vegetarian"
+          ],
+          "image_url": "/static/pasta.jpg"
+        }
+      ]
+    },
+    {
+      "category_name": "CALZONE",
+      "note": "",
+      "items": [
+        {
+          "item_name": "Signature Piri Piri Paneer Calzone",
+          "description": "Moon shaped pizza dough baked with Fresh Paneer seasoned with Piri Piri with Mozzarella and cheese. Served with potato fries on the side",
+          "pricing": {
+            "Standard": 389
+          },
+          "tags": [
+            "Veg",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Mexican Corn & Cheese Calzone",
+          "description": "Moon shaped pizza dough, baked with mozzarella cheese and loaded with Red, Yellow & Green Bellpeppers. Served with potato fries on the side",
+          "pricing": {
+            "Standard": 389
+          },
+          "tags": [
+            "Veg"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Mushroom & Cheese Calzone",
+          "description": "Moon shaped pizza dough baked with mozzarella cheese and loaded with mushrooms. Served with potato fries on the side",
+          "pricing": {
+            "Standard": 389
+          },
+          "tags": [
+            "Veg"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Smoked Pork Ham Calzone",
+          "description": "Moon shaped pizza dough with Pork Ham, Mozzarella, Cheese Dressing & Herbed Butter. Served with potato fries on the side",
+          "pricing": {
+            "Standard": 399
+          },
+          "tags": [
+            "Pork"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Signature Bacon & Cheese Calzone",
+          "description": "Moon shaped Pizza dough stuffed with Bacon strips, Mozzarella, Cheese Dressing & Herbed Butter. Served with potato fries on the side",
+          "pricing": {
+            "Standard": 399
+          },
+          "tags": [
+            "Pork",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Chicken & Mushroom Calzone",
+          "description": "Moon shaped pizza dough stuffed with sorted Mushrooms & chicken chunks, Mozzarella, Cheese Dressing & Herbed Butter. Served with potato fries on the side",
+          "pricing": {
+            "Standard": 389
+          },
+          "tags": [
+            "Non Vegetarian",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Smoked Chicken Ham Calzone",
+          "description": "Moon shaped pizza dough stuffed with Chicken Ham, Mozzarella, Cheese Dressing & Herbed Butter. Served with potato fries on the side",
+          "pricing": {
+            "Standard": 389
+          },
+          "tags": [
+            "Non Vegetarian"
+          ],
+          "image_url": "/static/pizza.jpg"
+        }
+      ]
+    },
+    {
+      "category_name": "HANDCRAFTED PIZZA",
+      "note": "Available in Small, Medium, Large",
+      "items": [
+        {
+          "item_name": "Classic Margherita Pizza",
+          "description": "Hand Tossed Pizza baked with tangy tomato & basil marinara sauce",
+          "pricing": {
+            "S": 149,
+            "M": 299,
+            "L": 399
+          },
+          "tags": [
+            "Veg"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Basil Pesto Veg Pizza",
+          "description": "Hand Tossed Pizza baked with Pesto sauce topped with Mushrooms, Broccoli, Cherry Tomatoes and Olives",
+          "pricing": {
+            "S": 249,
+            "M": 449,
+            "L": 549
+          },
+          "tags": [
+            "Veg",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Smoky Mushroom & Corn Barbecue Pizza",
+          "description": "Inhouse Hand Tossed Pizza baked with Barbeque sauce topped with Mushrooms & Fresh Corn",
+          "pricing": {
+            "S": 199,
+            "M": 399,
+            "L": 499
+          },
+          "tags": [
+            "Veg",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Farmers Favorite Veg Pizza",
+          "description": "Inhouse Hand Tossed Pizza baked with Stir Fried Mushrooms, Bell Peppers, Baby Corn & Broccoli",
+          "pricing": {
+            "S": 199,
+            "M": 399,
+            "L": 499
+          },
+          "tags": [
+            "Veg"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Mexican Paneer Delight Pizza",
+          "description": "Inhouse hand tossed pizza, baked with Paneer Cubes tossed in Chipotle sauce, Bell peppers, Cherry Tomatoes & Jalapenos.",
+          "pricing": {
+            "S": 199,
+            "M": 399,
+            "L": 499
+          },
+          "tags": [
+            "Veg",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Double Cheese Paradise Pizza",
+          "description": "Inhouse Hand Tossed Pizza baked with Extra Mozzarella Cheese and Red Bell-peppers",
+          "pricing": {
+            "S": 199,
+            "M": 399,
+            "L": 499
+          },
+          "tags": [
+            "Veg"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Signature Basil Pesto Chicken",
+          "description": "Hand Tossed Pizza topped with inhouse Pesto Sauce, Seasoned Chicken and Cherry Tomatoes",
+          "pricing": {
+            "S": 249,
+            "M": 449,
+            "L": 549
+          },
+          "tags": [
+            "Non Vegetarian",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Caribbean Cajun Spiced Chicken Pizza",
+          "description": "Hand Tossed Pizza baked with Chicken Chunks seasoned in Cajun Spice",
+          "pricing": {
+            "S": 199,
+            "M": 399,
+            "L": 499
+          },
+          "tags": [
+            "Non Vegetarian"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Jamaican Jerk Spiced Chicken Pizza",
+          "description": "Hand Tossed Pizza baked with Chicken Chunks seasoned in Jamaican Jerk Spice",
+          "pricing": {
+            "S": 199,
+            "M": 399,
+            "L": 499
+          },
+          "tags": [
+            "Non Vegetarian",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Chicken Pepperoni with Olives & Corn Pizza",
+          "description": "Hand tossed pizza topped with homemade marinara sauce, chicken pepperoni, stir-fried onions, corn, olives, mozzarella, cheddar, and processed cheese.",
+          "pricing": {
+            "S": 249,
+            "M": 449,
+            "L": 549
+          },
+          "tags": [
+            "Non Vegetarian"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Bacon & Pork Sausage Pizza",
+          "description": "Inhouse Hand Tossed Pizza baked with Crispy Bacon & Pork Ham",
+          "pricing": {
+            "S": 199,
+            "M": 399,
+            "L": 499
+          },
+          "tags": [
+            "Pork",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Pork Pepperoni with Olives & Corn Pizza",
+          "description": "Hand-tossed pizza topped with marinara sauce, pork pepperoni, stir-fried onions, corn, olives, mozzarella, cheddar, and processed cheese.",
+          "pricing": {
+            "S": 249,
+            "M": 449,
+            "L": 549
+          },
+          "tags": [
+            "Pork",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pizza.jpg"
+        },
+        {
+          "item_name": "Smoky Barbeque Chicken",
+          "description": "Hand Tossed Pizza baked with Chicken Chunks seasoned in American BBQ sauce and Veggies",
+          "pricing": {
+            "S": 199,
+            "M": 399,
+            "L": 499
+          },
+          "tags": [
+            "Non Vegetarian",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pizza.jpg"
+        }
+      ]
+    },
+    {
+      "category_name": "BREAKFAST",
+      "note": "",
+      "items": [
+        {
+          "item_name": "French Toast (4 pieces)",
+          "description": "Brioche made inhouse dunked in sweet cinnamon milk, vanilla syrup and egg, pan tossed with generous amount of butter. Choice of Topping: Maple Syrup, Nutella, Biscoff Spread (Contains Egg)",
+          "pricing": {
+            "Standard": 399
+          },
+          "tags": [
+            "Contains Eggs",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Classic Pancakes",
+          "description": "Freshly made Hot Pan cakes served with classic pancake syrup",
+          "pricing": {
+            "Standard": 259
+          },
+          "tags": [],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Biscoff Pancakes",
+          "description": "Freshly made Hot Pan cakes served with Biscoff Spread",
+          "pricing": {
+            "Standard": 399
+          },
+          "tags": [],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Nutella Pancakes",
+          "description": "Freshly made Hot Pan cakes served with Nutella Spread",
+          "pricing": {
+            "Standard": 399
+          },
+          "tags": [
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Egg & Toast",
+          "description": "Choice of Eggs & Two piece Brioche bread",
+          "pricing": {
+            "Standard": 199
+          },
+          "tags": [
+            "Contains Eggs"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Egg & Bacon",
+          "description": "Choice of Eggs, Two piece Brioche bread & Baked Bacon Strips",
+          "pricing": {
+            "Standard": 259
+          },
+          "tags": [
+            "Contains Eggs",
+            "Pork",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Egg & Sausage (Pork)",
+          "description": "Choice of Eggs, Two piece Brioche bread & Pork Sausage",
+          "pricing": {
+            "Standard": 259
+          },
+          "tags": [
+            "Contains Eggs",
+            "Pork"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Egg & Sausage (Chicken)",
+          "description": "Choice of Eggs, Two piece Brioche bread & Chicken Sausage",
+          "pricing": {
+            "Standard": 259
+          },
+          "tags": [
+            "Contains Eggs",
+            "Non Vegetarian",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "702 American Breakfast - Chicken",
+          "description": "Scrambled Eggs, 3 Pancakes, Pancake Syrup, Chicken Salami, Chicken Ham, Chicken Sausages, Masala Tea (Premix)/Americano/Cappuccino/Orange Juice",
+          "pricing": {
+            "Standard": 505
+          },
+          "tags": [
+            "Contains Eggs",
+            "Non Vegetarian",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "702 English Breakfast - Chicken",
+          "description": "Choice of Eggs [Scrambled/Sunnyside Up/Fully Cooked], Chicken Salami, Chicken Ham, Chicken Sausages, Baked Beans, Sorted Veggies, Hash Brown, Masala Tea (Premix)/Americano/Cappuccino/Orange Juice, 2 Slices of Bread",
+          "pricing": {
+            "Standard": 505
+          },
+          "tags": [
+            "Contains Eggs",
+            "Non Vegetarian",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "702 English Breakfast - Pork",
+          "description": "Choice of Eggs [Scrambled/Sunnyside Up/Fully Cooked], Bacon, Pork Ham, Pork Sausages, Baked Beans, Sorted Veggies, Hash Brown, Masala Tea (Premix)/Americano/Cappuccino/Orange Juice, 2 Slices of Bread",
+          "pricing": {
+            "Standard": 528
+          },
+          "tags": [
+            "Contains Eggs",
+            "Pork",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "702 American Breakfast - Pork",
+          "description": "Scrambled Eggs, 3 Pancakes, Pancake Syrup, Bacon, Pork Ham, Pork Sausages, Masala Tea (Premix)/Americano/Cappuccino/Orange Juice",
+          "pricing": {
+            "Standard": 528
+          },
+          "tags": [
+            "Contains Eggs",
+            "Pork",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Cheese Mushroom Omelette",
+          "description": "Sautéed mushrooms and eggs in creamy sauce, topped with parsley and melted cheese. Served with brioche",
+          "pricing": {
+            "Standard": 259
+          },
+          "tags": [
+            "Contains Eggs",
+            "Veg"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Egg & Beans",
+          "description": "Choice of Eggs, Two piece Brioche bread & Baked Beans in Tomato Sauce",
+          "pricing": {
+            "Standard": 259
+          },
+          "tags": [
+            "Contains Eggs"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Egg & Exotic Stir Fried Veggies",
+          "description": "Choice of Eggs, Two piece Brioche bread & Stir Fried Exotic Veggies",
+          "pricing": {
+            "Standard": 259
+          },
+          "tags": [
+            "Contains Eggs",
+            "Veg"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        }
+      ]
+    },
+    {
+      "category_name": "SIDES",
+      "note": "",
+      "items": [
+        {
+          "item_name": "Crispy Garlic Bread with Mozzarella Cheese (8 Piece)",
+          "description": "Sliced baguette with our signature garlic and herb butter garnished with cheddar and mozzarella cheese",
+          "pricing": {
+            "Standard": 229
+          },
+          "tags": [
+            "Veg",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Crispy Garlic Bread (8 Pieces)",
+          "description": "Thinly sliced baguette topped with garlic butter and herbs",
+          "pricing": {
+            "Standard": 170
+          },
+          "tags": [
+            "Veg"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Regular Fries",
+          "description": "Crispy Golden potato fries",
+          "pricing": {
+            "Standard": 170
+          },
+          "tags": [
+            "Veg"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Hash Brown (6 Pieces)",
+          "description": "Delicious potato patty soft on the inside and crisp on the outside",
+          "pricing": {
+            "Standard": 220
+          },
+          "tags": [
+            "Veg"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Potato Crisps with Mushroom & Basil (6 Pieces)",
+          "description": "V shaped potato wedges filled with creamy mushroom filling.",
+          "pricing": {
+            "Standard": 259
+          },
+          "tags": [
+            "Veg"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Basil Pesto Crostini With Olives & Cherry Tomatoes (6 Piece)",
+          "description": "Thinly sliced baguettes, drizzled in olive oil, garlic and pesto with a sprinkle of Parmesan.",
+          "pricing": {
+            "Standard": 249
+          },
+          "tags": [
+            "Veg",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Creamy Mushroom Crostini (6 Piece)",
+          "description": "Thin sliced baguettes, Mushrooms with Fresh Thyme, Fresh Cream & Cheese",
+          "pricing": {
+            "Standard": 249
+          },
+          "tags": [
+            "Veg"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Potato Crisps with Basil Pesto & Olives (6 Pieces)",
+          "description": "V shaped potato wedges filled with inhouse Basil pesto, sliced olives, cherry tomatoes and garnished with Parmesan cheese",
+          "pricing": {
+            "Standard": 259
+          },
+          "tags": [
+            "Veg"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Potato Crisps with Cream & Mushroom Sauce",
+          "description": "V shaped potato wedges flash baked with our signature inhouse Cream & mushroom sauce",
+          "pricing": {
+            "Standard": 269
+          },
+          "tags": [
+            "Veg"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Potato Crisps with Chicken & Mushroom",
+          "description": "V shaped potato wedges filled with minced chicken, creamy mushroom & basil filling.",
+          "pricing": {
+            "Standard": 269
+          },
+          "tags": [
+            "Non Vegetarian",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Chicken Nuggets",
+          "description": "12 Piece juicy Chicken nuggets",
+          "pricing": {
+            "Standard": 299
+          },
+          "tags": [
+            "Non Vegetarian"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        },
+        {
+          "item_name": "Spicy Chicken Poppers",
+          "description": "12 piece Spicy poppers",
+          "pricing": {
+            "Standard": 299
+          },
+          "tags": [
+            "Non Vegetarian",
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/breakfast.jpg"
+        }
+      ]
+    },
+    {
+      "category_name": "BEVERAGES",
+      "note": "Coffees, Shakes, Mojitos & Add-Ons",
+      "items": [
+        {
+          "item_name": "Iced Americano",
+          "description": "Single shot of Espresso, topped with Hot Water",
+          "pricing": {
+            "Standard": 135
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Classic Iced Coffee",
+          "description": "Double Shot Espresso served with sweet dairy cream over ice cubes.",
+          "pricing": {
+            "Standard": 230
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Classic Cold Coffee",
+          "description": "Double Shot Espresso blended with ice & sweet dairy cream",
+          "pricing": {
+            "Standard": 230
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Espresso Tonic",
+          "description": "Chilled tonic water and ice topped with double shot of espresso",
+          "pricing": {
+            "Standard": 249
+          },
+          "tags": [
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Hazelnut Cold Coffee",
+          "description": "Double Shot Espresso blended with ice, Milk & Gourmet Roasted Hazelnut Syrup",
+          "pricing": {
+            "Standard": 265
+          },
+          "tags": [
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Mocha Cold Coffee",
+          "description": "Double Shot Espresso blended with ice, Milk & Gourmet Chocolate Sauce",
+          "pricing": {
+            "Standard": 265
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Vanilla Cold Coffee",
+          "description": "Double Shot Espresso blended with ice, Milk & Vanilla Syrup",
+          "pricing": {
+            "Standard": 265
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Irish Cream Cold Coffee",
+          "description": "Double Shot Espresso blended with ice, Milk & Gourmet Irish Cream Syrup",
+          "pricing": {
+            "Standard": 265
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Caramel Cold Coffee",
+          "description": "Double Shot Espresso blended with ice, Milk & Gourmet Caramel Syrup",
+          "pricing": {
+            "Standard": 265
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Kit Kat Cold Coffee",
+          "description": "Double Shot Espresso blended with ice, Milk & Nestle Kit Kat",
+          "pricing": {
+            "Standard": 299
+          },
+          "tags": [
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Oreo Cold Coffee",
+          "description": "Double Shot Espresso blended with ice, Milk & Cadbury Oreo Cookies",
+          "pricing": {
+            "Standard": 299
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Choco Caramel Shake",
+          "description": "Sweet cream blended with thick chocolate sauce, caramel syrup and milk. topped with whipped cream",
+          "pricing": {
+            "Standard": 199
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Dark Fantasy Shake",
+          "description": "Sweet cream blended with thick chocolate sauce, Sunfeast Dark Fantasy Cookies and milk. topped with whipped cream",
+          "pricing": {
+            "Standard": 230
+          },
+          "tags": [
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Oreo Shake",
+          "description": "Sweet cream blended with thick chocolate sauce, Cadbury Oreo Cookies and milk. topped with whipped cream",
+          "pricing": {
+            "Standard": 230
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Kitkat Shake",
+          "description": "Sweet cream blended with thick chocolate sauce, Nestle Kit Kat and milk. topped with whipped cream",
+          "pricing": {
+            "Standard": 230
+          },
+          "tags": [
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Strawberry Shake",
+          "description": "Sweet cream blended with caramel syrup and milk. topped with whipped cream Gourmet Roasted Hazelnut Syrup",
+          "pricing": {
+            "Standard": 230
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Diet Coke / Coke / Thums Up",
+          "description": "Refreshing carbonated beverage.",
+          "pricing": {
+            "Standard": 80
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Virgin Mojito",
+          "description": "Lemon Syrup + Ice + Soda + Lemon + Mint",
+          "pricing": {
+            "Standard": 199
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Green Apple Mojito",
+          "description": "Green apple syrup + Ice + Soda + Lemon + Lemon syrup + Mint",
+          "pricing": {
+            "Standard": 210
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Watermelon Mint Mojito",
+          "description": "Watermelon syrup + Ice + Mint + Water (The perfect Summer cooler)",
+          "pricing": {
+            "Standard": 210
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Packaged Drinking Water",
+          "description": "Chilled bottled water.",
+          "pricing": {
+            "Standard": 15
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Lemon Ice Tea",
+          "description": "Lemon Tea shaken with ice and poured over ice",
+          "pricing": {
+            "Standard": 210
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Peach Ice Tea",
+          "description": "Peach tea shaken with ice and poured over.",
+          "pricing": {
+            "Standard": 210
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Roasted Hazelnut Syrup Add On",
+          "description": "Extra flavor",
+          "pricing": {
+            "Standard": 50
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Irish Cream Syrup Add On",
+          "description": "Extra flavor",
+          "pricing": {
+            "Standard": 50
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Caramel Syrup Add On",
+          "description": "Extra flavor",
+          "pricing": {
+            "Standard": 50
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Vanilla Syrup Add On",
+          "description": "Extra flavor",
+          "pricing": {
+            "Standard": 50
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Almond Milk Add On",
+          "description": "Dairy free alternative",
+          "pricing": {
+            "Standard": 75
+          },
+          "tags": [
+            "Chefs Recommendation"
+          ],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Lactose Free Milk Add On",
+          "description": "Dairy free alternative",
+          "pricing": {
+            "Standard": 50
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Whipped Cream Add On",
+          "description": "Extra topping",
+          "pricing": {
+            "Standard": 65
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        },
+        {
+          "item_name": "Cinnamon Add On",
+          "description": "Extra topping",
+          "pricing": {
+            "Standard": 35
+          },
+          "tags": [],
+          "image_url": "/static/pasta.jpg"
+        }
+      ]
+    }
+  ],
+  "legend": [
+    "Veg",
+    "Non Vegetarian",
+    "Pork",
+    "Contains Eggs",
+    "Chefs Recommendation"
+  ]
+}

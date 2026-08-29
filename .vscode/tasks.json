@@ -1,0 +1,13 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Install deps & run server",
+      "type": "shell",
+      "command": "python -m pip install -r requirements.txt; python -m uvicorn main:app --host 0.0.0.0 --port 8000",
+      "isBackground": true,
+      "problemMatcher": [],
+      "group": { "kind": "build", "isDefault": true }
+    }
+  ]
+}

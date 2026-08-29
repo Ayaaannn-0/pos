@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Big Little Bombaye · Staff Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body{font-family:Poppins,system-ui,sans-serif;background:#f6f7f9;color:#222}
+  .brand{font-family:Nunito,sans-serif}
+  .card{background:#fff;border:1px solid #e7e8eb;border-radius:22px;box-shadow:0 8px 30px rgba(30,35,40,.05)}
+  .status{font-size:10px;font-weight:800;letter-spacing:.12em;border-radius:999px;padding:6px 9px}
+  .received{background:#fff5df;color:#a36c14}
+  .preparing{background:#e9f0ff;color:#315fa5}
+  .ready{background:#e9f5e7;color:#54743c}
+  .completed{background:#e7f5ef;color:#39725a}
+  .cancelled{background:#f5e9e9;color:#9a4b4b}
+  button{transition:.18s}
+  .primary{background:#18283b;color:white}
+  .primary:hover{background:#263d57}
+  .soft:hover{transform:translateY(-1px)}
+  /* Glowing Table Animation */
+  .table-box { transition: all 0.3s ease; }
+  .table-box:hover { border-color: #18283b; box-shadow: 0 0 20px rgba(24,40,59,0.15); transform: translateY(-2px); }
+</style>
+</head>
+<body class="flex h-screen overflow-hidden">
+  
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white border-r border-gray-100 flex flex-col shrink-0 z-30">
+    <div class="p-6">
+      <div class="brand text-xl font-extrabold text-[#18283b]">Big Little Bombaye</div>
+      <div class="text-xs text-gray-400 mt-0.5">Staff Portal</div>
+    </div>
+    <nav class="flex-1 px-4 space-y-2">
+      <button onclick="showView('overview')" id="nav-overview" class="nav-btn w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-colors text-[#18283b] bg-gray-50">Overview</button>
+      <button onclick="showView('manual')" id="nav-manual" class="nav-btn w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-colors text-gray-500 hover:bg-gray-50 hover:text-[#18283b]">Manual Orders</button>
+      <button onclick="showView('inventory')" id="nav-inventory" class="nav-btn w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-colors text-gray-500 hover:bg-gray-50 hover:text-[#18283b]">Inventory</button>
+      <button onclick="showView('insights')" id="nav-insights" class="nav-btn w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-colors text-gray-500 hover:bg-gray-50 hover:text-[#18283b]">Insights</button>
+    </nav>
+    <div class="p-4 border-t border-gray-100">
+      <a href="/menu" class="w-full block text-center soft px-4 py-2 rounded-full border border-gray-200 text-sm font-semibold text-gray-700">Customer Menu</a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col min-h-screen overflow-y-auto relative">
+    <header class="sticky top-0 z-20 bg-white/95 backdrop-blur border-b border-gray-100 px-8 py-4 flex items-center justify-between">
+      <h1 id="page-title" class="text-xl font-bold text-[#18283b]">Overview</h1>
+      <button id="refresh" class="soft primary px-4 py-2 rounded-full text-sm font-semibold shadow-sm">Refresh</button>
+    </header>
+
+    <main class="p-8 max-w-7xl mx-auto w-full">
+      
+      <!-- Overview View -->
+      <div id="view-overview" class="view-section">
+        <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-7">
+          <div class="card p-5"><div class="text-xs text-gray-400 uppercase tracking-widest">Today Revenue</div><div id="todayRevenue" class="text-3xl font-extrabold text-[#18283b] mt-2">₹ 0</div></div>
+          <div class="card p-5"><div class="text-xs text-gray-400 uppercase tracking-widest">Completed Today</div><div id="todayOrders" class="text-3xl font-extrabold text-[#18283b] mt-2">0</div></div>
+          <div class="card p-5"><div class="text-xs text-gray-400 uppercase tracking-widest">Active Orders</div><div id="activeOrders" class="text-3xl font-extrabold text-[#18283b] mt-2">0</div></div>
+          <div class="card p-5"><div class="text-xs text-gray-400 uppercase tracking-widest">All-Time Revenue</div><div id="allRevenue" class="text-3xl font-extrabold text-[#18283b] mt-2">₹ 0</div></div>
+        </section>
+
+        <section class="grid lg:grid-cols-[1.5fr_1fr] gap-6">
+          <div class="card overflow-hidden">
+            <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between"><div><h2 class="font-bold text-lg">Live Orders</h2><p class="text-xs text-gray-400">New QR orders appear here automatically.</p></div><span id="lastUpdated" class="text-xs text-gray-400"></span></div>
+            <div id="orders" class="p-4 space-y-3"></div>
+          </div>
+          <div class="card overflow-hidden">
+            <div class="px-5 py-4 border-b border-gray-100"><h2 class="font-bold text-lg">Order History</h2><p class="text-xs text-gray-400">Completed and cancelled orders.</p></div>
+            <div class="overflow-auto max-h-[620px]"><table class="w-full text-sm"><thead class="sticky top-0 bg-white"><tr class="text-left text-xs text-gray-400"><th class="p-4">Order</th><th class="p-4">Table</th><th class="p-4">Status</th><th class="p-4 text-right">Amount</th></tr></thead><tbody id="history"></tbody></table></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Manual Orders View -->
+      <div id="view-manual" class="view-section hidden">
+        <div class="flex justify-between items-center mb-6">
+          <div>
+            <h2 class="font-bold text-lg text-[#18283b]">Table Management</h2>
+            <p class="text-xs text-gray-400 mt-1">Select a table to place a manual order on behalf of the customer.</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-6" id="tables-container">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Inventory View -->
+      <div id="view-inventory" class="view-section hidden">
+        <div class="card overflow-hidden">
+          <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+            <div>
+              <h2 class="font-bold text-lg text-[#18283b]">Inventory Management</h2>
+              <p class="text-xs text-gray-400">Track and update your stock levels.</p>
+            </div>
+            <button onclick="openInventoryModal()" class="soft primary px-4 py-2 rounded-full text-sm font-semibold shadow-sm">+ Add Item</button>
+          </div>
+          <table class="w-full text-sm text-left">
+            <thead class="bg-gray-50 border-b border-gray-100"><tr class="text-xs text-gray-500 uppercase tracking-wider"><th class="p-4 font-bold">Item Name</th><th class="p-4 font-bold">Stock</th><th class="p-4 font-bold">Unit</th><th class="p-4 text-right font-bold">Action</th></tr></thead>
+            <tbody id="inventory-list"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Insights View -->
+      <div id="view-insights" class="view-section hidden">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h2 class="font-bold text-lg text-[#18283b]">Revenue Insights</h2>
+            <p class="text-xs text-gray-400 mt-1">Sales performance analytics.</p>
+          </div>
+          <select id="insights-timeframe" onchange="loadInsights()" class="card px-4 py-2 text-sm font-semibold outline-none border border-gray-200 bg-white text-[#18283b] shadow-sm rounded-full cursor-pointer">
+            <option value="last_24h">Last 24 Hours</option>
+            <option value="last_7d">Last 7 Days</option>
+            <option value="last_30d">Last 30 Days</option>
+            <option value="last_1y">Last 1 Year</option>
+          </select>
+        </div>
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="card p-8 text-center flex flex-col justify-center items-center h-48">
+            <div class="text-xs text-gray-400 uppercase tracking-widest mb-3 font-bold">Total Revenue</div>
+            <div id="insight-revenue" class="text-4xl font-extrabold text-[#18283b]">₹ 0</div>
+          </div>
+          <div class="card p-8 text-center flex flex-col justify-center items-center h-48">
+            <div class="text-xs text-gray-400 uppercase tracking-widest mb-3 font-bold">Total Orders</div>
+            <div id="insight-orders" class="text-4xl font-extrabold text-[#18283b]">0</div>
+          </div>
+          <div class="card p-8 text-center flex flex-col justify-center items-center h-48">
+            <div class="text-xs text-gray-400 uppercase tracking-widest mb-3 font-bold">Avg Order Value</div>
+            <div id="insight-aov" class="text-4xl font-extrabold text-[#18283b]">₹ 0</div>
+          </div>
+        </section>
+      </div>
+
+    </main>
+  </div>
+  
+  <!-- Manual Order Modal -->
+  <div id="order-modal" class="fixed inset-0 bg-[#18283b]/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 opacity-0 transition-opacity">
+     <div class="card bg-white w-full max-w-2xl rounded-[24px] max-h-[90vh] flex flex-col shadow-2xl scale-95 transition-transform" id="order-modal-content">
+       <div class="px-6 py-5 border-b border-gray-100 flex justify-between items-center">
+         <h3 id="order-modal-title" class="font-extrabold text-xl text-[#18283b]">New Order</h3>
+         <button onclick="closeOrderModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 transition-colors font-bold">✕</button>
+       </div>
+       <div class="overflow-y-auto flex-1 p-6 bg-gray-50" id="order-modal-items">
+         <!-- Menu items populated here -->
+       </div>
+       <div class="p-6 border-t border-gray-100 bg-white rounded-b-[24px]">
+         <div class="flex justify-between items-center mb-4">
+           <span class="text-sm font-bold text-gray-500 uppercase tracking-wider">Subtotal</span>
+           <span id="order-modal-total" class="text-2xl font-extrabold text-[#18283b]">₹ 0</span>
+         </div>
+         <button onclick="submitManualOrder()" class="w-full primary py-3.5 rounded-full font-bold text-base shadow-lg shadow-[#18283b]/20">Place Order</button>
+       </div>
+     </div>
+  </div>
+
+  <!-- Inventory Add Modal -->
+  <div id="inventory-modal" class="fixed inset-0 bg-[#18283b]/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 opacity-0 transition-opacity">
+    <div class="card bg-white w-full max-w-sm rounded-[24px] p-6 shadow-2xl scale-95 transition-transform" id="inventory-modal-content">
+      <h3 class="font-extrabold text-lg text-[#18283b] mb-4">Add Inventory Item</h3>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Item Name</label>
+          <input type="text" id="inv-name" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-semibold outline-none focus:border-[#18283b]" placeholder="e.g. Tomatoes">
+        </div>
+        <div class="flex gap-4">
+          <div class="flex-1">
+            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Stock</label>
+            <input type="number" id="inv-stock" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-semibold outline-none focus:border-[#18283b]" value="0" min="0">
+          </div>
+          <div class="flex-1">
+            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Unit</label>
+            <input type="text" id="inv-unit" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-semibold outline-none focus:border-[#18283b]" placeholder="e.g. kg, pcs" value="units">
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-3 mt-6">
+        <button onclick="closeInventoryModal()" class="flex-1 py-2.5 rounded-full font-bold text-sm bg-gray-100 text-gray-600 hover:bg-gray-200">Cancel</button>
+        <button onclick="submitInventoryItem()" class="flex-1 py-2.5 rounded-full font-bold text-sm primary">Add Item</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 hidden bg-[#18283b] text-white px-5 py-3 rounded-full shadow-xl text-sm font-medium z-[100]"></div>
+
+<script>
+const money = n => '₹ ' + Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2});
+const esc = s => String(s??'').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const statusClass = s => s.toLowerCase();
+
+let currentView = 'overview';
+let menuData = null;
+let manualOrderCart = {};
+let manualOrderTable = null;
+
+// UI Navigation
+function showView(viewId) {
+  document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+  document.getElementById(`view-${viewId}`).classList.remove('hidden');
+  
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.classList.remove('bg-gray-50', 'text-[#18283b]');
+    btn.classList.add('text-gray-500');
+  });
+  const activeBtn = document.getElementById(`nav-${viewId}`);
+  activeBtn.classList.remove('text-gray-500');
+  activeBtn.classList.add('bg-gray-50', 'text-[#18283b]');
+
+  const titles = {
+    'overview': 'Overview',
+    'manual': 'Manual Orders',
+    'inventory': 'Inventory',
+    'insights': 'Insights'
+  };
+  document.getElementById('page-title').textContent = titles[viewId];
+  currentView = viewId;
+
+  if(viewId === 'inventory') loadInventory();
+  if(viewId === 'insights') loadInsights();
+  if(viewId === 'manual') renderTables();
+}
+
+let toastTimer;
+function toast(msg) {
+  const e = document.getElementById('toast');
+  e.textContent = msg;
+  e.classList.remove('hidden');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => e.classList.add('hidden'), 2500);
+}
+
+async function api(url, opts) {
+  const r = await fetch(url, opts);
+  let d = {};
+  try { d = await r.json(); } catch{}
+  if(!r.ok) throw new Error(d.detail || 'Request failed');
+  return d;
+}
+
+// ----------------------------------------------------
+// OVERVIEW / LIVE ORDERS
+// ----------------------------------------------------
+function orderCard(o) {
+  const buttons = [];
+  if(!o.bill_generated && o.status !== 'CANCELLED') buttons.push(`<button class="soft border border-gray-200 px-3 py-2 rounded-xl text-xs font-bold" onclick="bill(${o.id})">Generate Bill</button>`);
+  if(o.status === 'RECEIVED') buttons.push(`<button class="soft primary px-3 py-2 rounded-xl text-xs font-bold shadow-sm" onclick="setStatus(${o.id},'PREPARING')">Start Preparing</button>`);
+  if(o.status === 'PREPARING') buttons.push(`<button class="soft primary px-3 py-2 rounded-xl text-xs font-bold shadow-sm" onclick="setStatus(${o.id},'READY')">Mark Ready</button>`);
+  if(o.status === 'READY') buttons.push(`<button class="soft primary px-3 py-2 rounded-xl text-xs font-bold shadow-sm" onclick="setStatus(${o.id},'COMPLETED')">Complete</button>`);
+  if(['RECEIVED','PREPARING'].includes(o.status)) buttons.push(`<button class="soft border border-red-100 bg-red-50 text-red-600 px-3 py-2 rounded-xl text-xs font-bold hover:bg-red-100" onclick="setStatus(${o.id},'CANCELLED')">Cancel</button>`);
+  
+  return `<article class="border border-gray-100 rounded-[20px] p-5 bg-[#fcfcfb] shadow-sm transition-all hover:shadow-md">
+    <div class="flex justify-between gap-3">
+      <div>
+        <div class="font-extrabold text-[#18283b]">${esc(o.order_number)} <span class="text-gray-400 font-semibold px-1">·</span> <span class="text-gray-600 font-semibold">Table ${esc(o.table_number)}</span></div>
+        <div class="text-[11px] text-gray-400 mt-1 font-medium">${new Date(o.created_at).toLocaleString()}</div>
+      </div>
+      <span class="status ${statusClass(o.status)}">${esc(o.status)}</span>
+    </div>
+    <div class="mt-4 space-y-2">
+      ${o.items.map(i => `<div class="flex justify-between text-sm"><span class="font-medium text-gray-700"><span class="font-bold text-[#18283b] w-5 inline-block">${i.quantity}</span> × ${esc(i.item_name)} <span class="text-gray-400 text-xs">(${esc(i.tier)})</span></span><b class="text-[#18283b]">${money(i.price*i.quantity)}</b></div>`).join('')}
+    </div>
+    ${o.notes ? `<div class="mt-4 rounded-xl bg-[#fff5df] border border-[#f2e6cb] px-3 py-2 text-xs text-[#a36c14]"><b class="uppercase tracking-wide text-[10px] block mb-0.5">Note</b> ${esc(o.notes)}</div>` : ''}
+    <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between gap-3">
+      <div>
+        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total Amount</span>
+        <div class="font-extrabold text-lg text-[#18283b] leading-tight">${money(o.subtotal)}</div>
+      </div>
+      <div class="flex flex-wrap justify-end gap-2">${buttons.join('')}</div>
+    </div>
+  </article>`;
+}
+
+async function refresh() {
+  try {
+    const [orders, summary, history] = await Promise.all([api('/api/orders'), api('/api/revenue/summary'), api('/api/history')]);
+    
+    // Overview Live Orders
+    const live = orders.filter(o => ['RECEIVED','PREPARING','READY'].includes(o.status));
+    document.getElementById('orders').innerHTML = live.length ? live.map(orderCard).join('') : `<div class="py-16 text-center text-gray-400 text-sm font-medium">No active orders right now.</div>`;
+    
+    // Overview Stats
+    document.getElementById('todayRevenue').textContent = money(summary.today_revenue);
+    document.getElementById('todayOrders').textContent = summary.today_completed_orders;
+    document.getElementById('activeOrders').textContent = summary.active_orders;
+    document.getElementById('allRevenue').textContent = money(summary.all_time_revenue);
+    
+    // Overview History
+    document.getElementById('history').innerHTML = history.length ? history.map(o => `<tr class="border-t border-gray-50 hover:bg-gray-50 transition-colors"><td class="p-4 font-bold text-[#18283b] text-xs">${esc(o.order_number)}</td><td class="p-4 font-semibold text-gray-600 text-sm">${esc(o.table_number)}</td><td class="p-4"><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td><td class="p-4 text-right font-bold text-[#18283b]">${money(o.subtotal)}</td></tr>`).join('') : `<tr><td colspan="4" class="p-10 text-center text-gray-400">No history yet.</td></tr>`;
+    
+    document.getElementById('lastUpdated').textContent = 'Updated ' + new Date().toLocaleTimeString();
+  } catch(e) {
+    if(currentView === 'overview') toast(e.message);
+  }
+}
+
+async function bill(id) { try{ const o=await api(`/api/orders/${id}/bill`,{method:'POST'}); toast(`Bill generated for ${o.order_number}`); printBill(o); refresh(); }catch(e){toast(e.message);} }
+function printBill(o) { const w=window.open('','_blank','width=420,height=650'); if(!w)return; w.document.write(`<html><head><title>${esc(o.order_number)}</title><style>body{font-family:Arial;padding:24px;max-width:360px;margin:auto}h1{font-size:20px}small{color:#777}.row{display:flex;justify-content:space-between;margin:8px 0}.total{border-top:1px solid #ddd;padding-top:12px;font-weight:bold;font-size:18px}</style></head><body><h1>Big Little Bombaye</h1><small>${esc(o.order_number)} · Table ${esc(o.table_number)}</small><hr>${o.items.map(i=>`<div class="row"><span>${i.quantity} × ${esc(i.item_name)} (${esc(i.tier)})</span><b>${money(i.price*i.quantity)}</b></div>`).join('')}<div class="row total"><span>Total</span><span>${money(o.subtotal)}</span></div><p>Thank you.</p><script>window.print()<\/script></body></html>`); w.document.close(); }
+async function setStatus(id,status) { try{ await api(`/api/orders/${id}/status`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})}); toast('Order updated'); refresh(); }catch(e){toast(e.message);} }
+
+// ----------------------------------------------------
+// MANUAL ORDERS
+// ----------------------------------------------------
+function renderTables() {
+  let html = '';
+  for(let i=1; i<=6; i++) {
+    html += `
+      <div onclick="openOrderModal('Table ${i}')" class="card p-8 cursor-pointer flex flex-col items-center justify-center table-box group bg-white hover:bg-gray-50">
+         <div class="w-16 h-16 rounded-full bg-blue-50 group-hover:bg-[#18283b] transition-colors flex items-center justify-center text-xl font-bold text-blue-600 group-hover:text-white mb-4 shadow-inner">T${i}</div>
+         <div class="font-bold text-sm text-gray-700 group-hover:text-[#18283b]">Table ${i}</div>
+      </div>
+    `;
+  }
+  document.getElementById('tables-container').innerHTML = html;
+}
+
+async function fetchMenu() {
+  if(!menuData) {
+    try { menuData = await api('/api/menu'); } catch(e) { console.error(e); }
+  }
+}
+
+async function openOrderModal(tableNum) {
+  manualOrderTable = tableNum;
+  manualOrderCart = {};
+  document.getElementById('order-modal-title').textContent = `New Order - ${tableNum}`;
+  await fetchMenu();
+  renderOrderMenu();
+  updateOrderTotal();
+  
+  const m = document.getElementById('order-modal');
+  const mc = document.getElementById('order-modal-content');
+  m.classList.remove('hidden');
+  // Trigger animation
+  requestAnimationFrame(() => {
+    m.classList.remove('opacity-0');
+    mc.classList.remove('scale-95');
+  });
+}
+
+function closeOrderModal() {
+  const m = document.getElementById('order-modal');
+  const mc = document.getElementById('order-modal-content');
+  m.classList.add('opacity-0');
+  mc.classList.add('scale-95');
+  setTimeout(() => m.classList.add('hidden'), 300); // Wait for transition
+}
+
+function renderOrderMenu() {
+  if(!menuData) return;
+  const container = document.getElementById('order-modal-items');
+  let html = '';
+  
+  // Category shortcuts
+  let shortcuts = '<div class="flex overflow-x-auto gap-2 pb-2 mb-4 scrollbar-hide">';
+  menuData.categories.forEach((cat, idx) => {
+    shortcuts += `<button onclick="document.getElementById('cat-${idx}').scrollIntoView({behavior:'smooth'})" class="shrink-0 bg-gray-100 text-[#18283b] hover:bg-gray-200 px-4 py-1.5 rounded-full text-xs font-bold transition-colors">${esc(cat.category_name)}</button>`;
+  });
+  shortcuts += '</div>';
+  html += shortcuts;
+
+  menuData.categories.forEach((cat, idx) => {
+    html += `<h4 id="cat-${idx}" class="font-extrabold text-sm text-gray-400 uppercase tracking-widest mt-6 mb-3 sticky top-0 bg-gray-50 py-2 z-10">${esc(cat.category_name)}</h4><div class="space-y-3">`;
+    cat.items.forEach(item => {
+      const priceKeys = Object.keys(item.pricing);
+      priceKeys.forEach(tier => {
+        const key = `${item.item_name}|${tier}`;
+        const qty = manualOrderCart[key]?.quantity || 0;
+        const price = item.pricing[tier];
+        html += `
+          <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
+            <div>
+              <div class="font-bold text-[#18283b] text-sm">${esc(item.item_name)}</div>
+              <div class="text-xs text-gray-500 font-medium">${esc(tier)} · <span class="font-bold text-[#18283b]">${money(price)}</span></div>
+            </div>
+            <div class="flex items-center gap-3 bg-gray-50 rounded-full px-1 py-1 border border-gray-200">
+              <button onclick="updateCart('${esc(item.item_name)}', '${esc(tier)}', ${price}, -1)" class="w-7 h-7 rounded-full bg-white shadow-sm flex items-center justify-center font-bold text-[#18283b] hover:bg-gray-100 transition-colors">-</button>
+              <span class="w-4 text-center font-extrabold text-sm text-[#18283b]">${qty}</span>
+              <button onclick="updateCart('${esc(item.item_name)}', '${esc(tier)}', ${price}, 1)" class="w-7 h-7 rounded-full bg-[#18283b] text-white shadow-sm flex items-center justify-center font-bold hover:bg-[#263d57] transition-colors">+</button>
+            </div>
+          </div>
+        `;
+      });
+    });
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+function updateCart(itemName, tier, price, delta) {
+  const key = `${itemName}|${tier}`;
+  if(!manualOrderCart[key]) {
+    manualOrderCart[key] = { itemName, tier, price, quantity: 0 };
+  }
+  manualOrderCart[key].quantity += delta;
+  if(manualOrderCart[key].quantity <= 0) delete manualOrderCart[key];
+  renderOrderMenu();
+  updateOrderTotal();
+}
+
+function updateOrderTotal() {
+  let total = 0;
+  Object.values(manualOrderCart).forEach(item => total += item.price * item.quantity);
+  document.getElementById('order-modal-total').textContent = money(total);
+}
+
+async function submitManualOrder() {
+  const items = Object.values(manualOrderCart);
+  if(items.length === 0) return toast('Cart is empty.');
+  try {
+    await api('/api/orders', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        table_number: manualOrderTable,
+        notes: "Manual order via Staff Portal",
+        items: items.map(i => ({ item_name: i.itemName, tier: i.tier, quantity: i.quantity }))
+      })
+    });
+    toast('Order placed successfully.');
+    closeOrderModal();
+    refresh();
+  } catch(e) {
+    toast(e.message);
+  }
+}
+
+// ----------------------------------------------------
+// INVENTORY
+// ----------------------------------------------------
+async function loadInventory() {
+  try {
+    const data = await api('/api/inventory');
+    const tbody = document.getElementById('inventory-list');
+    if(data.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4" class="p-10 text-center text-gray-400 font-medium">Inventory is empty. Add items to track stock.</td></tr>`;
+      return;
+    }
+    let html = '';
+    data.forEach(item => {
+      html += `
+        <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors group">
+          <td class="p-4 font-bold text-[#18283b]">${esc(item.item_name)}</td>
+          <td class="p-4">
+            <input type="number" class="w-20 border border-transparent group-hover:border-gray-200 focus:border-[#18283b] rounded-lg px-2 py-1 text-sm font-bold text-[#18283b] outline-none transition-colors" value="${item.stock}" onchange="updateStock(${item.id}, this.value)">
+          </td>
+          <td class="p-4 text-xs font-semibold text-gray-500 uppercase">${esc(item.unit)}</td>
+          <td class="p-4 text-right">
+             <button onclick="updateStock(${item.id}, this.parentElement.parentElement.querySelector('input').value)" class="text-xs font-bold text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors">Save</button>
+          </td>
+        </tr>
+      `;
+    });
+    tbody.innerHTML = html;
+  } catch(e) { toast(e.message); }
+}
+
+async function updateStock(id, val) {
+  try {
+    await api(`/api/inventory/${id}`, {
+      method: 'PATCH',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ stock: parseInt(val) || 0 })
+    });
+    toast('Stock updated.');
+    loadInventory();
+  } catch(e) { toast(e.message); }
+}
+
+function openInventoryModal() {
+  document.getElementById('inv-name').value = '';
+  document.getElementById('inv-stock').value = '0';
+  document.getElementById('inv-unit').value = 'units';
+  const m = document.getElementById('inventory-modal');
+  const mc = document.getElementById('inventory-modal-content');
+  m.classList.remove('hidden');
+  requestAnimationFrame(() => {
+    m.classList.remove('opacity-0');
+    mc.classList.remove('scale-95');
+  });
+}
+
+function closeInventoryModal() {
+  const m = document.getElementById('inventory-modal');
+  const mc = document.getElementById('inventory-modal-content');
+  m.classList.add('opacity-0');
+  mc.classList.add('scale-95');
+  setTimeout(() => m.classList.add('hidden'), 300);
+}
+
+async function submitInventoryItem() {
+  const name = document.getElementById('inv-name').value;
+  const stock = document.getElementById('inv-stock').value;
+  const unit = document.getElementById('inv-unit').value;
+  if(!name) return toast('Item name required.');
+  
+  try {
+    await api('/api/inventory', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ item_name: name, stock: parseInt(stock)||0, unit: unit })
+    });
+    toast('Item added to inventory.');
+    closeInventoryModal();
+    loadInventory();
+  } catch(e) { toast(e.message); }
+}
+
+// ----------------------------------------------------
+// INSIGHTS
+// ----------------------------------------------------
+async function loadInsights() {
+  const timeframe = document.getElementById('insights-timeframe').value;
+  try {
+    const data = await api(`/api/insights?timeframe=${timeframe}`);
+    document.getElementById('insight-revenue').textContent = money(data.revenue);
+    document.getElementById('insight-orders').textContent = data.orders;
+    document.getElementById('insight-aov').textContent = money(data.avg_order_value);
+  } catch(e) { toast(e.message); }
+}
+
+// Initial setup
+document.getElementById('refresh').onclick = refresh;
+refresh();
+setInterval(refresh, 5000); // Auto-refresh active view (mainly Overview)
+</script>
+</body>
+</html>
