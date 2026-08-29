@@ -179,6 +179,26 @@ def serve_staff():
     return FileResponse(os.path.join(BASE_DIR, "staff.html"))
 
 
+MAX_TABLES = 12
+
+
+def validate_table_number(table_str: str) -> str:
+    table_str_clean = table_str.strip()
+    match = re.search(r"\d+", table_str_clean)
+    if not match:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid table number format. Please provide a valid table number between 1 and 12.",
+        )
+    table_num = int(match.group())
+    if table_num < 1 or table_num > MAX_TABLES:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid table number. Table '{table_str_clean}' does not exist. Please enter a valid table number (1-{MAX_TABLES}).",
+        )
+    return table_str_clean
+
+
 @app.get("/api/menu")
 def get_menu():
     return MENU
@@ -186,6 +206,7 @@ def get_menu():
 
 @app.post("/api/orders")
 def create_order(payload: OrderRequest):
+    validated_table = validate_table_number(payload.table_number)
     # Never trust prices sent by the browser. Recalculate from menu.json on the server.
     normalized_items = []
     subtotal = 0.0
@@ -218,7 +239,7 @@ def create_order(payload: OrderRequest):
             INSERT INTO orders (order_number, table_number, notes, status, subtotal, created_at, updated_at)
             VALUES (?, ?, ?, 'RECEIVED', ?, ?, ?)
             """,
-            (order_number, payload.table_number.strip(), payload.notes.strip(), round(subtotal, 2), now, now),
+            (order_number, validated_table, payload.notes.strip(), round(subtotal, 2), now, now),
         )
         order_id = cur.lastrowid
         conn.executemany(

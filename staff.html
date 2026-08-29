@@ -3,531 +3,329 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#f7f7f4" />
 <title>Big Little Bombaye · Staff Portal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  body{font-family:Poppins,system-ui,sans-serif;background:#f6f7f9;color:#222}
-  .brand{font-family:Nunito,sans-serif}
-  .card{background:#fff;border:1px solid #e7e8eb;border-radius:22px;box-shadow:0 8px 30px rgba(30,35,40,.05)}
-  .status{font-size:10px;font-weight:800;letter-spacing:.12em;border-radius:999px;padding:6px 9px}
-  .received{background:#fff5df;color:#a36c14}
-  .preparing{background:#e9f0ff;color:#315fa5}
-  .ready{background:#e9f5e7;color:#54743c}
-  .completed{background:#e7f5ef;color:#39725a}
-  .cancelled{background:#f5e9e9;color:#9a4b4b}
-  button{transition:.18s}
-  .primary{background:#18283b;color:white}
-  .primary:hover{background:#263d57}
-  .soft:hover{transform:translateY(-1px)}
-  /* Glowing Table Animation */
-  .table-box { transition: all 0.3s ease; }
-  .table-box:hover { border-color: #18283b; box-shadow: 0 0 20px rgba(24,40,59,0.15); transform: translateY(-2px); }
+:root{
+  --bg:#f6f7f4; --surface:#fff; --surface-2:#fbfbf9; --ink:#172536; --muted:#8992a0;
+  --line:#e8ebe7; --accent:#18283b; --accent-2:#b08d57; --success:#2f7458; --success-bg:#eaf5ef;
+  --warning:#9b6819; --warning-bg:#fff5df; --blue:#3866a7; --blue-bg:#edf3ff;
+  --danger:#a34d4d; --danger-bg:#faeeee; --shadow:0 12px 36px rgba(23,37,54,.055); --shadow-sm:0 5px 18px rgba(23,37,54,.045);
+  --r:18px; --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased} button,input,select{font:inherit} button{cursor:pointer}.hidden{display:none!important}
+.app{display:flex;height:100vh;overflow:hidden}.sidebar{width:248px;background:rgba(255,255,255,.92);border-right:1px solid var(--line);display:flex;flex-direction:column;flex-shrink:0;z-index:20}.brand-wrap{padding:25px 22px 20px}.brand{font-size:18px;font-weight:800;letter-spacing:-.035em}.brand-sub{font-size:11px;color:#98a0aa;margin-top:4px;font-weight:600}.live-mini{display:inline-flex;align-items:center;gap:7px;margin-top:17px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:#fbfcfa;color:#5f6b78;font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase}.live-dot{width:7px;height:7px;border-radius:50%;background:#3d8a68;box-shadow:0 0 0 0 rgba(61,138,104,.35);animation:pulse 2s infinite}.live-dot.off{background:#b6bdc5;animation:none}.nav{padding:6px 12px;display:flex;flex-direction:column;gap:4px}.nav-btn{border:0;background:transparent;color:#6f7884;text-align:left;padding:12px 12px;border-radius:12px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:11px;transition:background .16s,color .16s,transform .16s}.nav-btn:hover{background:#f7f8f6;color:var(--ink)}.nav-btn.active{background:#f1f3f1;color:var(--ink);box-shadow:inset 3px 0 0 var(--accent)}.nav-icon{width:18px;height:18px;display:grid;place-items:center;color:#8b949e}.nav-btn.active .nav-icon{color:var(--accent)}.nav-badge{margin-left:auto;min-width:21px;height:21px;padding:0 6px;border-radius:999px;background:#edf0ee;color:#53606c;display:grid;place-items:center;font-size:10px}.nav-btn.active .nav-badge{background:var(--accent);color:#fff}.sidebar-footer{margin-top:auto;padding:15px;border-top:1px solid var(--line)}.menu-link{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:42px;border:1px solid var(--line);border-radius:12px;color:#596572;text-decoration:none;font-size:11px;font-weight:800;background:#fff;transition:all .16s}.menu-link:hover{border-color:#cfd5d0;color:var(--ink);transform:translateY(-1px)}
+.main{min-width:0;flex:1;display:flex;flex-direction:column;overflow:hidden}.topbar{height:76px;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 30px;position:sticky;top:0;z-index:15}.page-heading{display:flex;align-items:center;gap:13px}.page-title{font-size:20px;font-weight:800;letter-spacing:-.035em}.page-context{font-size:11px;color:#99a1aa;font-weight:600;padding-left:13px;border-left:1px solid var(--line)}.top-actions{display:flex;align-items:center;gap:10px}.connection{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:800;color:#7d8792;text-transform:uppercase;letter-spacing:.07em;padding:8px 10px;border:1px solid var(--line);border-radius:999px;background:#fff}.connection .live-dot{width:6px;height:6px}.refresh-btn{height:38px;border:1px solid var(--accent);border-radius:11px;background:var(--accent);color:#fff;padding:0 14px;font-size:11px;font-weight:800;display:flex;align-items:center;gap:8px;transition:transform .16s,background .16s}.refresh-btn:hover{background:#243a54;transform:translateY(-1px)}.refresh-btn:active{transform:scale(.98)}.refresh-icon{transition:transform .4s var(--ease)}.refresh-btn.loading .refresh-icon{transform:rotate(180deg)}
+.content{overflow:auto;flex:1;padding:30px;scrollbar-width:thin;scrollbar-color:#d8ddd8 transparent}.content-inner{max-width:1450px;margin:0 auto}.view-section{animation:page-in .22s var(--ease) both}@keyframes page-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(61,138,104,.32)}70%{box-shadow:0 0 0 7px rgba(61,138,104,0)}100%{box-shadow:0 0 0 0 rgba(61,138,104,0)}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:19px 20px;box-shadow:var(--shadow-sm);min-width:0;position:relative;overflow:hidden}.stat-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.stat-label{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:#99a1aa}.stat-icon{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:#f3f5f3;color:#6f7984}.stat-value{font-size:27px;line-height:1.05;font-weight:800;letter-spacing:-.045em;margin-top:12px}.stat-meta{font-size:10px;color:#98a0a8;margin-top:8px;font-weight:600}.stat-meta strong{color:#5d6874}.sparkline{position:absolute;right:18px;bottom:12px;width:74px;height:25px;opacity:.75}.sparkline path{fill:none;stroke:#80966b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.stat.active .stat-icon{background:var(--warning-bg);color:var(--warning)}
+.section-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(340px,.75fr);gap:18px}.panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-sm);overflow:hidden}.panel-head{padding:19px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-title{font-size:14px;font-weight:800;letter-spacing:-.02em}.panel-sub{font-size:10px;color:#98a0aa;margin-top:4px;font-weight:600}.panel-tools{display:flex;align-items:center;gap:8px}.tiny-status{display:inline-flex;align-items:center;gap:6px;color:#77818c;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.tiny-status .live-dot{width:6px;height:6px}.orders{padding:12px;display:flex;flex-direction:column;gap:10px;min-height:420px}.empty{min-height:390px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#9ba3aa}.empty-icon{width:44px;height:44px;border-radius:14px;background:#f3f5f2;color:#7d8790;display:grid;place-items:center;margin-bottom:12px}.empty-title{font-size:12px;font-weight:800;color:#606b75}.empty-sub{font-size:10px;margin-top:5px;font-weight:600}.order-card{border:1px solid #e9ece8;border-radius:16px;padding:15px;background:#fff;animation:order-in .25s var(--ease) both;transition:box-shadow .18s,transform .18s,border-color .18s}.order-card:hover{box-shadow:0 10px 26px rgba(23,37,54,.07);transform:translateY(-1px);border-color:#dfe4df}@keyframes order-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}.order-main{display:flex;gap:14px}.order-state{width:4px;border-radius:4px;flex-shrink:0;background:#e1b65d}.order-state.preparing{background:#6f91c5}.order-state.ready{background:#6b9c7c}.order-body{min-width:0;flex:1}.order-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.order-number{font-size:11px;font-weight:800;letter-spacing:.01em}.order-table{color:#66717c;font-weight:700}.order-time{font-size:9px;color:#9aa2aa;font-weight:600;margin-top:4px}.status{font-size:8px;font-weight:800;letter-spacing:.12em;border-radius:999px;padding:6px 8px;white-space:nowrap}.received{background:var(--warning-bg);color:var(--warning)}.preparing{background:var(--blue-bg);color:var(--blue)}.ready{background:var(--success-bg);color:var(--success)}.completed{background:var(--success-bg);color:var(--success)}.cancelled{background:var(--danger-bg);color:var(--danger)}.items{margin-top:13px;padding-top:11px;border-top:1px solid #f0f2ef;display:flex;flex-direction:column;gap:7px}.item-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-size:10.5px}.item-name{font-weight:700;color:#4d5965}.item-name b{color:var(--ink);margin-right:5px}.item-price{font-weight:800;color:#35424e;white-space:nowrap}.order-note{margin-top:11px;padding:8px 10px;border-radius:10px;background:#fff8e9;color:#8f681e;font-size:9px;font-weight:600}.order-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:13px;padding-top:11px;border-top:1px solid #f0f2ef}.order-total-label{font-size:8px;text-transform:uppercase;letter-spacing:.13em;color:#9aa2aa;font-weight:800}.order-total{font-size:16px;font-weight:800;letter-spacing:-.03em;margin-top:3px}.actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}.btn{border:1px solid var(--line);background:#fff;color:#596572;height:31px;padding:0 10px;border-radius:9px;font-size:9px;font-weight:800;transition:all .15s}.btn:hover{border-color:#cfd5d0;transform:translateY(-1px)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.btn.primary:hover{background:#263d57}.btn.danger{background:var(--danger-bg);border-color:#f0dddd;color:var(--danger)}.btn:active{transform:scale(.98)}
+.history-wrap{max-height:470px;overflow:auto}.history-table{width:100%;border-collapse:collapse}.history-table th{position:sticky;top:0;background:#fff;z-index:1;text-align:left;padding:13px 16px;font-size:8px;color:#9aa2aa;text-transform:uppercase;letter-spacing:.12em;border-bottom:1px solid var(--line)}.history-table td{padding:14px 16px;border-bottom:1px solid #f0f2ef;font-size:9.5px}.history-table tr{transition:background .15s}.history-table tbody tr:hover{background:#fafbf9}.history-order{font-weight:800}.history-table .right{text-align:right;font-weight:800}.history-empty{text-align:center;padding:50px 20px;color:#9ba3aa;font-size:10px;font-weight:600}
+.subview-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px}.eyebrow{font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:#9aa2aa;font-weight:800}.subview-title{font-size:23px;font-weight:800;letter-spacing:-.045em;margin:5px 0 0}.subview-sub{font-size:10px;color:#8d969f;font-weight:600;margin-top:5px}.select{height:38px;padding:0 13px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink);font-size:10px;font-weight:800;outline:none}.select:focus{border-color:#c5cdc6;box-shadow:0 0 0 3px rgba(24,40,59,.06)}
+.tables{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.table-box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;cursor:pointer;transition:all .18s var(--ease)}.table-box:hover{border-color:#cfd6cf;box-shadow:var(--shadow);transform:translateY(-2px)}.table-icon{width:48px;height:48px;border-radius:14px;background:#f2f5f2;color:var(--accent);display:grid;place-items:center;font-size:13px;font-weight:800;margin-bottom:14px}.table-name{font-size:12px;font-weight:800}.table-hint{font-size:9px;color:#9aa2aa;margin-top:4px;font-weight:600}
+.table-card{padding:0}.table-card table{width:100%;border-collapse:collapse}.table-card th{padding:13px 18px;background:#fafbf9;color:#7d8790;text-transform:uppercase;letter-spacing:.1em;font-size:8px;text-align:left}.table-card td{padding:14px 18px;border-top:1px solid var(--line);font-size:10px}.stock-input{width:82px;border:1px solid transparent;background:transparent;border-radius:8px;padding:7px 8px;font-weight:800;outline:none}.stock-input:hover{background:#f7f8f6;border-color:var(--line)}.stock-input:focus{background:#fff;border-color:#bfc9c0;box-shadow:0 0 0 3px rgba(24,40,59,.05)}
+.insight-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}.insight-card{padding:22px}.insight-value{font-size:29px;font-weight:800;letter-spacing:-.045em;margin-top:11px}.chart-card{padding:20px}.chart-box{height:180px;display:flex;align-items:flex-end;gap:7px;padding-top:22px}.bar{flex:1;min-width:8px;border-radius:7px 7px 3px 3px;background:#dce5d7;position:relative;transition:height .45s var(--ease),background .18s}.bar:hover{background:#80966b}.bar-label{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);font-size:8px;color:#a0a7ae;font-weight:700}.chart-note{font-size:9px;color:#98a0aa;font-weight:600;margin-top:25px}
+.overlay{position:fixed;inset:0;background:rgba(23,37,54,.35);backdrop-filter:blur(8px);z-index:60;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .2s}.overlay.open{opacity:1;pointer-events:auto}.modal{width:min(680px,100%);max-height:90vh;background:#fff;border:1px solid rgba(255,255,255,.65);border-radius:22px;box-shadow:0 30px 90px rgba(23,37,54,.22);overflow:hidden;transform:translateY(8px) scale(.985);transition:transform .22s var(--ease);display:flex;flex-direction:column}.overlay.open .modal{transform:none}.modal-head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.modal-title{font-size:15px;font-weight:800}.close{width:32px;height:32px;border:0;border-radius:10px;background:#f3f4f2;color:#7b858e;display:grid;place-items:center;font-size:16px}.modal-body{padding:18px;background:#fafbf9;overflow:auto}.modal-foot{padding:16px 20px;border-top:1px solid var(--line);background:#fff}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:12px}.field label{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#89929c}.field input{height:42px;border:1px solid var(--line);border-radius:11px;background:#fff;padding:0 12px;outline:none;font-size:11px;font-weight:600}.field input:focus{border-color:#bdc8bf;box-shadow:0 0 0 3px rgba(24,40,59,.05)}.menu-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 13px;background:#fff;border:1px solid var(--line);border-radius:13px;margin-bottom:8px}.menu-item-name{font-size:10px;font-weight:800}.menu-item-meta{font-size:9px;color:#89929c;margin-top:3px;font-weight:600}.qty{display:flex;align-items:center;gap:8px;padding:4px;background:#f4f5f3;border-radius:999px}.qty button{width:28px;height:28px;border:0;border-radius:50%;background:#fff;color:var(--ink);font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.05)}.qty button:last-child{background:var(--accent);color:#fff}.qty span{min-width:16px;text-align:center;font-size:10px;font-weight:800}.modal-total{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.modal-total span:first-child{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#8d969f;font-weight:800}.modal-total span:last-child{font-size:19px;font-weight:800}.toast{position:fixed;right:20px;bottom:20px;z-index:100;background:var(--accent);color:#fff;padding:11px 14px;border-radius:12px;font-size:10px;font-weight:800;box-shadow:0 14px 32px rgba(23,37,54,.2);transform:translateY(12px);opacity:0;pointer-events:none;transition:all .2s var(--ease)}.toast.show{transform:none;opacity:1}
+@media(max-width:1100px){.sidebar{width:220px}.stats{grid-template-columns:repeat(2,1fr)}.section-grid{grid-template-columns:1fr}.history-wrap{max-height:360px}.tables{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.app{display:block;overflow:auto;height:auto;min-height:100vh}.sidebar{width:100%;height:auto;border-right:0;border-bottom:1px solid var(--line)}.brand-wrap{padding:17px 18px 10px}.live-mini{margin-top:10px}.nav{padding:7px 10px;display:flex;flex-direction:row;overflow:auto}.nav-btn{flex:0 0 auto;padding:9px 11px}.nav-btn.active{box-shadow:inset 0 -2px 0 var(--accent)}.nav-badge{display:none}.sidebar-footer{display:none}.main{overflow:visible}.topbar{height:64px;padding:0 16px}.page-context,.connection{display:none}.page-title{font-size:17px}.content{overflow:visible;padding:18px 14px}.stats{grid-template-columns:1fr 1fr;gap:10px}.stat{padding:15px}.stat-value{font-size:23px}.section-grid{gap:12px}.panel-head{padding:16px}.orders{min-height:300px;padding:9px}.order-head{align-items:flex-start}.order-foot{align-items:flex-start;flex-direction:column}.actions{justify-content:flex-start}.history-wrap{max-height:320px}.tables,.insight-cards{grid-template-columns:1fr}.subview-head{align-items:flex-start;flex-direction:column}.select{width:100%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+.floor-summary{display:flex;align-items:center;gap:7px;height:38px;padding:0 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:#7d8790;font-size:9px;font-weight:700}.floor-summary b{color:var(--ink);font-size:11px}.floor-sep{color:#c5cbc5;margin:0 2px}.floor-dot{width:7px;height:7px;border-radius:50%;display:inline-block}.floor-dot.available{background:#6b9c7c}.floor-dot.busy{background:#d0a24b}.table-panel{overflow:visible}.tables{padding:14px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.table-box{min-height:142px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px;cursor:pointer;transition:transform .18s var(--ease),box-shadow .18s var(--ease),border-color .18s,background .18s;position:relative;overflow:hidden}.table-box:hover{border-color:#cfd6cf;box-shadow:var(--shadow);transform:translateY(-2px)}.table-box.busy{background:#fffdf8;border-color:#eee2c9}.table-box.ready{background:#f7fbf8;border-color:#dcebe1}.table-top{display:flex;justify-content:space-between;align-items:center;gap:8px}.table-icon{width:42px;height:42px;border-radius:12px;background:#f2f5f2;color:var(--accent);display:grid;place-items:center;font-size:12px;font-weight:800;margin:0}.table-status{font-size:7px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 7px;border-radius:999px;background:#eef5ef;color:#4f8064}.table-status.busy{background:var(--warning-bg);color:var(--warning)}.table-status.ready{background:var(--success-bg);color:var(--success)}.table-name{font-size:11px;font-weight:800;margin-top:13px}.table-hint{font-size:9px;color:#9aa2aa;margin-top:4px;font-weight:600;line-height:1.45}.table-order{font-size:8px;color:#69747e;margin-top:10px;font-weight:700}.history-tools{display:flex;gap:8px;align-items:center}.history-search{width:210px}.history-page-card{overflow:auto}.history-page-card table{min-width:720px}.history-page-card td{font-size:9px}.history-items{font-weight:700;color:#6d7781}.history-date{color:#8e969e;font-weight:600}.history-empty-row{text-align:center;padding:48px!important;color:#9aa2aa;font-weight:700}
+@media(max-width:1100px){.tables{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){.floor-summary{width:100%;justify-content:center}.tables{grid-template-columns:repeat(2,1fr);padding:10px}.history-tools{width:100%;flex-direction:column}.history-search{width:100%}}
+
+.floor-overview{margin-bottom:18px}.overview-tables{padding:13px 14px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:8px}.table-chip{min-width:0;padding:10px 6px;border:1px solid var(--line);border-radius:11px;background:#fff;text-align:center;transition:all .16s}.table-chip:hover{transform:translateY(-1px);border-color:#ccd4cc}.table-chip .chip-no{font-size:9px;font-weight:800}.table-chip .chip-state{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:5px;font-size:7px;text-transform:uppercase;letter-spacing:.06em;font-weight:800;color:#98a0a8}.table-chip .chip-dot{width:5px;height:5px;border-radius:50%;background:#6b9c7c}.table-chip.busy{background:#fffaf0;border-color:#eee1c8}.table-chip.busy .chip-dot{background:#d0a24b}.table-chip.ready{background:#f5fbf7;border-color:#d9e9df}.table-chip.ready .chip-dot{background:#5e9472}.table-chip .chip-order{font-size:7px;color:#7d8790;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.btn span{margin-left:4px}@media(max-width:1100px){.overview-tables{grid-template-columns:repeat(6,1fr)}}@media(max-width:760px){.overview-tables{grid-template-columns:repeat(4,1fr)}.floor-overview{margin-bottom:12px}}
 </style>
 </head>
-<body class="flex h-screen overflow-hidden">
-  
-  <!-- Sidebar -->
-  <aside class="w-64 bg-white border-r border-gray-100 flex flex-col shrink-0 z-30">
-    <div class="p-6">
-      <div class="brand text-xl font-extrabold text-[#18283b]">Big Little Bombaye</div>
-      <div class="text-xs text-gray-400 mt-0.5">Staff Portal</div>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand-wrap">
+      <div class="brand">Big Little Bombaye</div>
+      <div class="brand-sub">Staff Portal · Operations</div>
+      <div class="live-mini"><span class="live-dot" id="side-live-dot"></span><span id="side-live-text">Live system</span></div>
     </div>
-    <nav class="flex-1 px-4 space-y-2">
-      <button onclick="showView('overview')" id="nav-overview" class="nav-btn w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-colors text-[#18283b] bg-gray-50">Overview</button>
-      <button onclick="showView('manual')" id="nav-manual" class="nav-btn w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-colors text-gray-500 hover:bg-gray-50 hover:text-[#18283b]">Manual Orders</button>
-      <button onclick="showView('inventory')" id="nav-inventory" class="nav-btn w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-colors text-gray-500 hover:bg-gray-50 hover:text-[#18283b]">Inventory</button>
-      <button onclick="showView('insights')" id="nav-insights" class="nav-btn w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-colors text-gray-500 hover:bg-gray-50 hover:text-[#18283b]">Insights</button>
+    <nav class="nav" aria-label="Staff navigation">
+      <button class="nav-btn active" id="nav-overview" onclick="showView('overview')"><span class="nav-icon" data-icon="grid"></span>Overview</button>
+      <button class="nav-btn" id="nav-manual" onclick="showView('manual')"><span class="nav-icon" data-icon="table"></span>Manual Orders</button>
+      <button class="nav-btn" id="nav-inventory" onclick="showView('inventory')"><span class="nav-icon" data-icon="box"></span>Inventory</button>
+      <button class="nav-btn" id="nav-insights" onclick="showView('insights')"><span class="nav-icon" data-icon="chart"></span>Insights</button>
+      <button class="nav-btn" id="nav-history" onclick="showView('history')"><span class="nav-icon" data-icon="history"></span>History</button>
     </nav>
-    <div class="p-4 border-t border-gray-100">
-      <a href="/menu" class="w-full block text-center soft px-4 py-2 rounded-full border border-gray-200 text-sm font-semibold text-gray-700">Customer Menu</a>
-    </div>
+    <div class="sidebar-footer"><a href="/menu" class="menu-link"><span data-icon="external"></span>Open Customer Menu</a></div>
   </aside>
 
-  <!-- Main Content -->
-  <div class="flex-1 flex flex-col min-h-screen overflow-y-auto relative">
-    <header class="sticky top-0 z-20 bg-white/95 backdrop-blur border-b border-gray-100 px-8 py-4 flex items-center justify-between">
-      <h1 id="page-title" class="text-xl font-bold text-[#18283b]">Overview</h1>
-      <button id="refresh" class="soft primary px-4 py-2 rounded-full text-sm font-semibold shadow-sm">Refresh</button>
+  <div class="main">
+    <header class="topbar">
+      <div class="page-heading"><div class="page-title" id="page-title">Overview</div><div class="page-context" id="page-context">Live operations</div></div>
+      <div class="top-actions"><div class="connection"><span class="live-dot" id="connection-dot"></span><span id="connection-text">Connected</span></div><button id="refresh" class="refresh-btn"><span class="refresh-icon" data-icon="refresh"></span>Refresh</button></div>
     </header>
 
-    <main class="p-8 max-w-7xl mx-auto w-full">
-      
-      <!-- Overview View -->
+    <main class="content"><div class="content-inner">
       <div id="view-overview" class="view-section">
-        <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-7">
-          <div class="card p-5"><div class="text-xs text-gray-400 uppercase tracking-widest">Today Revenue</div><div id="todayRevenue" class="text-3xl font-extrabold text-[#18283b] mt-2">₹ 0</div></div>
-          <div class="card p-5"><div class="text-xs text-gray-400 uppercase tracking-widest">Completed Today</div><div id="todayOrders" class="text-3xl font-extrabold text-[#18283b] mt-2">0</div></div>
-          <div class="card p-5"><div class="text-xs text-gray-400 uppercase tracking-widest">Active Orders</div><div id="activeOrders" class="text-3xl font-extrabold text-[#18283b] mt-2">0</div></div>
-          <div class="card p-5"><div class="text-xs text-gray-400 uppercase tracking-widest">All-Time Revenue</div><div id="allRevenue" class="text-3xl font-extrabold text-[#18283b] mt-2">₹ 0</div></div>
+        <section class="stats">
+          <article class="stat"><div class="stat-top"><div class="stat-label">Today Revenue</div><div class="stat-icon" data-icon="rupee"></div></div><div id="todayRevenue" class="stat-value">₹ 0</div><div class="stat-meta">Completed sales today</div><svg class="sparkline" id="revenue-spark" viewBox="0 0 74 25" preserveAspectRatio="none"><path d="M1 20 L12 17 L23 18 L34 11 L45 14 L56 7 L73 4"/></svg></article>
+          <article class="stat"><div class="stat-top"><div class="stat-label">Completed Today</div><div class="stat-icon" data-icon="check"></div></div><div id="todayOrders" class="stat-value">0</div><div class="stat-meta">Bills closed today</div></article>
+          <article class="stat" id="active-stat"><div class="stat-top"><div class="stat-label">Active Orders</div><div class="stat-icon" data-icon="pulse"></div></div><div id="activeOrders" class="stat-value">0</div><div class="stat-meta">Received · preparing · ready</div></article>
+          <article class="stat"><div class="stat-top"><div class="stat-label">All-Time Revenue</div><div class="stat-icon" data-icon="trend"></div></div><div id="allRevenue" class="stat-value">₹ 0</div><div class="stat-meta">Across all completed orders</div></article>
         </section>
 
-        <section class="grid lg:grid-cols-[1.5fr_1fr] gap-6">
-          <div class="card overflow-hidden">
-            <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between"><div><h2 class="font-bold text-lg">Live Orders</h2><p class="text-xs text-gray-400">New QR orders appear here automatically.</p></div><span id="lastUpdated" class="text-xs text-gray-400"></span></div>
-            <div id="orders" class="p-4 space-y-3"></div>
-          </div>
-          <div class="card overflow-hidden">
-            <div class="px-5 py-4 border-b border-gray-100"><h2 class="font-bold text-lg">Order History</h2><p class="text-xs text-gray-400">Completed and cancelled orders.</p></div>
-            <div class="overflow-auto max-h-[620px]"><table class="w-full text-sm"><thead class="sticky top-0 bg-white"><tr class="text-left text-xs text-gray-400"><th class="p-4">Order</th><th class="p-4">Table</th><th class="p-4">Status</th><th class="p-4 text-right">Amount</th></tr></thead><tbody id="history"></tbody></table></div>
-          </div>
+        <section class="panel floor-overview">
+          <div class="panel-head"><div><div class="panel-title">Floor status</div><div class="panel-sub">12 tables · live occupancy</div></div><button class="btn" onclick="showView('manual')">Manage tables <span aria-hidden="true">→</span></button></div>
+          <div id="overview-tables" class="overview-tables"></div>
+        </section>
+
+        <section class="section-grid">
+          <section class="panel">
+            <div class="panel-head"><div><div class="panel-title">Live Orders</div><div class="panel-sub">New QR orders appear here automatically.</div></div><div class="panel-tools"><span class="tiny-status"><span class="live-dot"></span><span>Live</span></span><span id="lastUpdated" class="panel-sub"></span></div></div>
+            <div id="orders" class="orders"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><div><div class="panel-title">Order History</div><div class="panel-sub">Completed and cancelled orders.</div></div></div>
+            <div class="history-wrap"><table class="history-table"><thead><tr><th>Order</th><th>Table</th><th>Status</th><th class="right">Amount</th></tr></thead><tbody id="history"></tbody></table></div>
+          </section>
         </section>
       </div>
 
-      <!-- Manual Orders View -->
       <div id="view-manual" class="view-section hidden">
-        <div class="flex justify-between items-center mb-6">
-          <div>
-            <h2 class="font-bold text-lg text-[#18283b]">Table Management</h2>
-            <p class="text-xs text-gray-400 mt-1">Select a table to place a manual order on behalf of the customer.</p>
-          </div>
+        <div class="subview-head">
+          <div><div class="eyebrow">Floor operations</div><div class="subview-title">Manual Orders</div><div class="subview-sub">Select a table to create a staff-placed order. Occupied tables show their live status.</div></div>
+          <div class="floor-summary"><span class="floor-dot available"></span><b id="available-tables">12</b> available <span class="floor-sep">•</span> <span class="floor-dot busy"></span><b id="busy-tables">0</b> active</div>
         </div>
-        <div class="grid grid-cols-2 lg:grid-cols-3 gap-6" id="tables-container">
-          <!-- Populated by JS -->
-        </div>
-      </div>
-
-      <!-- Inventory View -->
-      <div id="view-inventory" class="view-section hidden">
-        <div class="card overflow-hidden">
-          <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
-            <div>
-              <h2 class="font-bold text-lg text-[#18283b]">Inventory Management</h2>
-              <p class="text-xs text-gray-400">Track and update your stock levels.</p>
-            </div>
-            <button onclick="openInventoryModal()" class="soft primary px-4 py-2 rounded-full text-sm font-semibold shadow-sm">+ Add Item</button>
-          </div>
-          <table class="w-full text-sm text-left">
-            <thead class="bg-gray-50 border-b border-gray-100"><tr class="text-xs text-gray-500 uppercase tracking-wider"><th class="p-4 font-bold">Item Name</th><th class="p-4 font-bold">Stock</th><th class="p-4 font-bold">Unit</th><th class="p-4 text-right font-bold">Action</th></tr></thead>
-            <tbody id="inventory-list"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Insights View -->
-      <div id="view-insights" class="view-section hidden">
-        <div class="flex items-center justify-between mb-6">
-          <div>
-            <h2 class="font-bold text-lg text-[#18283b]">Revenue Insights</h2>
-            <p class="text-xs text-gray-400 mt-1">Sales performance analytics.</p>
-          </div>
-          <select id="insights-timeframe" onchange="loadInsights()" class="card px-4 py-2 text-sm font-semibold outline-none border border-gray-200 bg-white text-[#18283b] shadow-sm rounded-full cursor-pointer">
-            <option value="last_24h">Last 24 Hours</option>
-            <option value="last_7d">Last 7 Days</option>
-            <option value="last_30d">Last 30 Days</option>
-            <option value="last_1y">Last 1 Year</option>
-          </select>
-        </div>
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="card p-8 text-center flex flex-col justify-center items-center h-48">
-            <div class="text-xs text-gray-400 uppercase tracking-widest mb-3 font-bold">Total Revenue</div>
-            <div id="insight-revenue" class="text-4xl font-extrabold text-[#18283b]">₹ 0</div>
-          </div>
-          <div class="card p-8 text-center flex flex-col justify-center items-center h-48">
-            <div class="text-xs text-gray-400 uppercase tracking-widest mb-3 font-bold">Total Orders</div>
-            <div id="insight-orders" class="text-4xl font-extrabold text-[#18283b]">0</div>
-          </div>
-          <div class="card p-8 text-center flex flex-col justify-center items-center h-48">
-            <div class="text-xs text-gray-400 uppercase tracking-widest mb-3 font-bold">Avg Order Value</div>
-            <div id="insight-aov" class="text-4xl font-extrabold text-[#18283b]">₹ 0</div>
-          </div>
+        <section class="table-panel panel">
+          <div class="panel-head"><div><div class="panel-title">Tables</div><div class="panel-sub">Tap any available table to start a manual order.</div></div><span class="tiny-status"><span class="live-dot"></span><span>Live floor</span></span></div>
+          <div class="tables" id="tables-container"></div>
         </section>
       </div>
 
-    </main>
-  </div>
-  
-  <!-- Manual Order Modal -->
-  <div id="order-modal" class="fixed inset-0 bg-[#18283b]/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 opacity-0 transition-opacity">
-     <div class="card bg-white w-full max-w-2xl rounded-[24px] max-h-[90vh] flex flex-col shadow-2xl scale-95 transition-transform" id="order-modal-content">
-       <div class="px-6 py-5 border-b border-gray-100 flex justify-between items-center">
-         <h3 id="order-modal-title" class="font-extrabold text-xl text-[#18283b]">New Order</h3>
-         <button onclick="closeOrderModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 transition-colors font-bold">✕</button>
-       </div>
-       <div class="overflow-y-auto flex-1 p-6 bg-gray-50" id="order-modal-items">
-         <!-- Menu items populated here -->
-       </div>
-       <div class="p-6 border-t border-gray-100 bg-white rounded-b-[24px]">
-         <div class="flex justify-between items-center mb-4">
-           <span class="text-sm font-bold text-gray-500 uppercase tracking-wider">Subtotal</span>
-           <span id="order-modal-total" class="text-2xl font-extrabold text-[#18283b]">₹ 0</span>
-         </div>
-         <button onclick="submitManualOrder()" class="w-full primary py-3.5 rounded-full font-bold text-base shadow-lg shadow-[#18283b]/20">Place Order</button>
-       </div>
-     </div>
-  </div>
-
-  <!-- Inventory Add Modal -->
-  <div id="inventory-modal" class="fixed inset-0 bg-[#18283b]/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 opacity-0 transition-opacity">
-    <div class="card bg-white w-full max-w-sm rounded-[24px] p-6 shadow-2xl scale-95 transition-transform" id="inventory-modal-content">
-      <h3 class="font-extrabold text-lg text-[#18283b] mb-4">Add Inventory Item</h3>
-      <div class="space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Item Name</label>
-          <input type="text" id="inv-name" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-semibold outline-none focus:border-[#18283b]" placeholder="e.g. Tomatoes">
-        </div>
-        <div class="flex gap-4">
-          <div class="flex-1">
-            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Stock</label>
-            <input type="number" id="inv-stock" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-semibold outline-none focus:border-[#18283b]" value="0" min="0">
-          </div>
-          <div class="flex-1">
-            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Unit</label>
-            <input type="text" id="inv-unit" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-semibold outline-none focus:border-[#18283b]" placeholder="e.g. kg, pcs" value="units">
-          </div>
-        </div>
+      <div id="view-inventory" class="view-section hidden">
+        <div class="subview-head"><div><div class="eyebrow">Stock control</div><div class="subview-title">Inventory</div><div class="subview-sub">Keep essential stock counts current.</div></div><button onclick="openInventoryModal()" class="btn primary" style="height:38px;padding:0 14px">+ Add item</button></div>
+        <section class="panel table-card"><table><thead><tr><th>Item</th><th>Stock</th><th>Unit</th><th style="text-align:right">Action</th></tr></thead><tbody id="inventory-list"></tbody></table></section>
       </div>
-      <div class="flex gap-3 mt-6">
-        <button onclick="closeInventoryModal()" class="flex-1 py-2.5 rounded-full font-bold text-sm bg-gray-100 text-gray-600 hover:bg-gray-200">Cancel</button>
-        <button onclick="submitInventoryItem()" class="flex-1 py-2.5 rounded-full font-bold text-sm primary">Add Item</button>
-      </div>
-    </div>
-  </div>
 
-  <!-- Toast -->
-  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 hidden bg-[#18283b] text-white px-5 py-3 rounded-full shadow-xl text-sm font-medium z-[100]"></div>
+      <div id="view-insights" class="view-section hidden">
+        <div class="subview-head"><div><div class="eyebrow">Business performance</div><div class="subview-title">Insights</div><div class="subview-sub">A quick view of completed sales performance.</div></div><select id="insights-timeframe" onchange="loadInsights()" class="select"><option value="last_24h">Last 24 Hours</option><option value="last_7d">Last 7 Days</option><option value="last_30d">Last 30 Days</option><option value="last_1y">Last 1 Year</option></select></div>
+        <section class="insight-cards"><article class="panel insight-card"><div class="stat-label">Total Revenue</div><div id="insight-revenue" class="insight-value">₹ 0</div><div class="stat-meta">Completed orders in selected period</div></article><article class="panel insight-card"><div class="stat-label">Total Orders</div><div id="insight-orders" class="insight-value">0</div><div class="stat-meta">Completed orders</div></article><article class="panel insight-card"><div class="stat-label">Average Order Value</div><div id="insight-aov" class="insight-value">₹ 0</div><div class="stat-meta">Revenue ÷ completed orders</div></article></section>
+        <section class="panel chart-card"><div class="panel-title">Recent completed sales</div><div class="panel-sub">Order values from the latest completed history available.</div><div id="sales-bars" class="chart-box"></div><div class="chart-note">This is an operational snapshot; use the selected timeframe above for the aggregate figures.</div></section>
+      </div>
+
+      <div id="view-history" class="view-section hidden">
+        <div class="subview-head"><div><div class="eyebrow">Closed orders</div><div class="subview-title">Order History</div><div class="subview-sub">Completed and cancelled orders stored in your POS database.</div></div><div class="history-tools"><input id="history-search" class="select history-search" placeholder="Search order or table…" oninput="renderFullHistory()"><select id="history-filter" class="select" onchange="renderFullHistory()"><option value="ALL">All statuses</option><option value="COMPLETED">Completed</option><option value="CANCELLED">Cancelled</option></select></div></div>
+        <section class="panel table-card history-page-card"><table><thead><tr><th>Order</th><th>Table</th><th>Status</th><th>Items</th><th>Date</th><th style="text-align:right">Amount</th></tr></thead><tbody id="full-history"></tbody></table></section>
+      </div>
+    </div></main>
+  </div>
+</div>
+
+<div id="order-modal" class="overlay" onclick="if(event.target===this)closeOrderModal()"><div class="modal" id="order-modal-content"><div class="modal-head"><div class="modal-title" id="order-modal-title">New Order</div><button onclick="closeOrderModal()" class="close" aria-label="Close">×</button></div><div class="modal-body" id="order-modal-items"></div><div class="modal-foot"><div class="modal-total"><span>Subtotal</span><span id="order-modal-total">₹ 0</span></div><button onclick="submitManualOrder()" class="refresh-btn" style="width:100%;justify-content:center">Place Order</button></div></div></div>
+<div id="inventory-modal" class="overlay" onclick="if(event.target===this)closeInventoryModal()"><div class="modal" id="inventory-modal-content" style="max-width:480px"><div class="modal-head"><div class="modal-title">Add Inventory Item</div><button onclick="closeInventoryModal()" class="close">×</button></div><div class="modal-body"><div class="field"><label>Item name</label><input id="inv-name" placeholder="e.g. Coffee beans"></div><div class="field"><label>Starting stock</label><input id="inv-stock" type="number" min="0" value="0"></div><div class="field"><label>Unit</label><input id="inv-unit" value="units"></div></div><div class="modal-foot"><button onclick="submitInventoryItem()" class="refresh-btn" style="width:100%;justify-content:center">Add item</button></div></div></div>
+<div id="toast" class="toast"></div>
 
 <script>
 const money = n => '₹ ' + Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2});
-const esc = s => String(s??'').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-const statusClass = s => s.toLowerCase();
+const esc = s => String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const statusClass = s => String(s||'').toLowerCase();
+const iconPaths={
+ grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+ table:'<path d="M4 6h16M4 10h16M6 6v12M18 6v12M3 18h18"/>', box:'<path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8M12 13v8"/>',
+ chart:'<path d="M4 19V5M4 19h16"/><path d="m7 15 3-4 3 2 5-7"/>', external:'<path d="M14 5h5v5M19 5l-8 8"/><path d="M19 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/>',
+ refresh:'<path d="M20 11a8 8 0 0 0-14.9-3M4 5v4h4M4 13a8 8 0 0 0 14.9 3M20 19v-4h-4"/>', rupee:'<path d="M6 4h12M6 8h12M9 4c4 0 6 2 6 5s-2 5-6 5h-1l7 6"/>',
+ check:'<path d="m5 12 4 4L19 6"/>', pulse:'<path d="M3 12h4l2-7 4 14 2-7h6"/>', trend:'<path d="M4 16l5-5 4 3 7-8"/><path d="M15 6h5v5"/>', history:'<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/>'
+};
+function icon(name){return `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${iconPaths[name]||''}</svg>`}
+document.querySelectorAll('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon));
 
-let currentView = 'overview';
-let menuData = null;
-let manualOrderCart = {};
-let manualOrderTable = null;
+let currentView='overview', menuData=null, lastOrders=[], manualOrderCart={}, manualOrderTable=null, toastTimer, lastActiveIds=new Set(), lastStatusMap=new Map(), lastRefreshAt=0, latestHistory=[];
+function showView(viewId){
+  document.querySelectorAll('.view-section').forEach(e=>e.classList.add('hidden'));
+  const target=document.getElementById('view-'+viewId);
+  if(!target)return;
+  target.classList.remove('hidden');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const nav=document.getElementById('nav-'+viewId); if(nav)nav.classList.add('active');
+  const titles={overview:['Overview','Live operations'],manual:['Manual Orders','Floor operations'],inventory:['Inventory','Stock control'],insights:['Insights','Business performance'],history:['History','Closed orders']};
+  document.getElementById('page-title').textContent=titles[viewId][0];
+  document.getElementById('page-context').textContent=titles[viewId][1];
+  currentView=viewId;
+  if(viewId==='manual')renderTables(lastOrders);
+  if(viewId==='inventory')loadInventory();
+  if(viewId==='insights'){loadInsights();renderSalesBars(latestHistory)}
+  if(viewId==='history')renderFullHistory();
+}
+function toast(msg){const e=document.getElementById('toast');e.textContent=msg;e.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.classList.remove('show'),2400)}
+async function api(url,opts){const r=await fetch(url,opts);let d={};try{d=await r.json()}catch{}if(!r.ok)throw new Error(d.detail||'Request failed');return d}
+function animateNumber(el,target,prefix=''){const current=Number(el.dataset.value||0), end=Number(target||0);if(Math.abs(end-current)<.01){el.textContent=prefix+end.toLocaleString('en-IN',{maximumFractionDigits:2});el.dataset.value=end;return}const start=performance.now(),dur=380;function tick(t){const p=Math.min(1,(t-start)/dur),e=1-Math.pow(1-p,3),v=current+(end-current)*e;el.textContent=prefix+v.toLocaleString('en-IN',{maximumFractionDigits:2});if(p<1)requestAnimationFrame(tick);else el.dataset.value=end}requestAnimationFrame(tick)}
+function elapsed(iso){const ms=Math.max(0,Date.now()-new Date(iso).getTime()),m=Math.floor(ms/60000),s=Math.floor(ms/1000)%60;return m?`${m}m ${String(s).padStart(2,'0')}s`:`${s}s`}
+function statusIcon(status){return {RECEIVED:icon('pulse'),PREPARING:icon('trend'),READY:icon('check')}[status]||''}
+function orderCard(o,i){const buttons=[];if(!o.bill_generated&&o.status!=='CANCELLED')buttons.push(`<button class="btn" onclick="bill(${o.id})">Generate bill</button>`);if(o.status==='RECEIVED')buttons.push(`<button class="btn primary" onclick="setStatus(${o.id},'PREPARING')">Start preparing</button>`);if(o.status==='PREPARING')buttons.push(`<button class="btn primary" onclick="setStatus(${o.id},'READY')">Mark ready</button>`);if(o.status==='READY')buttons.push(`<button class="btn primary" onclick="setStatus(${o.id},'COMPLETED')">Complete</button>`);if(['RECEIVED','PREPARING'].includes(o.status))buttons.push(`<button class="btn danger" onclick="setStatus(${o.id},'CANCELLED')">Cancel</button>`);const state=statusClass(o.status);return `<article class="order-card" data-order-id="${o.id}" style="animation-delay:${Math.min(i,6)*35}ms"><div class="order-main"><div class="order-state ${state}"></div><div class="order-body"><div class="order-head"><div><div class="order-number">${esc(o.order_number)} <span class="order-table">· Table ${esc(o.table_number)}</span></div><div class="order-time">Placed ${new Date(o.created_at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} · <span class="elapsed" data-created="${esc(o.created_at)}">${elapsed(o.created_at)}</span> ago</div></div><span class="status ${state}">${statusIcon(o.status)} ${esc(o.status)}</span></div><div class="items">${o.items.map(it=>`<div class="item-row"><span class="item-name"><b>${it.quantity}×</b>${esc(it.item_name)} <small style="color:#a1a8ae">${esc(it.tier)}</small></span><span class="item-price">${money(it.price*it.quantity)}</span></div>`).join('')}</div>${o.notes?`<div class="order-note"><b>Note:</b> ${esc(o.notes)}</div>`:''}<div class="order-foot"><div><div class="order-total-label">Order total</div><div class="order-total">${money(o.subtotal)}</div></div><div class="actions">${buttons.join('')}</div></div></div></div></article>`}
+let lastLiveOrdersJson="", lastOverviewJson="", lastTablesJson="", lastHistoryJson="";
 
-// UI Navigation
-function showView(viewId) {
-  document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-  document.getElementById(`view-${viewId}`).classList.remove('hidden');
-  
-  document.querySelectorAll('.nav-btn').forEach(btn => {
-    btn.classList.remove('bg-gray-50', 'text-[#18283b]');
-    btn.classList.add('text-gray-500');
+function updateOrderCardElement(cardEl, o){
+  cardEl.dataset.orderId = o.id;
+  const stateDiv = cardEl.querySelector('.order-state');
+  if(stateDiv) stateDiv.className = 'order-state ' + statusClass(o.status);
+  const statusSpan = cardEl.querySelector('.status');
+  if(statusSpan){
+    statusSpan.className = 'status ' + statusClass(o.status);
+    statusSpan.innerHTML = statusIcon(o.status) + ' ' + esc(o.status);
+  }
+  const actionsDiv = cardEl.querySelector('.actions');
+  if(actionsDiv){
+    const buttons = [];
+    if(!o.bill_generated && o.status !== 'CANCELLED') buttons.push(`<button class="btn" onclick="bill(${o.id})">Generate bill</button>`);
+    if(o.status === 'RECEIVED') buttons.push(`<button class="btn primary" onclick="setStatus(${o.id},'PREPARING')">Start preparing</button>`);
+    if(o.status === 'PREPARING') buttons.push(`<button class="btn primary" onclick="setStatus(${o.id},'READY')">Mark ready</button>`);
+    if(o.status === 'READY') buttons.push(`<button class="btn primary" onclick="setStatus(${o.id},'COMPLETED')">Complete</button>`);
+    if(['RECEIVED','PREPARING'].includes(o.status)) buttons.push(`<button class="btn danger" onclick="setStatus(${o.id},'CANCELLED')">Cancel</button>`);
+    actionsDiv.innerHTML = buttons.join('');
+  }
+}
+
+function renderLiveOrders(live){
+  const currentJson = JSON.stringify(live.map(o => ({id:o.id, status:o.status, bill:o.bill_generated, updated:o.updated_at, notes:o.notes, subtotal:o.subtotal, items:o.items})));
+  if(currentJson === lastLiveOrdersJson) return;
+  lastLiveOrdersJson = currentJson;
+
+  const container = document.getElementById('orders');
+  if(!container) return;
+  if(!live.length){
+    container.innerHTML = `<div class="empty"><div class="empty-icon">${icon('check')}</div><div class="empty-title">All caught up</div><div class="empty-sub">New QR orders will appear here automatically.</div></div>`;
+    return;
+  }
+  if(container.querySelector('.empty')) container.innerHTML = '';
+
+  const existingCards = new Map();
+  container.querySelectorAll('.order-card').forEach(el => {
+    const id = Number(el.dataset.orderId);
+    if(id) existingCards.set(id, el);
   });
-  const activeBtn = document.getElementById(`nav-${viewId}`);
-  activeBtn.classList.remove('text-gray-500');
-  activeBtn.classList.add('bg-gray-50', 'text-[#18283b]');
+  const incomingIds = new Set(live.map(o => o.id));
 
-  const titles = {
-    'overview': 'Overview',
-    'manual': 'Manual Orders',
-    'inventory': 'Inventory',
-    'insights': 'Insights'
-  };
-  document.getElementById('page-title').textContent = titles[viewId];
-  currentView = viewId;
-
-  if(viewId === 'inventory') loadInventory();
-  if(viewId === 'insights') loadInsights();
-  if(viewId === 'manual') renderTables();
-}
-
-let toastTimer;
-function toast(msg) {
-  const e = document.getElementById('toast');
-  e.textContent = msg;
-  e.classList.remove('hidden');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => e.classList.add('hidden'), 2500);
-}
-
-async function api(url, opts) {
-  const r = await fetch(url, opts);
-  let d = {};
-  try { d = await r.json(); } catch{}
-  if(!r.ok) throw new Error(d.detail || 'Request failed');
-  return d;
-}
-
-// ----------------------------------------------------
-// OVERVIEW / LIVE ORDERS
-// ----------------------------------------------------
-function orderCard(o) {
-  const buttons = [];
-  if(!o.bill_generated && o.status !== 'CANCELLED') buttons.push(`<button class="soft border border-gray-200 px-3 py-2 rounded-xl text-xs font-bold" onclick="bill(${o.id})">Generate Bill</button>`);
-  if(o.status === 'RECEIVED') buttons.push(`<button class="soft primary px-3 py-2 rounded-xl text-xs font-bold shadow-sm" onclick="setStatus(${o.id},'PREPARING')">Start Preparing</button>`);
-  if(o.status === 'PREPARING') buttons.push(`<button class="soft primary px-3 py-2 rounded-xl text-xs font-bold shadow-sm" onclick="setStatus(${o.id},'READY')">Mark Ready</button>`);
-  if(o.status === 'READY') buttons.push(`<button class="soft primary px-3 py-2 rounded-xl text-xs font-bold shadow-sm" onclick="setStatus(${o.id},'COMPLETED')">Complete</button>`);
-  if(['RECEIVED','PREPARING'].includes(o.status)) buttons.push(`<button class="soft border border-red-100 bg-red-50 text-red-600 px-3 py-2 rounded-xl text-xs font-bold hover:bg-red-100" onclick="setStatus(${o.id},'CANCELLED')">Cancel</button>`);
-  
-  return `<article class="border border-gray-100 rounded-[20px] p-5 bg-[#fcfcfb] shadow-sm transition-all hover:shadow-md">
-    <div class="flex justify-between gap-3">
-      <div>
-        <div class="font-extrabold text-[#18283b]">${esc(o.order_number)} <span class="text-gray-400 font-semibold px-1">·</span> <span class="text-gray-600 font-semibold">Table ${esc(o.table_number)}</span></div>
-        <div class="text-[11px] text-gray-400 mt-1 font-medium">${new Date(o.created_at).toLocaleString()}</div>
-      </div>
-      <span class="status ${statusClass(o.status)}">${esc(o.status)}</span>
-    </div>
-    <div class="mt-4 space-y-2">
-      ${o.items.map(i => `<div class="flex justify-between text-sm"><span class="font-medium text-gray-700"><span class="font-bold text-[#18283b] w-5 inline-block">${i.quantity}</span> × ${esc(i.item_name)} <span class="text-gray-400 text-xs">(${esc(i.tier)})</span></span><b class="text-[#18283b]">${money(i.price*i.quantity)}</b></div>`).join('')}
-    </div>
-    ${o.notes ? `<div class="mt-4 rounded-xl bg-[#fff5df] border border-[#f2e6cb] px-3 py-2 text-xs text-[#a36c14]"><b class="uppercase tracking-wide text-[10px] block mb-0.5">Note</b> ${esc(o.notes)}</div>` : ''}
-    <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between gap-3">
-      <div>
-        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total Amount</span>
-        <div class="font-extrabold text-lg text-[#18283b] leading-tight">${money(o.subtotal)}</div>
-      </div>
-      <div class="flex flex-wrap justify-end gap-2">${buttons.join('')}</div>
-    </div>
-  </article>`;
-}
-
-async function refresh() {
-  try {
-    const [orders, summary, history] = await Promise.all([api('/api/orders'), api('/api/revenue/summary'), api('/api/history')]);
-    
-    // Overview Live Orders
-    const live = orders.filter(o => ['RECEIVED','PREPARING','READY'].includes(o.status));
-    document.getElementById('orders').innerHTML = live.length ? live.map(orderCard).join('') : `<div class="py-16 text-center text-gray-400 text-sm font-medium">No active orders right now.</div>`;
-    
-    // Overview Stats
-    document.getElementById('todayRevenue').textContent = money(summary.today_revenue);
-    document.getElementById('todayOrders').textContent = summary.today_completed_orders;
-    document.getElementById('activeOrders').textContent = summary.active_orders;
-    document.getElementById('allRevenue').textContent = money(summary.all_time_revenue);
-    
-    // Overview History
-    document.getElementById('history').innerHTML = history.length ? history.map(o => `<tr class="border-t border-gray-50 hover:bg-gray-50 transition-colors"><td class="p-4 font-bold text-[#18283b] text-xs">${esc(o.order_number)}</td><td class="p-4 font-semibold text-gray-600 text-sm">${esc(o.table_number)}</td><td class="p-4"><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td><td class="p-4 text-right font-bold text-[#18283b]">${money(o.subtotal)}</td></tr>`).join('') : `<tr><td colspan="4" class="p-10 text-center text-gray-400">No history yet.</td></tr>`;
-    
-    document.getElementById('lastUpdated').textContent = 'Updated ' + new Date().toLocaleTimeString();
-  } catch(e) {
-    if(currentView === 'overview') toast(e.message);
-  }
-}
-
-async function bill(id) { try{ const o=await api(`/api/orders/${id}/bill`,{method:'POST'}); toast(`Bill generated for ${o.order_number}`); printBill(o); refresh(); }catch(e){toast(e.message);} }
-function printBill(o) { const w=window.open('','_blank','width=420,height=650'); if(!w)return; w.document.write(`<html><head><title>${esc(o.order_number)}</title><style>body{font-family:Arial;padding:24px;max-width:360px;margin:auto}h1{font-size:20px}small{color:#777}.row{display:flex;justify-content:space-between;margin:8px 0}.total{border-top:1px solid #ddd;padding-top:12px;font-weight:bold;font-size:18px}</style></head><body><h1>Big Little Bombaye</h1><small>${esc(o.order_number)} · Table ${esc(o.table_number)}</small><hr>${o.items.map(i=>`<div class="row"><span>${i.quantity} × ${esc(i.item_name)} (${esc(i.tier)})</span><b>${money(i.price*i.quantity)}</b></div>`).join('')}<div class="row total"><span>Total</span><span>${money(o.subtotal)}</span></div><p>Thank you.</p><script>window.print()<\/script></body></html>`); w.document.close(); }
-async function setStatus(id,status) { try{ await api(`/api/orders/${id}/status`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})}); toast('Order updated'); refresh(); }catch(e){toast(e.message);} }
-
-// ----------------------------------------------------
-// MANUAL ORDERS
-// ----------------------------------------------------
-function renderTables() {
-  let html = '';
-  for(let i=1; i<=6; i++) {
-    html += `
-      <div onclick="openOrderModal('Table ${i}')" class="card p-8 cursor-pointer flex flex-col items-center justify-center table-box group bg-white hover:bg-gray-50">
-         <div class="w-16 h-16 rounded-full bg-blue-50 group-hover:bg-[#18283b] transition-colors flex items-center justify-center text-xl font-bold text-blue-600 group-hover:text-white mb-4 shadow-inner">T${i}</div>
-         <div class="font-bold text-sm text-gray-700 group-hover:text-[#18283b]">Table ${i}</div>
-      </div>
-    `;
-  }
-  document.getElementById('tables-container').innerHTML = html;
-}
-
-async function fetchMenu() {
-  if(!menuData) {
-    try { menuData = await api('/api/menu'); } catch(e) { console.error(e); }
-  }
-}
-
-async function openOrderModal(tableNum) {
-  manualOrderTable = tableNum;
-  manualOrderCart = {};
-  document.getElementById('order-modal-title').textContent = `New Order - ${tableNum}`;
-  await fetchMenu();
-  renderOrderMenu();
-  updateOrderTotal();
-  
-  const m = document.getElementById('order-modal');
-  const mc = document.getElementById('order-modal-content');
-  m.classList.remove('hidden');
-  // Trigger animation
-  requestAnimationFrame(() => {
-    m.classList.remove('opacity-0');
-    mc.classList.remove('scale-95');
+  existingCards.forEach((el, id) => {
+    if(!incomingIds.has(id)) el.remove();
   });
-}
 
-function closeOrderModal() {
-  const m = document.getElementById('order-modal');
-  const mc = document.getElementById('order-modal-content');
-  m.classList.add('opacity-0');
-  mc.classList.add('scale-95');
-  setTimeout(() => m.classList.add('hidden'), 300); // Wait for transition
-}
-
-function renderOrderMenu() {
-  if(!menuData) return;
-  const container = document.getElementById('order-modal-items');
-  let html = '';
-  
-  // Category shortcuts
-  let shortcuts = '<div class="flex overflow-x-auto gap-2 pb-2 mb-4 scrollbar-hide">';
-  menuData.categories.forEach((cat, idx) => {
-    shortcuts += `<button onclick="document.getElementById('cat-${idx}').scrollIntoView({behavior:'smooth'})" class="shrink-0 bg-gray-100 text-[#18283b] hover:bg-gray-200 px-4 py-1.5 rounded-full text-xs font-bold transition-colors">${esc(cat.category_name)}</button>`;
-  });
-  shortcuts += '</div>';
-  html += shortcuts;
-
-  menuData.categories.forEach((cat, idx) => {
-    html += `<h4 id="cat-${idx}" class="font-extrabold text-sm text-gray-400 uppercase tracking-widest mt-6 mb-3 sticky top-0 bg-gray-50 py-2 z-10">${esc(cat.category_name)}</h4><div class="space-y-3">`;
-    cat.items.forEach(item => {
-      const priceKeys = Object.keys(item.pricing);
-      priceKeys.forEach(tier => {
-        const key = `${item.item_name}|${tier}`;
-        const qty = manualOrderCart[key]?.quantity || 0;
-        const price = item.pricing[tier];
-        html += `
-          <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
-            <div>
-              <div class="font-bold text-[#18283b] text-sm">${esc(item.item_name)}</div>
-              <div class="text-xs text-gray-500 font-medium">${esc(tier)} · <span class="font-bold text-[#18283b]">${money(price)}</span></div>
-            </div>
-            <div class="flex items-center gap-3 bg-gray-50 rounded-full px-1 py-1 border border-gray-200">
-              <button onclick="updateCart('${esc(item.item_name)}', '${esc(tier)}', ${price}, -1)" class="w-7 h-7 rounded-full bg-white shadow-sm flex items-center justify-center font-bold text-[#18283b] hover:bg-gray-100 transition-colors">-</button>
-              <span class="w-4 text-center font-extrabold text-sm text-[#18283b]">${qty}</span>
-              <button onclick="updateCart('${esc(item.item_name)}', '${esc(tier)}', ${price}, 1)" class="w-7 h-7 rounded-full bg-[#18283b] text-white shadow-sm flex items-center justify-center font-bold hover:bg-[#263d57] transition-colors">+</button>
-            </div>
-          </div>
-        `;
-      });
-    });
-    html += `</div>`;
-  });
-  container.innerHTML = html;
-}
-
-function updateCart(itemName, tier, price, delta) {
-  const key = `${itemName}|${tier}`;
-  if(!manualOrderCart[key]) {
-    manualOrderCart[key] = { itemName, tier, price, quantity: 0 };
-  }
-  manualOrderCart[key].quantity += delta;
-  if(manualOrderCart[key].quantity <= 0) delete manualOrderCart[key];
-  renderOrderMenu();
-  updateOrderTotal();
-}
-
-function updateOrderTotal() {
-  let total = 0;
-  Object.values(manualOrderCart).forEach(item => total += item.price * item.quantity);
-  document.getElementById('order-modal-total').textContent = money(total);
-}
-
-async function submitManualOrder() {
-  const items = Object.values(manualOrderCart);
-  if(items.length === 0) return toast('Cart is empty.');
-  try {
-    await api('/api/orders', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        table_number: manualOrderTable,
-        notes: "Manual order via Staff Portal",
-        items: items.map(i => ({ item_name: i.itemName, tier: i.tier, quantity: i.quantity }))
-      })
-    });
-    toast('Order placed successfully.');
-    closeOrderModal();
-    refresh();
-  } catch(e) {
-    toast(e.message);
-  }
-}
-
-// ----------------------------------------------------
-// INVENTORY
-// ----------------------------------------------------
-async function loadInventory() {
-  try {
-    const data = await api('/api/inventory');
-    const tbody = document.getElementById('inventory-list');
-    if(data.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="4" class="p-10 text-center text-gray-400 font-medium">Inventory is empty. Add items to track stock.</td></tr>`;
-      return;
+  live.forEach((o, i) => {
+    if(existingCards.has(o.id)){
+      updateOrderCardElement(existingCards.get(o.id), o);
+    } else {
+      const temp = document.createElement('div');
+      temp.innerHTML = orderCard(o, i);
+      const newCard = temp.firstElementChild;
+      const targetChild = container.children[i];
+      if(targetChild){
+        container.insertBefore(newCard, targetChild);
+      } else {
+        container.appendChild(newCard);
+      }
     }
-    let html = '';
-    data.forEach(item => {
-      html += `
-        <tr class="border-t border-gray-100 hover:bg-gray-50 transition-colors group">
-          <td class="p-4 font-bold text-[#18283b]">${esc(item.item_name)}</td>
-          <td class="p-4">
-            <input type="number" class="w-20 border border-transparent group-hover:border-gray-200 focus:border-[#18283b] rounded-lg px-2 py-1 text-sm font-bold text-[#18283b] outline-none transition-colors" value="${item.stock}" onchange="updateStock(${item.id}, this.value)">
-          </td>
-          <td class="p-4 text-xs font-semibold text-gray-500 uppercase">${esc(item.unit)}</td>
-          <td class="p-4 text-right">
-             <button onclick="updateStock(${item.id}, this.parentElement.parentElement.querySelector('input').value)" class="text-xs font-bold text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors">Save</button>
-          </td>
-        </tr>
-      `;
-    });
-    tbody.innerHTML = html;
-  } catch(e) { toast(e.message); }
-}
-
-async function updateStock(id, val) {
-  try {
-    await api(`/api/inventory/${id}`, {
-      method: 'PATCH',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ stock: parseInt(val) || 0 })
-    });
-    toast('Stock updated.');
-    loadInventory();
-  } catch(e) { toast(e.message); }
-}
-
-function openInventoryModal() {
-  document.getElementById('inv-name').value = '';
-  document.getElementById('inv-stock').value = '0';
-  document.getElementById('inv-unit').value = 'units';
-  const m = document.getElementById('inventory-modal');
-  const mc = document.getElementById('inventory-modal-content');
-  m.classList.remove('hidden');
-  requestAnimationFrame(() => {
-    m.classList.remove('opacity-0');
-    mc.classList.remove('scale-95');
   });
 }
 
-function closeInventoryModal() {
-  const m = document.getElementById('inventory-modal');
-  const mc = document.getElementById('inventory-modal-content');
-  m.classList.add('opacity-0');
-  mc.classList.add('scale-95');
-  setTimeout(() => m.classList.add('hidden'), 300);
+function renderHistory(history){
+  const currentJson = JSON.stringify(history.map(o => [o.id, o.status, o.subtotal]));
+  if(currentJson === lastHistoryJson) return;
+  lastHistoryJson = currentJson;
+  document.getElementById('history').innerHTML=history.length?history.map(o=>`<tr><td class="history-order">${esc(o.order_number)}</td><td>${esc(o.table_number)}</td><td><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td><td class="right">${money(o.subtotal)}</td></tr>`).join(''):`<tr><td colspan="4"><div class="history-empty">No completed or cancelled orders yet.</div></td></tr>`;
 }
 
-async function submitInventoryItem() {
-  const name = document.getElementById('inv-name').value;
-  const stock = document.getElementById('inv-stock').value;
-  const unit = document.getElementById('inv-unit').value;
-  if(!name) return toast('Item name required.');
-  
-  try {
-    await api('/api/inventory', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ item_name: name, stock: parseInt(stock)||0, unit: unit })
-    });
-    toast('Item added to inventory.');
-    closeInventoryModal();
-    loadInventory();
-  } catch(e) { toast(e.message); }
+function renderSalesBars(history){const completed=history.filter(o=>o.status==='COMPLETED').slice(0,10).reverse();const box=document.getElementById('sales-bars');if(!box)return;if(!completed.length){box.innerHTML='<div class="empty" style="min-height:160px;width:100%"><div class="empty-title">Not enough completed sales yet</div></div>';return}const max=Math.max(...completed.map(o=>Number(o.subtotal)||0),1);box.innerHTML=completed.map((o,i)=>`<div class="bar" style="height:${Math.max(12,(o.subtotal/max)*145)}px;animation-delay:${i*35}ms" title="${esc(o.order_number)} · ${money(o.subtotal)}"><span class="bar-label">${esc(String(o.table_number).replace('Table ','T'))}</span></div>`).join('')}
+function updateConnection(ok){document.getElementById('connection-dot').classList.toggle('off',!ok);document.getElementById('side-live-dot').classList.toggle('off',!ok);document.getElementById('connection-text').textContent=ok?'Connected':'Offline';document.getElementById('side-live-text').textContent=ok?'Live system':'Connection issue'}
+async function refresh(){const btn=document.getElementById('refresh');btn.classList.add('loading');try{const [orders,summary,history]=await Promise.all([api('/api/orders'),api('/api/revenue/summary'),api('/api/history')]);latestHistory=history;lastOrders=orders;renderTables(orders);renderOverviewTables(orders);const live=orders.filter(o=>['RECEIVED','PREPARING','READY'].includes(o.status));renderLiveOrders(live);animateNumber(document.getElementById('todayRevenue'),summary.today_revenue,'₹ ');animateNumber(document.getElementById('todayOrders'),summary.today_completed_orders);animateNumber(document.getElementById('activeOrders'),summary.active_orders);animateNumber(document.getElementById('allRevenue'),summary.all_time_revenue,'₹ ');document.getElementById('active-stat').classList.toggle('active',summary.active_orders>0);renderHistory(history);renderSalesBars(history);document.getElementById('lastUpdated').textContent='Updated '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});updateConnection(true);lastRefreshAt=Date.now();lastStatusMap=new Map(live.map(o=>[o.id,o.status]));}catch(e){updateConnection(false);if(currentView==='overview')toast('Could not refresh: '+e.message)}finally{btn.classList.remove('loading')}}
+async function bill(id){try{const o=await api(`/api/orders/${id}/bill`,{method:'POST'});toast(`Bill generated · ${o.order_number}`);printBill(o);refresh()}catch(e){toast(e.message)}}
+function printBill(o){const w=window.open('','_blank','width=420,height=650');if(!w)return;w.document.write(`<html><head><title>${esc(o.order_number)}</title><style>body{font-family:Arial;padding:24px;max-width:360px;margin:auto;color:#172536}.row{display:flex;justify-content:space-between;gap:12px;margin:8px 0}.total{border-top:1px solid #ddd;padding-top:12px;font-weight:bold;font-size:18px}small{color:#777}</style></head><body><h1>Big Little Bombaye</h1><small>${esc(o.order_number)} · Table ${esc(o.table_number)}</small><hr>${o.items.map(i=>`<div class="row"><span>${i.quantity} × ${esc(i.item_name)} (${esc(i.tier)})</span><b>${money(i.price*i.quantity)}</b></div>`).join('')}<div class="row total"><span>Total</span><span>${money(o.subtotal)}</span></div><p>Thank you.</p><script>window.print()<\/script></body></html>`);w.document.close()}
+
+async function setStatus(id,status){
+  const order = lastOrders.find(o => o.id === id);
+  const oldStatus = order ? order.status : null;
+  if(order){
+    order.status = status;
+    const cardEl = document.querySelector(`.order-card[data-order-id="${id}"]`);
+    if(cardEl){
+      if(['COMPLETED','CANCELLED'].includes(status)){
+        cardEl.style.opacity = '0.4';
+        cardEl.style.pointerEvents = 'none';
+      } else {
+        updateOrderCardElement(cardEl, order);
+      }
+    }
+  }
+  try{
+    await api(`/api/orders/${id}/status`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});
+    toast(status==='PREPARING'?'Order moved to preparing':status==='READY'?'Order is ready':status==='COMPLETED'?'Order completed':'Order cancelled');
+    refresh();
+  }catch(e){
+    if(order && oldStatus !== null){
+      order.status = oldStatus;
+      const cardEl = document.querySelector(`.order-card[data-order-id="${id}"]`);
+      if(cardEl){
+        cardEl.style.opacity = '1';
+        cardEl.style.pointerEvents = 'auto';
+        updateOrderCardElement(cardEl, order);
+      }
+    }
+    toast('Failed to update status: ' + e.message);
+  }
 }
 
-// ----------------------------------------------------
-// INSIGHTS
-// ----------------------------------------------------
-async function loadInsights() {
-  const timeframe = document.getElementById('insights-timeframe').value;
-  try {
-    const data = await api(`/api/insights?timeframe=${timeframe}`);
-    document.getElementById('insight-revenue').textContent = money(data.revenue);
-    document.getElementById('insight-orders').textContent = data.orders;
-    document.getElementById('insight-aov').textContent = money(data.avg_order_value);
-  } catch(e) { toast(e.message); }
+function renderOverviewTables(orders=[]){
+  const active=orders.filter(o=>['RECEIVED','PREPARING','READY'].includes(o.status));
+  const currentJson = JSON.stringify(active.map(o=>[o.table_number, o.status, o.subtotal]));
+  if(currentJson === lastOverviewJson) return;
+  lastOverviewJson = currentJson;
+
+  const byTable=new Map(); active.forEach(o=>{const n=tableNumberKey(o.table_number);if(n!=null&&!byTable.has(n))byTable.set(n,o)});
+  const el=document.getElementById('overview-tables'); if(!el)return;
+  let h=''; for(let i=1;i<=12;i++){const o=byTable.get(i);const state=o?(o.status==='READY'?'ready':'busy'):'';const label=o?(o.status==='RECEIVED'?'New':o.status==='PREPARING'?'Preparing':'Ready'):'Available';h+=`<button type="button" class="table-chip ${state}" onclick="showView('manual')"><div class="chip-no">T${i}</div><div class="chip-state"><span class="chip-dot"></span>${label}</div>${o?`<div class="chip-order">${money(o.subtotal)}</div>`:''}</button>`}
+  el.innerHTML=h;
+}
+function tableNumberKey(v){const m=String(v||'').match(/\d+/);return m?Number(m[0]):null}
+function renderTables(orders=[]){
+  const active=orders.filter(o=>['RECEIVED','PREPARING','READY'].includes(o.status));
+  const currentJson = JSON.stringify(active.map(o=>[o.table_number, o.status, o.subtotal, o.items.length]));
+  if(currentJson === lastTablesJson) return;
+  lastTablesJson = currentJson;
+
+  const byTable=new Map();
+  active.forEach(o=>{const n=tableNumberKey(o.table_number);if(n!=null && !byTable.has(n))byTable.set(n,o)});
+  const total=12,busy=Array.from(byTable.keys()).filter(n=>n>=1&&n<=total).length;
+  document.getElementById('available-tables').textContent=total-busy;
+  document.getElementById('busy-tables').textContent=busy;
+  let h='';
+  for(let i=1;i<=total;i++){
+    const o=byTable.get(i);
+    const state=o?(o.status==='READY'?'ready':'busy'):'available';
+    const status=o?(o.status==='RECEIVED'?'New':o.status==='PREPARING'?'Preparing':'Ready'):'Available';
+    const hint=o?`Order ${esc(o.order_number)} · ${money(o.subtotal)}`:'Tap to create a manual order';
+    h+=`<button type="button" onclick="openOrderModal('Table ${i}')" class="table-box ${state}"><div class="table-top"><div class="table-icon">T${i}</div><span class="table-status ${state}">${status}</span></div><div class="table-name">Table ${i}</div><div class="table-hint">${hint}</div>${o?`<div class="table-order">${o.items.reduce((n,it)=>n+it.quantity,0)} item${o.items.reduce((n,it)=>n+it.quantity,0)===1?'':'s'}</div>`:''}</button>`;
+  }
+  document.getElementById('tables-container').innerHTML=h;
+}
+function renderFullHistory(){
+  const q=(document.getElementById('history-search')?.value||'').trim().toLowerCase();
+  const filter=document.getElementById('history-filter')?.value||'ALL';
+  const rows=latestHistory.filter(o=>(filter==='ALL'||o.status===filter)&&(!q||String(o.order_number).toLowerCase().includes(q)||String(o.table_number).toLowerCase().includes(q)));
+  const body=document.getElementById('full-history'); if(!body)return;
+  body.innerHTML=rows.length?rows.map(o=>{const count=o.items.reduce((n,it)=>n+it.quantity,0);return `<tr><td><strong>${esc(o.order_number)}</strong></td><td>${esc(o.table_number)}</td><td><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td><td class="history-items">${count} item${count===1?'':'s'}</td><td class="history-date">${new Date(o.updated_at||o.created_at).toLocaleString([], {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</td><td style="text-align:right"><strong>${money(o.subtotal)}</strong></td></tr>`}).join(''):`<tr><td colspan="6" class="history-empty-row">No matching orders found.</td></tr>`;
 }
 
-// Initial setup
-document.getElementById('refresh').onclick = refresh;
-refresh();
-setInterval(refresh, 5000); // Auto-refresh active view (mainly Overview)
+async function fetchMenu(){if(!menuData){try{menuData=await api('/api/menu')}catch(e){toast(e.message)}}}
+async function openOrderModal(tableNum){manualOrderTable=tableNum;manualOrderCart={};document.getElementById('order-modal-title').textContent='New Order · '+tableNum;await fetchMenu();renderOrderMenu();updateOrderTotal();document.getElementById('order-modal').classList.add('open')}
+function closeOrderModal(){document.getElementById('order-modal').classList.remove('open')}
+function renderOrderMenu(){if(!menuData)return;const c=document.getElementById('order-modal-items');let h='';menuData.categories.forEach((cat,idx)=>{h+=`<div class="eyebrow" style="margin:${idx?18:0}px 0 8px">${esc(cat.category_name)}</div>`;cat.items.forEach(item=>Object.keys(item.pricing).forEach(tier=>{const key=`${item.item_name}|${tier}`,qty=manualOrderCart[key]?.quantity||0,price=item.pricing[tier];h+=`<div class="menu-item"><div><div class="menu-item-name">${esc(item.item_name)}</div><div class="menu-item-meta">${esc(tier)} · ${money(price)}</div></div><div class="qty"><button onclick="updateCart('${esc(item.item_name)}','${esc(tier)}',${price},-1)">−</button><span>${qty}</span><button onclick="updateCart('${esc(item.item_name)}','${esc(tier)}',${price},1)">+</button></div></div>`}))});c.innerHTML=h}
+function updateCart(itemName,tier,price,delta){const key=`${itemName}|${tier}`;if(!manualOrderCart[key])manualOrderCart[key]={itemName,tier,price,quantity:0};manualOrderCart[key].quantity+=delta;if(manualOrderCart[key].quantity<=0)delete manualOrderCart[key];renderOrderMenu();updateOrderTotal()}
+function updateOrderTotal(){document.getElementById('order-modal-total').textContent=money(Object.values(manualOrderCart).reduce((t,i)=>t+i.price*i.quantity,0))}
+async function submitManualOrder(){const items=Object.values(manualOrderCart);if(!items.length)return toast('Cart is empty.');try{await api('/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({table_number:manualOrderTable,notes:'Manual order via Staff Portal',items:items.map(i=>({item_name:i.itemName,tier:i.tier,quantity:i.quantity}))})});toast('Order placed successfully');closeOrderModal();refresh()}catch(e){toast(e.message)}}
+async function loadInventory(){try{const data=await api('/api/inventory');const tbody=document.getElementById('inventory-list');tbody.innerHTML=data.length?data.map(item=>`<tr><td><strong>${esc(item.item_name)}</strong></td><td><input class="stock-input" type="number" min="0" value="${item.stock}" onchange="updateStock(${item.id},this.value)"></td><td style="color:#89929c;font-weight:700;text-transform:uppercase;font-size:8px;letter-spacing:.08em">${esc(item.unit)}</td><td style="text-align:right"><button class="btn" onclick="updateStock(${item.id},this.closest('tr').querySelector('input').value)">Save</button></td></tr>`).join(''):`<tr><td colspan="4"><div class="history-empty">Inventory is empty. Add your first item.</div></td></tr>`}catch(e){toast(e.message)}}
+async function updateStock(id,val){try{await api(`/api/inventory/${id}`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({stock:parseInt(val)||0})});toast('Stock updated');loadInventory()}catch(e){toast(e.message)}}
+function openInventoryModal(){document.getElementById('inv-name').value='';document.getElementById('inv-stock').value='0';document.getElementById('inv-unit').value='units';document.getElementById('inventory-modal').classList.add('open')}
+function closeInventoryModal(){document.getElementById('inventory-modal').classList.remove('open')}
+async function submitInventoryItem(){const name=document.getElementById('inv-name').value.trim();if(!name)return toast('Item name required.');try{await api('/api/inventory',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({item_name:name,stock:parseInt(document.getElementById('inv-stock').value)||0,unit:document.getElementById('inv-unit').value.trim()||'units'})});toast('Inventory item added');closeInventoryModal();loadInventory()}catch(e){toast(e.message)}}
+async function loadInsights(){const timeframe=document.getElementById('insights-timeframe').value;try{const data=await api(`/api/insights?timeframe=${timeframe}`);animateNumber(document.getElementById('insight-revenue'),data.revenue,'₹ ');animateNumber(document.getElementById('insight-orders'),data.orders);animateNumber(document.getElementById('insight-aov'),data.avg_order_value,'₹ ')}catch(e){toast(e.message)}}
+renderTables([]);renderOverviewTables([]);document.getElementById('refresh').onclick=refresh;document.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName))return;if(e.key.toLowerCase()==='r')refresh();if(e.key.toLowerCase()==='o')showView('overview');if(e.key.toLowerCase()==='m')showView('manual');if(e.key.toLowerCase()==='i')showView('inventory');if(e.key.toLowerCase()==='h')showView('history')});
+setInterval(()=>document.querySelectorAll('.elapsed').forEach(e=>e.textContent=elapsed(e.dataset.created)),1000);refresh();setInterval(refresh,5000);
 </script>
 </body>
 </html>

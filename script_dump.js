@@ -633,6 +633,13 @@ async function placeOrder() {
   var notes = document.getElementById("order-notes").value.trim();
   if (!cartState.length) { showToast("Add at least one dish first."); return; }
   if (!table) { showToast("Please enter your table number."); document.getElementById("order-table").focus(); return; }
+  var tableMatch = table.match(/\d+/);
+  var tableNum = tableMatch ? parseInt(tableMatch[0], 10) : null;
+  if (tableNum === null || tableNum < 1 || tableNum > 12) {
+    showToast("Invalid table number. Table '" + table + "' does not exist (1-12).");
+    document.getElementById("order-table").focus();
+    return;
+  }
   btn.disabled = true;
   btn.textContent = "Sending order…";
   statusEl.textContent = "Sending your order to the cafe…";
