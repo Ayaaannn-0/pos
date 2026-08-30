@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <style>
 :root{
   --bg:#f6f7f4; --surface:#fff; --surface-2:#fbfbf9; --ink:#172536; --muted:#8992a0;
@@ -21,7 +22,7 @@
 .main{min-width:0;flex:1;display:flex;flex-direction:column;overflow:hidden}.topbar{height:76px;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 30px;position:sticky;top:0;z-index:15}.page-heading{display:flex;align-items:center;gap:13px}.page-title{font-size:20px;font-weight:800;letter-spacing:-.035em}.page-context{font-size:11px;color:#99a1aa;font-weight:600;padding-left:13px;border-left:1px solid var(--line)}.top-actions{display:flex;align-items:center;gap:10px}.connection{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:800;color:#7d8792;text-transform:uppercase;letter-spacing:.07em;padding:8px 10px;border:1px solid var(--line);border-radius:999px;background:#fff}.connection .live-dot{width:6px;height:6px}.refresh-btn{height:38px;border:1px solid var(--accent);border-radius:11px;background:var(--accent);color:#fff;padding:0 14px;font-size:11px;font-weight:800;display:flex;align-items:center;gap:8px;transition:transform .16s,background .16s}.refresh-btn:hover{background:#243a54;transform:translateY(-1px)}.refresh-btn:active{transform:scale(.98)}.refresh-icon{transition:transform .4s var(--ease)}.refresh-btn.loading .refresh-icon{transform:rotate(180deg)}
 .content{overflow:auto;flex:1;padding:30px;scrollbar-width:thin;scrollbar-color:#d8ddd8 transparent}.content-inner{max-width:1450px;margin:0 auto}.view-section{animation:page-in .22s var(--ease) both}@keyframes page-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(61,138,104,.32)}70%{box-shadow:0 0 0 7px rgba(61,138,104,0)}100%{box-shadow:0 0 0 0 rgba(61,138,104,0)}}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:19px 20px;box-shadow:var(--shadow-sm);min-width:0;position:relative;overflow:hidden}.stat-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.stat-label{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:#99a1aa}.stat-icon{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:#f3f5f3;color:#6f7984}.stat-value{font-size:27px;line-height:1.05;font-weight:800;letter-spacing:-.045em;margin-top:12px}.stat-meta{font-size:10px;color:#98a0a8;margin-top:8px;font-weight:600}.stat-meta strong{color:#5d6874}.sparkline{position:absolute;right:18px;bottom:12px;width:74px;height:25px;opacity:.75}.sparkline path{fill:none;stroke:#80966b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.stat.active .stat-icon{background:var(--warning-bg);color:var(--warning)}
-.section-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(340px,.75fr);gap:18px}.panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-sm);overflow:hidden}.panel-head{padding:19px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-title{font-size:14px;font-weight:800;letter-spacing:-.02em}.panel-sub{font-size:10px;color:#98a0aa;margin-top:4px;font-weight:600}.panel-tools{display:flex;align-items:center;gap:8px}.tiny-status{display:inline-flex;align-items:center;gap:6px;color:#77818c;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.tiny-status .live-dot{width:6px;height:6px}.orders{padding:12px;display:flex;flex-direction:column;gap:10px;min-height:420px}.empty{min-height:390px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#9ba3aa}.empty-icon{width:44px;height:44px;border-radius:14px;background:#f3f5f2;color:#7d8790;display:grid;place-items:center;margin-bottom:12px}.empty-title{font-size:12px;font-weight:800;color:#606b75}.empty-sub{font-size:10px;margin-top:5px;font-weight:600}.order-card{border:1px solid #e9ece8;border-radius:16px;padding:15px;background:#fff;animation:order-in .25s var(--ease) both;transition:box-shadow .18s,transform .18s,border-color .18s}.order-card:hover{box-shadow:0 10px 26px rgba(23,37,54,.07);transform:translateY(-1px);border-color:#dfe4df}@keyframes order-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}.order-main{display:flex;gap:14px}.order-state{width:4px;border-radius:4px;flex-shrink:0;background:#e1b65d}.order-state.preparing{background:#6f91c5}.order-state.ready{background:#6b9c7c}.order-body{min-width:0;flex:1}.order-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.order-number{font-size:11px;font-weight:800;letter-spacing:.01em}.order-table{color:#66717c;font-weight:700}.order-time{font-size:9px;color:#9aa2aa;font-weight:600;margin-top:4px}.status{font-size:8px;font-weight:800;letter-spacing:.12em;border-radius:999px;padding:6px 8px;white-space:nowrap}.received{background:var(--warning-bg);color:var(--warning)}.preparing{background:var(--blue-bg);color:var(--blue)}.ready{background:var(--success-bg);color:var(--success)}.completed{background:var(--success-bg);color:var(--success)}.cancelled{background:var(--danger-bg);color:var(--danger)}.items{margin-top:13px;padding-top:11px;border-top:1px solid #f0f2ef;display:flex;flex-direction:column;gap:7px}.item-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-size:10.5px}.item-name{font-weight:700;color:#4d5965}.item-name b{color:var(--ink);margin-right:5px}.item-price{font-weight:800;color:#35424e;white-space:nowrap}.order-note{margin-top:11px;padding:8px 10px;border-radius:10px;background:#fff8e9;color:#8f681e;font-size:9px;font-weight:600}.order-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:13px;padding-top:11px;border-top:1px solid #f0f2ef}.order-total-label{font-size:8px;text-transform:uppercase;letter-spacing:.13em;color:#9aa2aa;font-weight:800}.order-total{font-size:16px;font-weight:800;letter-spacing:-.03em;margin-top:3px}.actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}.btn{border:1px solid var(--line);background:#fff;color:#596572;height:31px;padding:0 10px;border-radius:9px;font-size:9px;font-weight:800;transition:all .15s}.btn:hover{border-color:#cfd5d0;transform:translateY(-1px)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.btn.primary:hover{background:#263d57}.btn.danger{background:var(--danger-bg);border-color:#f0dddd;color:var(--danger)}.btn:active{transform:scale(.98)}
+.section-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(340px,.75fr);gap:18px}.panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-sm);overflow:hidden}.panel-head{padding:19px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-title{font-size:14px;font-weight:800;letter-spacing:-.02em}.panel-sub{font-size:10px;color:#98a0aa;margin-top:4px;font-weight:600}.panel-tools{display:flex;align-items:center;gap:8px}.tiny-status{display:inline-flex;align-items:center;gap:6px;color:#77818c;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.tiny-status .live-dot{width:6px;height:6px}.orders{padding:12px;display:flex;flex-direction:column;gap:10px;min-height:420px}.empty{min-height:390px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#9ba3aa}.empty-icon{width:44px;height:44px;border-radius:14px;background:#f3f5f2;color:#7d8790;display:grid;place-items:center;margin-bottom:12px}.empty-title{font-size:12px;font-weight:800;color:#606b75}.empty-sub{font-size:10px;margin-top:5px;font-weight:600}.order-card{border:1px solid #e9ece8;border-radius:16px;padding:15px;background:#fff;animation:order-in .25s var(--ease) both;transition:box-shadow .18s,transform .18s,border-color .18s}.order-card:hover{box-shadow:0 10px 26px rgba(23,37,54,.07);transform:translateY(-1px);border-color:#dfe4df}@keyframes order-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}.order-main{display:flex;gap:14px}.order-state{width:4px;border-radius:4px;flex-shrink:0;background:#e1b65d}.order-state.preparing{background:#6f91c5}.order-state.ready{background:#6b9c7c}.order-body{min-width:0;flex:1}.order-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.order-number{font-size:11px;font-weight:800;letter-spacing:.01em}.order-table{color:#66717c;font-weight:700}.order-time{font-size:11px;font-size:9px;color:#9aa2aa;font-weight:600;margin-top:4px}.status{font-size:8px;font-weight:800;letter-spacing:.12em;border-radius:999px;padding:6px 8px;white-space:nowrap}.received{background:var(--warning-bg);color:var(--warning)}.preparing{background:var(--blue-bg);color:var(--blue)}.ready{background:var(--success-bg);color:var(--success)}.completed{background:var(--success-bg);color:var(--success)}.cancelled{background:var(--danger-bg);color:var(--danger)}.items{margin-bottom: 6px!important; margin-top:13px;padding-top:11px;border-top:1px solid #f0f2ef;display:flex;flex-direction:column;gap:7px}.item-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-size:10.5px}.item-name{font-weight:700;color:#4d5965}.item-name b{color:var(--ink);margin-right:5px}.item-price{font-weight:800;color:#35424e;white-space:nowrap}.order-note{margin-top:11px;padding:8px 10px;border-radius:10px;background:#fff8e9;color:#8f681e;font-size:9px;font-weight:600}.order-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:13px;padding-top:11px;border-top:1px solid #f0f2ef}.order-total-label{font-size:8px;text-transform:uppercase;letter-spacing:.13em;color:#9aa2aa;font-weight:800}.order-total{font-size:16px;font-weight:800;letter-spacing:-.03em;margin-top:3px}.actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}.btn{border:1px solid var(--line);background:#fff;color:#596572;height:31px;padding:0 10px;border-radius:9px;font-size:9px;font-weight:800;transition:all .15s}.btn:hover{border-color:#cfd5d0;transform:translateY(-1px)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.btn.primary:hover{background:#263d57}.btn.danger{background:var(--danger-bg);border-color:#f0dddd;color:var(--danger)}.btn:active{transform:scale(.98)}
 .history-wrap{max-height:470px;overflow:auto}.history-table{width:100%;border-collapse:collapse}.history-table th{position:sticky;top:0;background:#fff;z-index:1;text-align:left;padding:13px 16px;font-size:8px;color:#9aa2aa;text-transform:uppercase;letter-spacing:.12em;border-bottom:1px solid var(--line)}.history-table td{padding:14px 16px;border-bottom:1px solid #f0f2ef;font-size:9.5px}.history-table tr{transition:background .15s}.history-table tbody tr:hover{background:#fafbf9}.history-order{font-weight:800}.history-table .right{text-align:right;font-weight:800}.history-empty{text-align:center;padding:50px 20px;color:#9ba3aa;font-size:10px;font-weight:600}
 .subview-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px}.eyebrow{font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:#9aa2aa;font-weight:800}.subview-title{font-size:23px;font-weight:800;letter-spacing:-.045em;margin:5px 0 0}.subview-sub{font-size:10px;color:#8d969f;font-weight:600;margin-top:5px}.select{height:38px;padding:0 13px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink);font-size:10px;font-weight:800;outline:none}.select:focus{border-color:#c5cdc6;box-shadow:0 0 0 3px rgba(24,40,59,.06)}
 .tables{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.table-box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;cursor:pointer;transition:all .18s var(--ease)}.table-box:hover{border-color:#cfd6cf;box-shadow:var(--shadow);transform:translateY(-2px)}.table-icon{width:48px;height:48px;border-radius:14px;background:#f2f5f2;color:var(--accent);display:grid;place-items:center;font-size:13px;font-weight:800;margin-bottom:14px}.table-name{font-size:12px;font-weight:800}.table-hint{font-size:9px;color:#9aa2aa;margin-top:4px;font-weight:600}
@@ -36,7 +37,37 @@
 @media(max-width:1100px){.tables{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:760px){.floor-summary{width:100%;justify-content:center}.tables{grid-template-columns:repeat(2,1fr);padding:10px}.history-tools{width:100%;flex-direction:column}.history-search{width:100%}}
 
-.floor-overview{margin-bottom:18px}.overview-tables{padding:13px 14px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:8px}.table-chip{min-width:0;padding:10px 6px;border:1px solid var(--line);border-radius:11px;background:#fff;text-align:center;transition:all .16s}.table-chip:hover{transform:translateY(-1px);border-color:#ccd4cc}.table-chip .chip-no{font-size:9px;font-weight:800}.table-chip .chip-state{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:5px;font-size:7px;text-transform:uppercase;letter-spacing:.06em;font-weight:800;color:#98a0a8}.table-chip .chip-dot{width:5px;height:5px;border-radius:50%;background:#6b9c7c}.table-chip.busy{background:#fffaf0;border-color:#eee1c8}.table-chip.busy .chip-dot{background:#d0a24b}.table-chip.ready{background:#f5fbf7;border-color:#d9e9df}.table-chip.ready .chip-dot{background:#5e9472}.table-chip .chip-order{font-size:7px;color:#7d8790;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.btn span{margin-left:4px}@media(max-width:1100px){.overview-tables{grid-template-columns:repeat(6,1fr)}}@media(max-width:760px){.overview-tables{grid-template-columns:repeat(4,1fr)}.floor-overview{margin-bottom:12px}}
+.floor-overview{margin-bottom:18px}.overview-tables{padding:13px 14px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:8px}.table-chip{min-width:0;padding:10px 6px;border:1px solid var(--line);border-radius:11px;background:#fff;text-align:center;transition:all .16s}.table-chip:hover{transform:translateY(-1px);border-color:#ccd4cc}.table-chip .chip-no{font-size:9px;font-weight:800}.table-chip .chip-state{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:5px;font-size:7px;text-transform:uppercase;letter-spacing:.06em;font-weight:800;color:#98a0af}.table-chip .chip-dot{width:5px;height:5px;border-radius:50%;background:#6b9c7c}.table-chip.busy{background:#fffaf0;border-color:#eee1c8}.table-chip.busy .chip-dot{background:#d0a24b}.table-chip.ready{background:#f5fbf7;border-color:#d9e9df}.table-chip.ready .chip-dot{background:#5e9472}.category-shortcuts::-webkit-scrollbar{display:none}
+.cat-shortcut{flex:0 0 auto;padding:6px 12px;border-radius:999px;background:#f4f5f3;color:#596572;font-size:10px;font-weight:800;border:none;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+.cat-shortcut:hover{background:#e8ebe7;color:var(--ink)}
+.cat-shortcut.active{background:var(--accent);color:#fff}
+.overview-split{display:flex;gap:24px;height:calc(100vh - 195px);align-items:stretch}
+.overview-left,.overview-right{flex:1;min-width:0;display:flex;flex-direction:column}
+.overview-left .panel,.overview-right .panel{display:flex;flex-direction:column;flex:1;overflow:hidden;margin-bottom:0}
+.overview-left .orders{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px;min-height:0}
+.overview-right .overview-tables{flex:1;overflow-y:auto;padding:24px; display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-content:start;min-height:0}
+.order-card{background:#fff!important;border:1px solid #e2e8f0!important;box-shadow:0 2px 6px rgba(0,0,0,.04)!important;border-radius:12px!important; margin-bottom:8px!important;}
+.order-number{font-size:16px!important;line-height:1.2; font-weight:800!important;}
+.order-table{font-size:20px!important;color:#4a5568!important}
+.item-row{font-size:13px!important;padding:2px 0}
+.item-name,.item-price{font-size:13px!important}
+.order-head{align-items:center; margin-bottom: 6px!important;}
+.table-square{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;border:none!important;color:#fff;cursor:pointer;transition:transform .1s;padding:12px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.table-square:active{transform:scale(.95)}
+.table-square.vacant{background-color:#22c55e!important}
+.table-square.occupied{background-color:#ef4444!important}
+.table-square .chip-no{font-size:20px!important;font-weight:800;line-height:1}
+.table-square .chip-state{font-size:14px!important;font-weight:700;margin-top:8px;opacity:.9}
+.table-square .chip-order{font-size:14px!important;font-weight:800;margin-top:4px}
+.kot-btn{background:#000;color:#fff;font-size:14px;font-weight:800;padding:12px 24px;border-radius:12px;border:none;margin-left:auto;box-shadow:0 4px 12px rgba(0,0,0,.15);cursor:pointer}
+.kot-btn:active{transform:scale(.95)}
+.stat{padding:12px 16px!important}
+.stat-value{font-size:20px!important;margin-top:6px!important}
+.stat-meta,.sparkline{display:none!important}
+.content{padding-top:12px!important}
+@media(max-width:1100px){.overview-right .overview-tables{grid-template-columns:repeat(3,1fr)}}
+.quick-order-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.order-context{padding:14px 18px;background:#fafbf9;border-bottom:1px solid var(--line)}.order-type-toggle{display:flex;gap:7px;margin-bottom:10px}.order-type-toggle button,.split-toggle{border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 11px;color:#62707c;font-size:10px;font-weight:800}.order-type-toggle button.active,.split-toggle.active{background:var(--accent);border-color:var(--accent);color:#fff}.customer-inline{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.customer-inline input{height:38px;border:1px solid var(--line);border-radius:10px;padding:0 11px;background:#fff;font-size:10px;font-weight:600;outline:none}.customer-note{min-height:14px;margin-top:6px;font-size:9px;color:#6d7781;font-weight:700}.customer-search{display:flex;gap:10px;padding:18px;border-bottom:1px solid var(--line)}.customer-search input{flex:1}.customer-result{padding:4px 18px 18px}.customer-name{font-size:18px;font-weight:800;margin-top:16px}.customer-meta{font-size:10px;color:#87919b;font-weight:700;margin-top:5px}.favorite-list{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}.favorite-chip{padding:7px 9px;border-radius:999px;background:#f1f4f1;color:#53616d;font-size:9px;font-weight:800}.settings-panel{padding:20px;max-width:620px}.settings-note{padding:12px;border-radius:11px;background:#f5f7f4;color:#6d7882;font-size:10px;font-weight:600;line-height:1.5;margin:4px 0 15px}.tender-modal{max-width:520px}.tender-total{display:flex;justify-content:space-between;align-items:center;padding:17px;border-radius:14px;background:#fff;border:1px solid var(--line)}.tender-total span{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#89929c}.tender-total strong{font-size:26px;letter-spacing:-.04em}.tender-breakdown{font-size:10px;color:#74808b;line-height:1.7;margin:10px 2px}.tender-methods{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:18px 0 11px}.tender-method{height:70px;border:1px solid var(--line);border-radius:13px;background:#fff;color:#52606d;font-weight:800;font-size:12px}.tender-method.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 8px 18px rgba(24,40,59,.15)}.split-fields{margin-top:12px}.split-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.split-row input{height:38px;border:1px solid var(--line);border-radius:10px;padding:0 10px;font-size:11px;font-weight:700}.order-badge{display:inline-flex;align-items:center;padding:4px 7px;border-radius:999px;background:#edf3ff;color:#3866a7;font-size:8px;font-weight:800;letter-spacing:.08em}.order-badge.delivery{background:#fff5df;color:#9b6819}.kot-btn{border:1px dashed #c7d0c8;background:#fff;color:#596572;height:31px;padding:0 10px;border-radius:9px;font-size:9px;font-weight:800}.history-token{font-weight:800;color:#172536}.payment-mark{font-size:8px;font-weight:800;color:#2f7458;letter-spacing:.08em}
+@media(max-width:760px){.quick-order-actions{width:100%}.customer-inline{grid-template-columns:1fr}.customer-search{flex-direction:column}.tender-methods{gap:6px}.tender-method{font-size:10px;height:58px}}
 </style>
 </head>
 <body>
@@ -50,9 +81,12 @@
     <nav class="nav" aria-label="Staff navigation">
       <button class="nav-btn active" id="nav-overview" onclick="showView('overview')"><span class="nav-icon" data-icon="grid"></span>Overview</button>
       <button class="nav-btn" id="nav-manual" onclick="showView('manual')"><span class="nav-icon" data-icon="table"></span>Manual Orders</button>
-      <button class="nav-btn" id="nav-inventory" onclick="showView('inventory')"><span class="nav-icon" data-icon="box"></span>Inventory</button>
+      <button class="nav-btn" id="nav-online" onclick="showView('online')"><span class="nav-icon" data-icon="box"></span>Online Orders</button>
+      <button class="nav-btn" id="nav-customers" onclick="showView('customers')"><span class="nav-icon" data-icon="history"></span>Customers</button>
       <button class="nav-btn" id="nav-insights" onclick="showView('insights')"><span class="nav-icon" data-icon="chart"></span>Insights</button>
+      <button class="nav-btn" id="nav-86list" onclick="showView('86list')"><span class="nav-icon" data-icon="grid"></span>Menu</button>
       <button class="nav-btn" id="nav-history" onclick="showView('history')"><span class="nav-icon" data-icon="history"></span>History</button>
+      <button class="nav-btn" id="nav-settings" onclick="showView('settings')"><span class="nav-icon" data-icon="grid"></span>Settings</button>
     </nav>
     <div class="sidebar-footer"><a href="/menu" class="menu-link"><span data-icon="external"></span>Open Customer Menu</a></div>
   </aside>
@@ -66,65 +100,140 @@
     <main class="content"><div class="content-inner">
       <div id="view-overview" class="view-section">
         <section class="stats">
-          <article class="stat"><div class="stat-top"><div class="stat-label">Today Revenue</div><div class="stat-icon" data-icon="rupee"></div></div><div id="todayRevenue" class="stat-value">₹ 0</div><div class="stat-meta">Completed sales today</div><svg class="sparkline" id="revenue-spark" viewBox="0 0 74 25" preserveAspectRatio="none"><path d="M1 20 L12 17 L23 18 L34 11 L45 14 L56 7 L73 4"/></svg></article>
-          <article class="stat"><div class="stat-top"><div class="stat-label">Completed Today</div><div class="stat-icon" data-icon="check"></div></div><div id="todayOrders" class="stat-value">0</div><div class="stat-meta">Bills closed today</div></article>
-          <article class="stat" id="active-stat"><div class="stat-top"><div class="stat-label">Active Orders</div><div class="stat-icon" data-icon="pulse"></div></div><div id="activeOrders" class="stat-value">0</div><div class="stat-meta">Received · preparing · ready</div></article>
-          <article class="stat"><div class="stat-top"><div class="stat-label">All-Time Revenue</div><div class="stat-icon" data-icon="trend"></div></div><div id="allRevenue" class="stat-value">₹ 0</div><div class="stat-meta">Across all completed orders</div></article>
+          <article class="stat"><div class="stat-top"><div class="stat-label">Today Revenue</div><div class="stat-icon" data-icon="rupee"></div></div><div id="todayRevenue" class="stat-value">₹0</div></article>
+          <article class="stat"><div class="stat-top"><div class="stat-label">Completed Today</div><div class="stat-icon" data-icon="check"></div></div><div id="todayOrders" class="stat-value">0</div></article>
+          <article class="stat" id="active-stat"><div class="stat-top"><div class="stat-label">Active Orders</div><div class="stat-icon" data-icon="pulse"></div></div><div id="activeOrders" class="stat-value">0</div></article>
+          <article class="stat"><div class="stat-top"><div class="stat-label">Pending KOTs</div><div class="stat-icon" data-icon="pulse"></div></div><div id="pendingKots" class="stat-value">0</div></article>
         </section>
-
-        <section class="panel floor-overview">
-          <div class="panel-head"><div><div class="panel-title">Floor status</div><div class="panel-sub">12 tables · live occupancy</div></div><button class="btn" onclick="showView('manual')">Manage tables <span aria-hidden="true">→</span></button></div>
-          <div id="overview-tables" class="overview-tables"></div>
-        </section>
-
-        <section class="section-grid">
-          <section class="panel">
-            <div class="panel-head"><div><div class="panel-title">Live Orders</div><div class="panel-sub">New QR orders appear here automatically.</div></div><div class="panel-tools"><span class="tiny-status"><span class="live-dot"></span><span>Live</span></span><span id="lastUpdated" class="panel-sub"></span></div></div>
-            <div id="orders" class="orders"></div>
-          </section>
-          <section class="panel">
-            <div class="panel-head"><div><div class="panel-title">Order History</div><div class="panel-sub">Completed and cancelled orders.</div></div></div>
-            <div class="history-wrap"><table class="history-table"><thead><tr><th>Order</th><th>Table</th><th>Status</th><th class="right">Amount</th></tr></thead><tbody id="history"></tbody></table></div>
-          </section>
-        </section>
+        <div class="overview-split">
+          <div class="overview-left">
+            <section class="panel" style="margin-bottom:14px"><div class="panel-head"><div><div class="panel-title">Active Prep</div><div class="panel-sub">Prepaid orders move straight to the kitchen.</div></div><div class="panel-tools"><span class="tiny-status"><span class="live-dot"></span><span>Auto</span></span></div></div><div id="prepaid-orders" class="orders"></div></section>
+            <section class="panel"><div class="panel-head"><div><div class="panel-title">Unpaid Settlement</div><div class="panel-sub">Pay-at-counter orders requiring cashier action.</div></div><div class="panel-tools"><span id="lastUpdated" class="panel-sub"></span></div></div><div id="pending-payment-orders" class="orders"></div></section>
+          </div>
+          <div class="overview-right">
+            <section class="panel floor-overview" style="margin-bottom:0">
+              <div class="panel-head"><div><div class="panel-title">Floor status</div><div class="panel-sub">12 tables · live occupancy</div></div><button class="btn" onclick="showView('manual')">Manage tables <span aria-hidden="true">→</span></button></div>
+              <div id="overview-tables" class="overview-tables"></div>
+            </section>
+          </div>
+        </div>
       </div>
 
       <div id="view-manual" class="view-section hidden">
         <div class="subview-head">
-          <div><div class="eyebrow">Floor operations</div><div class="subview-title">Manual Orders</div><div class="subview-sub">Select a table to create a staff-placed order. Occupied tables show their live status.</div></div>
-          <div class="floor-summary"><span class="floor-dot available"></span><b id="available-tables">12</b> available <span class="floor-sep">•</span> <span class="floor-dot busy"></span><b id="busy-tables">0</b> active</div>
-        </div>
-        <section class="table-panel panel">
+          <div><div class="eyebrow">Counter and floor operations</div><div class="subview-title">Manual Orders</div><div class="subview-sub">Start a takeaway or delivery order without touching floor status.</div></div>
+          </div>
+          <div style="display:flex; gap:12px; margin-bottom:16px;">
+            <button class="btn primary" style="flex:1; height:64px; font-size:18px; border-radius:16px;" onclick="openOrderModal(null,'TAKEAWAY')">+ Takeaway</button>
+            <button class="btn" style="flex:1; height:64px; font-size:18px; border-radius:16px;" onclick="openOrderModal(null,'DELIVERY')">+ Delivery</button>
+          </div>
+          <section class="table-panel panel">
           <div class="panel-head"><div><div class="panel-title">Tables</div><div class="panel-sub">Tap any available table to start a manual order.</div></div><span class="tiny-status"><span class="live-dot"></span><span>Live floor</span></span></div>
           <div class="tables" id="tables-container"></div>
         </section>
       </div>
 
-      <div id="view-inventory" class="view-section hidden">
-        <div class="subview-head"><div><div class="eyebrow">Stock control</div><div class="subview-title">Inventory</div><div class="subview-sub">Keep essential stock counts current.</div></div><button onclick="openInventoryModal()" class="btn primary" style="height:38px;padding:0 14px">+ Add item</button></div>
-        <section class="panel table-card"><table><thead><tr><th>Item</th><th>Stock</th><th>Unit</th><th style="text-align:right">Action</th></tr></thead><tbody id="inventory-list"></tbody></table></section>
+      <div id="view-online" class="view-section hidden">
+        <div class="subview-head"><div><div class="eyebrow">Aggregator queue</div><div class="subview-title">Online Orders</div><div class="subview-sub">Accept Swiggy, Zomato, and direct delivery orders without delay.</div></div></div>
+        <section class="panel"><div class="panel-head"><div><div class="panel-title">Awaiting kitchen acceptance</div><div class="panel-sub">Accepting prints the KOT through the configured browser print flow.</div></div></div><div id="online-orders" class="orders"></div></section>
+      </div>
+
+      <div id="view-customers" class="view-section hidden">
+        <div class="subview-head"><div><div class="eyebrow">Customer relationship</div><div class="subview-title">Customers</div><div class="subview-sub">Find a customer using their 10-digit mobile number and see repeat-order preferences.</div></div></div>
+        <section class="panel customer-panel"><div class="customer-search"><input id="customer-search" class="select" inputmode="numeric" maxlength="10" placeholder="Enter 10-digit mobile number"><button class="refresh-btn" onclick="findCustomer()">Find customer</button></div><div id="customer-result" class="customer-result"><div class="history-empty">Search a mobile number to view customer history.</div></div></section>
       </div>
 
       <div id="view-insights" class="view-section hidden">
-        <div class="subview-head"><div><div class="eyebrow">Business performance</div><div class="subview-title">Insights</div><div class="subview-sub">A quick view of completed sales performance.</div></div><select id="insights-timeframe" onchange="loadInsights()" class="select"><option value="last_24h">Last 24 Hours</option><option value="last_7d">Last 7 Days</option><option value="last_30d">Last 30 Days</option><option value="last_1y">Last 1 Year</option></select></div>
-        <section class="insight-cards"><article class="panel insight-card"><div class="stat-label">Total Revenue</div><div id="insight-revenue" class="insight-value">₹ 0</div><div class="stat-meta">Completed orders in selected period</div></article><article class="panel insight-card"><div class="stat-label">Total Orders</div><div id="insight-orders" class="insight-value">0</div><div class="stat-meta">Completed orders</div></article><article class="panel insight-card"><div class="stat-label">Average Order Value</div><div id="insight-aov" class="insight-value">₹ 0</div><div class="stat-meta">Revenue ÷ completed orders</div></article></section>
-        <section class="panel chart-card"><div class="panel-title">Recent completed sales</div><div class="panel-sub">Order values from the latest completed history available.</div><div id="sales-bars" class="chart-box"></div><div class="chart-note">This is an operational snapshot; use the selected timeframe above for the aggregate figures.</div></section>
-      </div>
-
-      <div id="view-history" class="view-section hidden">
+          <div class="subview-head"><div><div class="eyebrow">End of Day</div><div class="subview-title">Till Management</div><div class="subview-sub">Reconcile cash drawer and generate Z-Report.</div></div></div>
+          
+          <div id="till-open-panel" class="panel" style="padding:24px; max-width:400px; margin-bottom:24px;">
+            <h3 style="font-size:16px; font-weight:800; margin-bottom:16px;">Open Register</h3>
+            <label style="font-size:12px; font-weight:700; color:#64748b; margin-bottom:8px; display:block;">Opening Float (Small Change)</label>
+            <input type="number" id="till-opening-float" style="width:100%; height:48px; border-radius:12px; border:1px solid #cbd5e1; padding:0 16px; font-size:18px; margin-bottom:16px;">
+            <button class="btn primary" style="width:100%; height:48px;" onclick="openRegister()">Set Opening Float</button>
+          </div>
+          
+          <div id="till-close-panel" class="panel hidden" style="padding:24px; max-width:400px;">
+            <h3 style="font-size:16px; font-weight:800; margin-bottom:16px;">Close Register</h3>
+            <div style="background:#f8fafc; padding:16px; border-radius:12px; margin-bottom:16px;">
+              <div style="font-size:12px; color:#64748b; font-weight:700;">Opening Float</div>
+              <div id="till-display-float" style="font-size:18px; font-weight:800;">₹0</div>
+            </div>
+            
+            <label style="font-size:12px; font-weight:700; color:#64748b; margin-bottom:8px; display:block;">Blind Count: Actual Cash in Drawer</label>
+            <input type="number" id="till-actual-cash" style="width:100%; height:48px; border-radius:12px; border:1px solid #cbd5e1; padding:0 16px; font-size:18px; margin-bottom:16px;" placeholder="Count the drawer...">
+            <button class="btn primary" id="btn-close-register" style="width:100%; height:48px;" onclick="closeRegister()">Calculate Variance & Close</button>
+            
+            <div id="till-results" class="hidden" style="margin-top:24px; border-top:1px solid #e2e8f0; padding-top:24px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:12px;"><span style="font-weight:700; color:#64748b;">Expected Total</span><strong id="till-expected" style="font-size:16px;"></strong></div>
+                <div style="display:flex; justify-content:space-between;"><span style="font-weight:700; color:#64748b;">Variance</span><strong id="till-variance" style="font-size:18px;"></strong></div>
+            </div>
+          </div>
+        </div>
+  
+        <div id="view-history" class="view-section hidden">
         <div class="subview-head"><div><div class="eyebrow">Closed orders</div><div class="subview-title">Order History</div><div class="subview-sub">Completed and cancelled orders stored in your POS database.</div></div><div class="history-tools"><input id="history-search" class="select history-search" placeholder="Search order or table…" oninput="renderFullHistory()"><select id="history-filter" class="select" onchange="renderFullHistory()"><option value="ALL">All statuses</option><option value="COMPLETED">Completed</option><option value="CANCELLED">Cancelled</option></select></div></div>
         <section class="panel table-card history-page-card"><table><thead><tr><th>Order</th><th>Table</th><th>Status</th><th>Items</th><th>Date</th><th style="text-align:right">Amount</th></tr></thead><tbody id="full-history"></tbody></table></section>
+      </div>
+
+      
+      <div id="view-86list" class="view-section hidden">
+        <section class="panel">
+          <div class="panel-head"><div><div class="panel-title">Menu Control</div><div class="panel-sub">Toggle items availability. Max 2 clicks.</div></div></div>
+          <div class="content-inner" style="padding:20px; overflow-y:auto; max-height:calc(100vh - 120px);">
+             <div id="86list-container" style="display:flex; flex-direction:column; gap:10px;"></div>
+          </div>
+        </section>
+      </div>
+
+      <div id="view-settings" class="view-section hidden">
+        <div class="subview-head"><div><div class="eyebrow">Hardware and pricing</div><div class="subview-title">Settings</div><div class="subview-sub">Configure checkout charges and the kitchen print station.</div></div></div>
+        <section class="panel settings-panel"><div class="field"><label>GST / Tax percentage</label><input id="setting-tax-rate" type="number" min="0" max="50" step="0.01"></div><div class="field"><label>Service charge percentage</label><input id="setting-service-rate" type="number" min="0" max="50" step="0.01"></div><div class="field"><label>Printer name</label><input id="setting-printer-name" maxlength="100"></div><div class="field"><label>Kitchen station</label><input id="setting-printer-station" maxlength="100"></div><div class="settings-note">This MVP opens the browser print dialog for KOTs and receipts. Choose the thermal printer there; direct ESC/POS dispatch needs a local printer bridge.</div><button class="refresh-btn" onclick="saveSettings()">Save settings</button></section>
       </div>
     </div></main>
   </div>
 </div>
 
-<div id="order-modal" class="overlay" onclick="if(event.target===this)closeOrderModal()"><div class="modal" id="order-modal-content"><div class="modal-head"><div class="modal-title" id="order-modal-title">New Order</div><button onclick="closeOrderModal()" class="close" aria-label="Close">×</button></div><div class="modal-body" id="order-modal-items"></div><div class="modal-foot"><div class="modal-total"><span>Subtotal</span><span id="order-modal-total">₹ 0</span></div><button onclick="submitManualOrder()" class="refresh-btn" style="width:100%;justify-content:center">Place Order</button></div></div></div>
-<div id="inventory-modal" class="overlay" onclick="if(event.target===this)closeInventoryModal()"><div class="modal" id="inventory-modal-content" style="max-width:480px"><div class="modal-head"><div class="modal-title">Add Inventory Item</div><button onclick="closeInventoryModal()" class="close">×</button></div><div class="modal-body"><div class="field"><label>Item name</label><input id="inv-name" placeholder="e.g. Coffee beans"></div><div class="field"><label>Starting stock</label><input id="inv-stock" type="number" min="0" value="0"></div><div class="field"><label>Unit</label><input id="inv-unit" value="units"></div></div><div class="modal-foot"><button onclick="submitInventoryItem()" class="refresh-btn" style="width:100%;justify-content:center">Add item</button></div></div></div>
-<div id="toast" class="toast"></div>
+<div id="order-modal" class="overlay" onclick="if(event.target===this)closeOrderModal()"><div class="modal" id="order-modal-content"><div class="modal-head"><div class="modal-title" id="order-modal-title">New Order</div><button onclick="closeOrderModal()" class="close" aria-label="Close">×</button></div><div style="flex:1; overflow-y:auto; display:flex; flex-direction:column;"><div class="order-context" style="flex-shrink:0"><div class="order-type-toggle"><button type="button" data-order-type="DINE_IN" onclick="setManualOrderType('DINE_IN')">Dine-in</button><button type="button" data-order-type="TAKEAWAY" onclick="setManualOrderType('TAKEAWAY')">Takeaway</button><button type="button" data-order-type="DELIVERY" onclick="setManualOrderType('DELIVERY')">Delivery</button></div><select id="delivery-source" class="select hidden"><option value="DELIVERY">Direct delivery</option><option value="SWIGGY">Swiggy</option><option value="ZOMATO">Zomato</option></select><div class="customer-inline"><input id="manual-customer-phone" readonly="readonly" maxlength="10" placeholder="Customer mobile (optional)" style="background:#f8fafc; font-size:24px; letter-spacing:2px; text-align:center; cursor:pointer;">
+
+<div id="numpad-container" style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:16px;">
+    <button type="button" class="numpad-btn">1</button><button type="button" class="numpad-btn">2</button><button type="button" class="numpad-btn">3</button>
+    <button type="button" class="numpad-btn">4</button><button type="button" class="numpad-btn">5</button><button type="button" class="numpad-btn">6</button>
+    <button type="button" class="numpad-btn">7</button><button type="button" class="numpad-btn">8</button><button type="button" class="numpad-btn">9</button>
+    <button type="button" class="numpad-btn" onclick="document.getElementById('manual-customer-phone').value=''">CLEAR</button>
+    <button type="button" class="numpad-btn">0</button>
+    <button type="button" class="numpad-btn" onclick="const p=document.getElementById('manual-customer-phone'); p.value=p.value.slice(0,-1)">DEL</button>
+</div>
+<style>
+.numpad-btn { background:#f1f5f9; border:none; border-radius:12px; height:54px; font-size:20px; font-weight:800; color:#334155; cursor:pointer; }
+.numpad-btn:active { background:#e2e8f0; }
+</style>
+<input id="manual-customer-name" maxlength="100" placeholder="Customer name"></div><div id="manual-customer-note" class="customer-note"></div></div><div class="modal-filters" style="padding:14px 18px 0;background:#fff;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:12px;z-index:10;"><input type="text" id="order-search-input" class="order-search" placeholder="Search items..." oninput="renderOrderMenu()" style="width:100%;height:38px;border:1px solid var(--line);border-radius:11px;padding:0 12px;outline:none;font-size:11px;font-weight:600;"><div id="category-shortcuts" class="category-shortcuts" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;margin-bottom:-1px;"></div></div><div class="modal-body" id="order-modal-items" style="overflow:visible;"></div></div><div class="modal-foot"><div class="modal-total"><span>Subtotal</span><span id="order-modal-total">₹0</span></div><button onclick="submitManualOrder()" class="refresh-btn" style="width:100%;justify-content:center">Place Order</button></div></div></div>
+<div id="tender-modal" class="overlay" onclick="if(event.target===this)closeTenderModal()"><div class="modal tender-modal"><div class="modal-head"><div><div class="modal-title">Checkout · <span id="tender-token"></span></div><div id="tender-order-label" class="panel-sub"></div></div><button onclick="closeTenderModal()" class="close">×</button></div><div class="modal-body"><div class="tender-total"><span>Amount due</span><strong id="tender-total">₹0</strong></div><div id="tender-breakdown" class="tender-breakdown"></div><div class="tender-methods"><button class="tender-method active" data-tender="CASH" onclick="selectTender('CASH')">CASH</button><button class="tender-method" data-tender="UPI" onclick="selectTender('UPI')">UPI</button><button class="tender-method" data-tender="CARD" onclick="selectTender('CARD')">CARD</button></div><button class="split-toggle" id="split-toggle" onclick="toggleSplitBill()">Split bill</button><div id="split-fields" class="split-fields hidden"><div class="split-row"><select id="split-method-1" class="select"><option>CASH</option><option>UPI</option><option>CARD</option></select><input id="split-amount-1" type="number" min="0" step="0.01" oninput="syncSplitAmount()"></div><div class="split-row"><select id="split-method-2" class="select"><option>UPI</option><option>CASH</option><option>CARD</option></select><input id="split-amount-2" type="number" min="0" step="0.01" readonly></div></div></div><div class="modal-foot"><button onclick="confirmTender()" class="refresh-btn" style="width:100%;justify-content:center">Collect payment &amp; print bill</button></div></div></div>
+<div id="upi-qr-modal" class="overlay" onclick="if(event.target===this)closeUpiQr()"><div class="modal" style="max-width:420px"><div class="modal-head"><div><div class="modal-title">Pay by UPI</div><div id="upi-qr-caption" class="panel-sub"></div></div><button onclick="closeUpiQr()" class="close">×</button></div><div class="modal-body" style="text-align:center"><div id="upi-qr-code" style="display:flex;justify-content:center;padding:14px;min-height:240px"></div><div id="upi-qr-amount" style="font-size:28px;font-weight:800;margin:8px 0 18px"></div><div class="panel-sub">Scan with PhonePe, GPay, or any UPI app.</div></div><div class="modal-foot"><button onclick="simulateUpiSuccess()" class="refresh-btn" style="width:100%;justify-content:center">Simulate Mock Success</button></div></div></div>
+
+<div id="printer-error" class="overlay hidden" style="background:rgba(220,38,38,0.95); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff;">
+    <h1 style="font-size:32px; font-weight:900; margin-bottom:12px; text-align:center;">PRINTER DISCONNECTED</h1>
+    <p style="font-size:16px; font-weight:600; margin-bottom:32px;">RESTART BRIDGE</p>
+    <button onclick="retryFailedPrints()" style="background:#fff; color:#dc2626; border:none; padding:16px 32px; border-radius:12px; font-size:18px; font-weight:800; cursor:pointer; box-shadow:0 8px 16px rgba(0,0,0,0.2);">Retry Failed Prints (<span id="failed-print-count">0</span>)</button>
+    <button onclick="document.getElementById('printer-error').classList.add('hidden')" style="margin-top:24px; background:transparent; border:1px solid rgba(255,255,255,0.5); color:#fff; padding:8px 16px; border-radius:8px; cursor:pointer;">Dismiss</button>
+</div>
+
+
+<div id="order-options-modal" class="overlay hidden" onclick="if(event.target===this)this.classList.add('hidden')" style="z-index:9000; display:flex; flex-direction:column; justify-content:flex-end;">
+    <div style="background:#fff; border-top-left-radius:24px; border-top-right-radius:24px; padding:24px; padding-bottom:48px;">
+        <h3 style="margin-bottom:24px; font-size:18px; font-weight:800;" id="opts-title">Order Options</h3>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+            <button onclick="document.getElementById('order-options-modal').classList.add('hidden'); printKOT(window.currentOptsId);" style="height:64px; border-radius:16px; font-size:16px; font-weight:800; background:#f1f5f9; border:none; cursor:pointer;">Reprint KOT</button>
+            <button onclick="document.getElementById('order-options-modal').classList.add('hidden'); if(confirm('Cancel Order?')) if(confirm('Are you absolutely sure? This cannot be undone.')) setStatus(window.currentOptsId, 'CANCELLED');" style="height:64px; border-radius:16px; font-size:16px; font-weight:800; background:#fef2f2; color:#dc2626; border:none; cursor:pointer;">Cancel Order</button>
+        </div>
+    </div>
+</div>
+
+  <div id="toast" class="toast"></div>
 
 <script>
-const money = n => '₹ ' + Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2});
+const money = n => '₹' + Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2});
 const esc = s => String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const statusClass = s => String(s||'').toLowerCase();
 const iconPaths={
@@ -137,195 +246,256 @@ const iconPaths={
 function icon(name){return `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${iconPaths[name]||''}</svg>`}
 document.querySelectorAll('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon));
 
-let currentView='overview', menuData=null, lastOrders=[], manualOrderCart={}, manualOrderTable=null, toastTimer, lastActiveIds=new Set(), lastStatusMap=new Map(), lastRefreshAt=0, latestHistory=[];
-function showView(viewId){
-  document.querySelectorAll('.view-section').forEach(e=>e.classList.add('hidden'));
-  const target=document.getElementById('view-'+viewId);
-  if(!target)return;
-  target.classList.remove('hidden');
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  const nav=document.getElementById('nav-'+viewId); if(nav)nav.classList.add('active');
-  const titles={overview:['Overview','Live operations'],manual:['Manual Orders','Floor operations'],inventory:['Inventory','Stock control'],insights:['Insights','Business performance'],history:['History','Closed orders']};
-  document.getElementById('page-title').textContent=titles[viewId][0];
-  document.getElementById('page-context').textContent=titles[viewId][1];
-  currentView=viewId;
-  if(viewId==='manual')renderTables(lastOrders);
-  if(viewId==='inventory')loadInventory();
-  if(viewId==='insights'){loadInsights();renderSalesBars(latestHistory)}
-  if(viewId==='history')renderFullHistory();
-}
-function toast(msg){const e=document.getElementById('toast');e.textContent=msg;e.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.classList.remove('show'),2400)}
+let currentView='overview', menuData=null, lastOrders=[], manualOrderCart={}, manualOrderTable=null, manualOrderType='DINE_IN', latestHistory=[], appSettings={}, currentTenderOrder=null, currentUpiOrder=null, selectedTender='CASH', splitBill=false, toastTimer;
+function showView(viewId){const titles={overview:['Overview','Live operations'],manual:['Manual Orders','Counter and floor operations'],online:['Online Orders','Aggregator queue'],customers:['Customers','Customer relationship'],insights:['Insights','Business performance'],history:['History','Closed orders'],'86list':['Menu Control','Toggle item availability'],settings:['Settings','Hardware and pricing']};const target=document.getElementById('view-'+viewId);if(!target||!titles[viewId])return;document.querySelectorAll('.view-section').forEach(e=>e.classList.add('hidden'));target.classList.remove('hidden');document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.getElementById('nav-'+viewId)?.classList.add('active');document.getElementById('page-title').textContent=titles[viewId][0];document.getElementById('page-context').textContent=titles[viewId][1];currentView=viewId;if(viewId==='manual')renderTables(lastOrders);if(viewId==='online')renderOnlineOrders(lastOrders);if(viewId==='insights'){loadInsights();renderSalesBars(latestHistory)}if(viewId==='history')renderFullHistory();if(viewId==='86list') render86List(); if(viewId==='settings')loadSettings()}
+function toast(msg){const e=document.getElementById('toast');e.textContent=msg;e.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.classList.remove('show'),2600)}
 async function api(url,opts){const r=await fetch(url,opts);let d={};try{d=await r.json()}catch{}if(!r.ok)throw new Error(d.detail||'Request failed');return d}
-function animateNumber(el,target,prefix=''){const current=Number(el.dataset.value||0), end=Number(target||0);if(Math.abs(end-current)<.01){el.textContent=prefix+end.toLocaleString('en-IN',{maximumFractionDigits:2});el.dataset.value=end;return}const start=performance.now(),dur=380;function tick(t){const p=Math.min(1,(t-start)/dur),e=1-Math.pow(1-p,3),v=current+(end-current)*e;el.textContent=prefix+v.toLocaleString('en-IN',{maximumFractionDigits:2});if(p<1)requestAnimationFrame(tick);else el.dataset.value=end}requestAnimationFrame(tick)}
+function animateNumber(el,target,prefix=''){if(!el)return;el.textContent=prefix+Number(target||0).toLocaleString('en-IN',{maximumFractionDigits:2});el.dataset.value=target||0}
 function elapsed(iso){const ms=Math.max(0,Date.now()-new Date(iso).getTime()),m=Math.floor(ms/60000),s=Math.floor(ms/1000)%60;return m?`${m}m ${String(s).padStart(2,'0')}s`:`${s}s`}
 function statusIcon(status){return {RECEIVED:icon('pulse'),PREPARING:icon('trend'),READY:icon('check')}[status]||''}
-function orderCard(o,i){const buttons=[];if(!o.bill_generated&&o.status!=='CANCELLED')buttons.push(`<button class="btn" onclick="bill(${o.id})">Generate bill</button>`);if(o.status==='RECEIVED')buttons.push(`<button class="btn primary" onclick="setStatus(${o.id},'PREPARING')">Start preparing</button>`);if(o.status==='PREPARING')buttons.push(`<button class="btn primary" onclick="setStatus(${o.id},'READY')">Mark ready</button>`);if(o.status==='READY')buttons.push(`<button class="btn primary" onclick="setStatus(${o.id},'COMPLETED')">Complete</button>`);if(['RECEIVED','PREPARING'].includes(o.status))buttons.push(`<button class="btn danger" onclick="setStatus(${o.id},'CANCELLED')">Cancel</button>`);const state=statusClass(o.status);return `<article class="order-card" data-order-id="${o.id}" style="animation-delay:${Math.min(i,6)*35}ms"><div class="order-main"><div class="order-state ${state}"></div><div class="order-body"><div class="order-head"><div><div class="order-number">${esc(o.order_number)} <span class="order-table">· Table ${esc(o.table_number)}</span></div><div class="order-time">Placed ${new Date(o.created_at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} · <span class="elapsed" data-created="${esc(o.created_at)}">${elapsed(o.created_at)}</span> ago</div></div><span class="status ${state}">${statusIcon(o.status)} ${esc(o.status)}</span></div><div class="items">${o.items.map(it=>`<div class="item-row"><span class="item-name"><b>${it.quantity}×</b>${esc(it.item_name)} <small style="color:#a1a8ae">${esc(it.tier)}</small></span><span class="item-price">${money(it.price*it.quantity)}</span></div>`).join('')}</div>${o.notes?`<div class="order-note"><b>Note:</b> ${esc(o.notes)}</div>`:''}<div class="order-foot"><div><div class="order-total-label">Order total</div><div class="order-total">${money(o.subtotal)}</div></div><div class="actions">${buttons.join('')}</div></div></div></div></article>`}
-let lastLiveOrdersJson="", lastOverviewJson="", lastTablesJson="", lastHistoryJson="";
-
-function updateOrderCardElement(cardEl, o){
-  cardEl.dataset.orderId = o.id;
-  const stateDiv = cardEl.querySelector('.order-state');
-  if(stateDiv) stateDiv.className = 'order-state ' + statusClass(o.status);
-  const statusSpan = cardEl.querySelector('.status');
-  if(statusSpan){
-    statusSpan.className = 'status ' + statusClass(o.status);
-    statusSpan.innerHTML = statusIcon(o.status) + ' ' + esc(o.status);
-  }
-  const actionsDiv = cardEl.querySelector('.actions');
-  if(actionsDiv){
-    const buttons = [];
-    if(!o.bill_generated && o.status !== 'CANCELLED') buttons.push(`<button class="btn" onclick="bill(${o.id})">Generate bill</button>`);
-    if(o.status === 'RECEIVED') buttons.push(`<button class="btn primary" onclick="setStatus(${o.id},'PREPARING')">Start preparing</button>`);
-    if(o.status === 'PREPARING') buttons.push(`<button class="btn primary" onclick="setStatus(${o.id},'READY')">Mark ready</button>`);
-    if(o.status === 'READY') buttons.push(`<button class="btn primary" onclick="setStatus(${o.id},'COMPLETED')">Complete</button>`);
-    if(['RECEIVED','PREPARING'].includes(o.status)) buttons.push(`<button class="btn danger" onclick="setStatus(${o.id},'CANCELLED')">Cancel</button>`);
-    actionsDiv.innerHTML = buttons.join('');
-  }
-}
-
-function renderLiveOrders(live){
-  const currentJson = JSON.stringify(live.map(o => ({id:o.id, status:o.status, bill:o.bill_generated, updated:o.updated_at, notes:o.notes, subtotal:o.subtotal, items:o.items})));
-  if(currentJson === lastLiveOrdersJson) return;
-  lastLiveOrdersJson = currentJson;
-
-  const container = document.getElementById('orders');
-  if(!container) return;
-  if(!live.length){
-    container.innerHTML = `<div class="empty"><div class="empty-icon">${icon('check')}</div><div class="empty-title">All caught up</div><div class="empty-sub">New QR orders will appear here automatically.</div></div>`;
-    return;
-  }
-  if(container.querySelector('.empty')) container.innerHTML = '';
-
-  const existingCards = new Map();
-  container.querySelectorAll('.order-card').forEach(el => {
-    const id = Number(el.dataset.orderId);
-    if(id) existingCards.set(id, el);
-  });
-  const incomingIds = new Set(live.map(o => o.id));
-
-  existingCards.forEach((el, id) => {
-    if(!incomingIds.has(id)) el.remove();
-  });
-
-  live.forEach((o, i) => {
-    if(existingCards.has(o.id)){
-      updateOrderCardElement(existingCards.get(o.id), o);
-    } else {
-      const temp = document.createElement('div');
-      temp.innerHTML = orderCard(o, i);
-      const newCard = temp.firstElementChild;
-      const targetChild = container.children[i];
-      if(targetChild){
-        container.insertBefore(newCard, targetChild);
-      } else {
-        container.appendChild(newCard);
-      }
+function orderTotal(o){return Number(o.grand_total??o.subtotal??0)}
+function typeBadge(o){return `<span class="order-badge ${o.order_type==='DELIVERY'?'delivery':''}">${esc(o.order_label||o.order_type)}</span>`}
+function orderActions(o) {
+    const b = [];
+    if (o.payment_status === 'PENDING_PAYMENT') {
+        b.push(`<button class="btn primary" style="height:44px;font-size:13px;background:#5b3cc4;border-color:#5b3cc4" onclick="openUpiQr(${o.id})">📱 UPI</button>`);
+        b.push(`<button class="btn primary" style="height:44px;font-size:13px;background:#287a55;border-color:#287a55" onclick="fastCash(${o.id})">💵 EXACT CASH</button>`);
     }
-  });
+    if (['RECEIVED', 'PREPARING'].includes(o.status)) {
+        b.push(`<button class="btn primary" style="flex:1; height:44px; font-size:14px;" onclick="setStatus(${o.id},'${o.status==='RECEIVED'?'PREPARING':'READY'}')">${o.status==='RECEIVED'?(o.order_type==='DELIVERY'?'Accept & Print KOT':'Send to kitchen'):'Mark ready'}</button>`);
+    } else if (o.status === 'READY' && o.payment_status === 'PREPAID') {
+        b.push(`<button class="btn primary" style="flex:1; height:44px; font-size:14px;" onclick="setStatus(${o.id},'COMPLETED')">Mark served</button>`);
+    } else if (o.status === 'READY' && !o.bill_generated && o.payment_status !== 'PENDING_PAYMENT') {
+        b.push(`<button class="btn primary" style="flex:1; height:44px; font-size:14px;" onclick="openTender(${o.id})">Checkout</button>`);
+    } else if (o.status === 'READY') {
+        b.push(`<button class="btn primary" style="flex:1; height:44px; font-size:14px;" onclick="setStatus(${o.id},'COMPLETED')">Complete</button>`);
+    }
+    
+    b.push(`<button class="btn" style="height:44px; width:44px; padding:0; display:grid; place-items:center;" onclick="openOrderOptions(${o.id})"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>`);
+    return b.join('');
 }
-
-function renderHistory(history){
-  const currentJson = JSON.stringify(history.map(o => [o.id, o.status, o.subtotal]));
-  if(currentJson === lastHistoryJson) return;
-  lastHistoryJson = currentJson;
-  document.getElementById('history').innerHTML=history.length?history.map(o=>`<tr><td class="history-order">${esc(o.order_number)}</td><td>${esc(o.table_number)}</td><td><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td><td class="right">${money(o.subtotal)}</td></tr>`).join(''):`<tr><td colspan="4"><div class="history-empty">No completed or cancelled orders yet.</div></td></tr>`;
-}
-
-function renderSalesBars(history){const completed=history.filter(o=>o.status==='COMPLETED').slice(0,10).reverse();const box=document.getElementById('sales-bars');if(!box)return;if(!completed.length){box.innerHTML='<div class="empty" style="min-height:160px;width:100%"><div class="empty-title">Not enough completed sales yet</div></div>';return}const max=Math.max(...completed.map(o=>Number(o.subtotal)||0),1);box.innerHTML=completed.map((o,i)=>`<div class="bar" style="height:${Math.max(12,(o.subtotal/max)*145)}px;animation-delay:${i*35}ms" title="${esc(o.order_number)} · ${money(o.subtotal)}"><span class="bar-label">${esc(String(o.table_number).replace('Table ','T'))}</span></div>`).join('')}
+function orderCard(o,i){const state=statusClass(o.status), customer=o.customer_name||o.customer_phone;return `<article class="order-card" data-order-id="${o.id}" style="animation-delay:${Math.min(i,6)*35}ms"><div class="order-main"><div class="order-state ${state}"></div><div class="order-body"><div class="order-head"><div><div class="order-number">Token #${esc(o.token_number)} · ${typeBadge(o)}</div><div class="order-time">Placed ${new Date(o.created_at).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})} · <span class="elapsed" data-created="${esc(o.created_at)}">${elapsed(o.created_at)}</span> ago${customer?` · ${esc(customer)}`:''}</div></div><span class="status ${state}">${statusIcon(o.status)} ${esc(o.status)}</span></div><div class="items">${o.items.map(it=>`<div class="item-row"><span class="item-name"><b>${it.quantity}×</b>${esc(it.item_name)} <small style="color:#a1a8ae">${esc(it.tier)}</small></span></div>`).join('')}</div>${o.notes?`<div class="order-note"><b>Note:</b> ${esc(o.notes)}</div>`:''}<div class="order-foot"><div><div class="order-total-label">${o.payment_status==='PAID'?'Paid total':'Order total'}</div><div class="order-total">${money(orderTotal(o))}</div></div><div class="actions">${orderActions(o)}</div></div></div></div></article>`}
+function renderOrderList(el,orders,emptyTitle,emptySub){if(!el)return;el.innerHTML=orders.length?orders.map(orderCard).join(''):`<div class="empty"><div class="empty-icon">${icon('check')}</div><div class="empty-title">${emptyTitle}</div><div class="empty-sub">${emptySub}</div></div>`}
+function renderLiveOrders(orders){const active=orders.filter(o=>!['COMPLETED','CANCELLED'].includes(o.status));const prepaid=active.filter(o=>o.payment_status==='PREPAID');const pending=active.filter(o=>o.payment_status==='PENDING_PAYMENT');renderOrderList(document.getElementById('prepaid-orders'),prepaid,'No prepaid orders in prep','Prepaid QR orders will appear and print automatically.');renderOrderList(document.getElementById('pending-payment-orders'),pending,'No payments awaiting settlement','Pay-at-counter orders will appear here for checkout.')}
+function renderOnlineOrders(orders){const online=orders.filter(o=>o.order_type==='DELIVERY'&&!['COMPLETED','CANCELLED'].includes(o.status));renderOrderList(document.getElementById('online-orders'),online,'No online orders waiting','Swiggy, Zomato, and direct delivery orders will appear here.')}
+function renderHistory(history){const el=document.getElementById('history');if(!el)return;el.innerHTML=history.length?history.map(o=>`<tr><td class="history-order"><span class="history-token">#${esc(o.token_number)}</span> ${esc(o.order_label)}</td><td>${esc(o.payment_status)}</td><td><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td><td class="right">${money(orderTotal(o))}</td></tr>`).join(''):`<tr><td colspan="4"><div class="history-empty">No completed or cancelled orders yet.</div></td></tr>`}
+function renderSalesBars(history){const completed=history.filter(o=>o.status==='COMPLETED').slice(0,10).reverse(),box=document.getElementById('sales-bars');if(!box)return;if(!completed.length){box.innerHTML='<div class="empty" style="min-height:160px;width:100%"><div class="empty-title">Not enough completed sales yet</div></div>';return}const max=Math.max(...completed.map(orderTotal),1);box.innerHTML=completed.map((o,i)=>`<div class="bar" style="height:${Math.max(12,(orderTotal(o)/max)*145)}px;animation-delay:${i*35}ms" title="${esc(o.order_label)} · ${money(orderTotal(o))}"><span class="bar-label">#${esc(o.token_number)}</span></div>`).join('')}
 function updateConnection(ok){document.getElementById('connection-dot').classList.toggle('off',!ok);document.getElementById('side-live-dot').classList.toggle('off',!ok);document.getElementById('connection-text').textContent=ok?'Connected':'Offline';document.getElementById('side-live-text').textContent=ok?'Live system':'Connection issue'}
-async function refresh(){const btn=document.getElementById('refresh');btn.classList.add('loading');try{const [orders,summary,history]=await Promise.all([api('/api/orders'),api('/api/revenue/summary'),api('/api/history')]);latestHistory=history;lastOrders=orders;renderTables(orders);renderOverviewTables(orders);const live=orders.filter(o=>['RECEIVED','PREPARING','READY'].includes(o.status));renderLiveOrders(live);animateNumber(document.getElementById('todayRevenue'),summary.today_revenue,'₹ ');animateNumber(document.getElementById('todayOrders'),summary.today_completed_orders);animateNumber(document.getElementById('activeOrders'),summary.active_orders);animateNumber(document.getElementById('allRevenue'),summary.all_time_revenue,'₹ ');document.getElementById('active-stat').classList.toggle('active',summary.active_orders>0);renderHistory(history);renderSalesBars(history);document.getElementById('lastUpdated').textContent='Updated '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});updateConnection(true);lastRefreshAt=Date.now();lastStatusMap=new Map(live.map(o=>[o.id,o.status]));}catch(e){updateConnection(false);if(currentView==='overview')toast('Could not refresh: '+e.message)}finally{btn.classList.remove('loading')}}
-async function bill(id){try{const o=await api(`/api/orders/${id}/bill`,{method:'POST'});toast(`Bill generated · ${o.order_number}`);printBill(o);refresh()}catch(e){toast(e.message)}}
-function printBill(o){const w=window.open('','_blank','width=420,height=650');if(!w)return;w.document.write(`<html><head><title>${esc(o.order_number)}</title><style>body{font-family:Arial;padding:24px;max-width:360px;margin:auto;color:#172536}.row{display:flex;justify-content:space-between;gap:12px;margin:8px 0}.total{border-top:1px solid #ddd;padding-top:12px;font-weight:bold;font-size:18px}small{color:#777}</style></head><body><h1>Big Little Bombaye</h1><small>${esc(o.order_number)} · Table ${esc(o.table_number)}</small><hr>${o.items.map(i=>`<div class="row"><span>${i.quantity} × ${esc(i.item_name)} (${esc(i.tier)})</span><b>${money(i.price*i.quantity)}</b></div>`).join('')}<div class="row total"><span>Total</span><span>${money(o.subtotal)}</span></div><p>Thank you.</p><script>window.print()<\/script></body></html>`);w.document.close()}
+async function refresh(){const btn=document.getElementById('refresh');btn.classList.add('loading');try{const [orders,summary,history,settings]=await Promise.all([api('/api/orders'),api('/api/revenue/summary'),api('/api/history'),api('/api/settings')]);lastOrders=orders;latestHistory=history;appSettings=settings;const live=orders.filter(o=>['RECEIVED','PREPARING','READY'].includes(o.status));renderLiveOrders(orders);renderOnlineOrders(orders);renderTables(orders);renderOverviewTables(orders);renderHistory(history);renderSalesBars(history);animateNumber(document.getElementById('todayRevenue'),summary.today_revenue,'₹');animateNumber(document.getElementById('todayOrders'),summary.today_completed_orders);animateNumber(document.getElementById('activeOrders'),summary.active_orders);animateNumber(document.getElementById('pendingKots'),orders.filter(o=>o.payment_status==='PREPAID'&&!['COMPLETED','CANCELLED'].includes(o.status)).length);document.getElementById('active-stat')?.classList.toggle('active',summary.active_orders>0);document.getElementById('lastUpdated').textContent='Updated '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});updateConnection(true)}catch(e){updateConnection(false);toast('Could not refresh: '+e.message)}finally{btn.classList.remove('loading')}}
 
-async function setStatus(id,status){
-  const order = lastOrders.find(o => o.id === id);
-  const oldStatus = order ? order.status : null;
-  if(order){
-    order.status = status;
-    const cardEl = document.querySelector(`.order-card[data-order-id="${id}"]`);
-    if(cardEl){
-      if(['COMPLETED','CANCELLED'].includes(status)){
-        cardEl.style.opacity = '0.4';
-        cardEl.style.pointerEvents = 'none';
-      } else {
-        updateOrderCardElement(cardEl, order);
+function openOrderOptions(id) { window.currentOptsId = id; const o = lastOrders.find(x=>x.id===id); document.getElementById("opts-title").textContent = "Token #" + o.token_number; document.getElementById("order-options-modal").classList.remove("hidden"); document.getElementById("order-options-modal").style.display="flex"; }
+  async function setStatus(id,status){const order=lastOrders.find(o=>o.id===id);if(status==='PREPARING'&&order?.status==='RECEIVED')printKOT(id);try{await api(`/api/orders/${id}/status`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});toast(status==='PREPARING'?'KOT sent to kitchen':status==='READY'?'Order is ready':status==='COMPLETED'?'Order completed':'Order cancelled');refresh()}catch(e){toast(e.message)}}
+function openTender(id){currentTenderOrder=lastOrders.find(o=>o.id===id);if(!currentTenderOrder)return;selectedTender='CASH';splitBill=false;document.getElementById('tender-token').textContent='#'+currentTenderOrder.token_number;document.getElementById('tender-order-label').textContent=currentTenderOrder.order_label;document.getElementById('tender-total').textContent=money(orderTotal(currentTenderOrder));document.getElementById('tender-breakdown').textContent=`Subtotal ${money(currentTenderOrder.subtotal)} · GST ${money(currentTenderOrder.tax_amount)} · Service ${money(currentTenderOrder.service_charge)}`;document.getElementById('split-toggle').classList.remove('active');document.getElementById('split-fields').classList.add('hidden');document.getElementById('split-amount-1').value=(orderTotal(currentTenderOrder)/2).toFixed(2);document.getElementById('split-amount-2').value=(orderTotal(currentTenderOrder)/2).toFixed(2);selectTender('CASH');document.getElementById('tender-modal').classList.add('open')}
+function closeTenderModal(){document.getElementById('tender-modal').classList.remove('open');currentTenderOrder=null}
+function selectTender(method){selectedTender=method;document.querySelectorAll('.tender-method').forEach(b=>b.classList.toggle('active',b.dataset.tender===method))}
+function toggleSplitBill(){splitBill=!splitBill;document.getElementById('split-toggle').classList.toggle('active',splitBill);document.getElementById('split-fields').classList.toggle('hidden',!splitBill)}
+function syncSplitAmount(){if(!currentTenderOrder)return;const first=Math.max(0,Number(document.getElementById('split-amount-1').value||0));document.getElementById('split-amount-2').value=Math.max(0,orderTotal(currentTenderOrder)-first).toFixed(2)}
+async function confirmTender(){if(!currentTenderOrder)return;const payments=splitBill?[{method:document.getElementById('split-method-1').value,amount:Number(document.getElementById('split-amount-1').value||0)},{method:document.getElementById('split-method-2').value,amount:Number(document.getElementById('split-amount-2').value||0)}]:[{method:selectedTender,amount:orderTotal(currentTenderOrder)}];try{const o=await api(`/api/orders/${currentTenderOrder.id}/bill`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({payments})});printBill(o);closeTenderModal();toast('Payment collected · Bill printed');refresh()}catch(e){toast(e.message)}}
+function removeFromSettlement(order){lastOrders=lastOrders.map(item=>item.id===order.id?order:item);renderLiveOrders(lastOrders);renderOnlineOrders(lastOrders)}
+async function fastCash(id){const order=lastOrders.find(item=>item.id===id);if(!order)return;try{const paid=await api(`/api/orders/${id}/bill`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({payments:[{method:'CASH',amount:orderTotal(order)}]})});printBill(paid,true);removeFromSettlement(paid);toast(`Cash received: ${orderLocation(paid)}`);refresh()}catch(e){toast(e.message)}}
+async function openUpiQr(id){const order=lastOrders.find(item=>item.id===id);if(!order)return;try{const data=await api(`/api/orders/${id}/upi-intent`);currentUpiOrder=order;const box=document.getElementById('upi-qr-code');box.innerHTML='';if(typeof QRCode!=='function')throw new Error('QR generator is unavailable. Check your internet connection.');new QRCode(box,{text:data.upi_intent,width:220,height:220,colorDark:'#172536',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});document.getElementById('upi-qr-caption').textContent=`Token #${order.token_number} · ${orderLocation(order)}`;document.getElementById('upi-qr-amount').textContent=money(data.amount);document.getElementById('upi-qr-modal').classList.add('open')}catch(e){toast(e.message)}}
+function closeUpiQr(){document.getElementById('upi-qr-modal').classList.remove('open');currentUpiOrder=null}
+async function simulateUpiSuccess(){if(!currentUpiOrder)return;try{const result=await api('/api/webhooks/mock-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order_id:currentUpiOrder.id})});printBill(result.order,true);removeFromSettlement(result.order);closeUpiQr();toast(`Payment Received: ${orderLocation(result.order)}`);refresh()}catch(e){toast(e.message)}}
+
+
+  let printQueue = JSON.parse(localStorage.getItem('failedPrints') || '[]');
+  function updatePrintQueueCount() {
+      const el = document.getElementById('failed-print-count');
+      if (el) el.textContent = printQueue.length;
+  }
+  updatePrintQueueCount();
+
+  async function printRequest(payload, type) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
+      try {
+          const res = await fetch('http://localhost:8000/api/printer/print', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ receipt_type: type, order: payload }),
+              signal: controller.signal
+          });
+          clearTimeout(timeoutId);
+          if (!res.ok) throw new Error('Bad status');
+          return true;
+      } catch (e) {
+          clearTimeout(timeoutId);
+          printQueue.push({ payload, type, time: Date.now() });
+          localStorage.setItem('failedPrints', JSON.stringify(printQueue));
+          updatePrintQueueCount();
+          document.getElementById('printer-error').classList.remove('hidden');
+          return false;
       }
-    }
   }
-  try{
-    await api(`/api/orders/${id}/status`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});
-    toast(status==='PREPARING'?'Order moved to preparing':status==='READY'?'Order is ready':status==='COMPLETED'?'Order completed':'Order cancelled');
-    refresh();
-  }catch(e){
-    if(order && oldStatus !== null){
-      order.status = oldStatus;
-      const cardEl = document.querySelector(`.order-card[data-order-id="${id}"]`);
-      if(cardEl){
-        cardEl.style.opacity = '1';
-        cardEl.style.pointerEvents = 'auto';
-        updateOrderCardElement(cardEl, order);
+
+  async function retryFailedPrints() {
+      if (!printQueue.length) return toast('Queue empty');
+      const btn = document.querySelector('#printer-error button');
+      btn.textContent = 'Printing...';
+      btn.disabled = true;
+      let remaining = [];
+      for (const job of printQueue) {
+          const success = await printRequest(job.payload, job.type);
+          if (success) {
+              await new Promise(r => setTimeout(r, 500)); // 500ms delay between prints
+          } else {
+              remaining.push(job);
+              break; // Stop sequentially on first failure
+          }
       }
+      printQueue = remaining;
+      localStorage.setItem('failedPrints', JSON.stringify(printQueue));
+      updatePrintQueueCount();
+      btn.innerHTML = `Retry Failed Prints (<span id="failed-print-count">${printQueue.length}</span>)`;
+      btn.disabled = false;
+      if (printQueue.length === 0) {
+          document.getElementById('printer-error').classList.add('hidden');
+          toast('All queued receipts printed!');
+      }
+  }
+
+  function printBill(o, silent=false) {
+      if (!silent) toast('Sending BILL to printer...');
+      printRequest(o, 'BILL').then(ok => { if (ok && !silent) toast('BILL printed!'); });
+  }
+  
+  function printKOT(orderId) {
+      const o = lastOrders.find(x => x.id === orderId);
+      if(!o) return;
+      toast('Sending KOT to printer...');
+      printRequest(o, 'KOT').then(ok => { if (ok) toast('KOT printed!'); });
+  }
+
+  function renderOverviewTables(orders=[]){const active=orders.filter(o=>o.order_type==='DINE_IN'&&['RECEIVED','PREPARING','READY'].includes(o.status)),byTable=new Map();active.forEach(o=>{const n=tableNumberKey(o.table_number);if(n&&!byTable.has(n))byTable.set(n,o)});const el=document.getElementById('overview-tables');if(!el)return;el.innerHTML=Array.from({length:12},(_,i)=>{const n=i+1,o=byTable.get(n),label=!o?'Available':o.status==='RECEIVED'?'Occupied':o.status==='PREPARING'?'Waiting on Food':'Bill Requested';return `<button type="button" class="table-square ${o?'occupied':'vacant'}" onclick="showView('manual')"><div class="chip-no">T${n}</div><div class="chip-state">${label}</div>${o?`<div class="chip-order">${money(orderTotal(o))}</div>`:''}</button>`}).join('')}
+function tableNumberKey(v){return /^\d+$/.test(String(v||''))?Number(v):null}
+function renderTables(orders=[]){const active=orders.filter(o=>o.order_type==='DINE_IN'&&['RECEIVED','PREPARING','READY'].includes(o.status)),byTable=new Map();active.forEach(o=>{const n=tableNumberKey(o.table_number);if(n&&!byTable.has(n))byTable.set(n,o)});const busy=byTable.size;const at = document.getElementById('available-tables'); if(at) at.textContent=12-busy;const bt = document.getElementById('busy-tables'); if(bt) bt.textContent=busy;document.getElementById('tables-container').innerHTML=Array.from({length:12},(_,i)=>{const n=i+1,o=byTable.get(n),state=o?(o.status==='READY'?'ready':'busy'):'available',status=!o?'Available':o.status==='RECEIVED'?'Occupied':o.status==='PREPARING'?'Waiting on Food':'Bill Requested';return `<button type="button" onclick="openOrderModal(${n},'DINE_IN')" class="table-box ${state}"><div class="table-top"><div class="table-icon">T${n}</div><span class="table-status ${state}">${status}</span></div><div class="table-name">Table ${n}</div><div class="table-hint">${o?`Token #${o.token_number} · ${money(orderTotal(o))}`:'Tap to create a dine-in order'}</div>${o?`<div class="table-order">${o.items.reduce((sum,item)=>sum+item.quantity,0)} items</div>`:''}</button>`}).join('')}
+function renderFullHistory(){const q=(document.getElementById('history-search')?.value||'').trim().toLowerCase(),filter=document.getElementById('history-filter')?.value||'ALL',rows=latestHistory.filter(o=>(filter==='ALL'||o.status===filter)&&(!q||String(o.token_number).includes(q)||String(o.order_label).toLowerCase().includes(q)||String(o.customer_phone).includes(q)));const body=document.getElementById('full-history');if(!body)return;body.innerHTML=rows.length?rows.map(o=>{const count=o.items.reduce((n,it)=>n+it.quantity,0);return `<tr><td><strong>#${esc(o.token_number)}</strong><br><small>${esc(o.order_label)}</small></td><td>${esc(o.customer_name||o.customer_phone||'—')}</td><td><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td><td class="history-items">${count} items</td><td class="history-date">${new Date(o.updated_at||o.created_at).toLocaleString([],{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</td><td style="text-align:right"><strong>${money(orderTotal(o))}</strong></td></tr>`}).join(''):`<tr><td colspan="6" class="history-empty-row">No matching orders found.</td></tr>`}
+async function fetchMenu(){if(!menuData)menuData=await api('/api/menu')}
+    document.querySelectorAll('.numpad-btn').forEach(b => {
+        if(b.textContent.length === 1) {
+            b.onclick = () => {
+                const el = document.getElementById('manual-customer-phone');
+                if(el.value.length < 10) el.value += b.textContent;
+            };
+        }
+    });
+    
+    function numpadKeydown(e) {
+        if(!document.getElementById('order-modal').classList.contains('open')) return;
+        const el = document.getElementById('manual-customer-phone');
+        if (e.key >= '0' && e.key <= '9') {
+            if(el.value.length < 10) el.value += e.key;
+        } else if (e.key === 'Backspace') {
+            el.value = el.value.slice(0, -1);
+        } else if (e.key === 'Enter') {
+            lookupManualCustomer();
+        }
     }
-    toast('Failed to update status: ' + e.message);
-  }
-}
+    document.addEventListener('keydown', numpadKeydown);
 
-function renderOverviewTables(orders=[]){
-  const active=orders.filter(o=>['RECEIVED','PREPARING','READY'].includes(o.status));
-  const currentJson = JSON.stringify(active.map(o=>[o.table_number, o.status, o.subtotal]));
-  if(currentJson === lastOverviewJson) return;
-  lastOverviewJson = currentJson;
-
-  const byTable=new Map(); active.forEach(o=>{const n=tableNumberKey(o.table_number);if(n!=null&&!byTable.has(n))byTable.set(n,o)});
-  const el=document.getElementById('overview-tables'); if(!el)return;
-  let h=''; for(let i=1;i<=12;i++){const o=byTable.get(i);const state=o?(o.status==='READY'?'ready':'busy'):'';const label=o?(o.status==='RECEIVED'?'New':o.status==='PREPARING'?'Preparing':'Ready'):'Available';h+=`<button type="button" class="table-chip ${state}" onclick="showView('manual')"><div class="chip-no">T${i}</div><div class="chip-state"><span class="chip-dot"></span>${label}</div>${o?`<div class="chip-order">${money(o.subtotal)}</div>`:''}</button>`}
-  el.innerHTML=h;
-}
-function tableNumberKey(v){const m=String(v||'').match(/\d+/);return m?Number(m[0]):null}
-function renderTables(orders=[]){
-  const active=orders.filter(o=>['RECEIVED','PREPARING','READY'].includes(o.status));
-  const currentJson = JSON.stringify(active.map(o=>[o.table_number, o.status, o.subtotal, o.items.length]));
-  if(currentJson === lastTablesJson) return;
-  lastTablesJson = currentJson;
-
-  const byTable=new Map();
-  active.forEach(o=>{const n=tableNumberKey(o.table_number);if(n!=null && !byTable.has(n))byTable.set(n,o)});
-  const total=12,busy=Array.from(byTable.keys()).filter(n=>n>=1&&n<=total).length;
-  document.getElementById('available-tables').textContent=total-busy;
-  document.getElementById('busy-tables').textContent=busy;
-  let h='';
-  for(let i=1;i<=total;i++){
-    const o=byTable.get(i);
-    const state=o?(o.status==='READY'?'ready':'busy'):'available';
-    const status=o?(o.status==='RECEIVED'?'New':o.status==='PREPARING'?'Preparing':'Ready'):'Available';
-    const hint=o?`Order ${esc(o.order_number)} · ${money(o.subtotal)}`:'Tap to create a manual order';
-    h+=`<button type="button" onclick="openOrderModal('Table ${i}')" class="table-box ${state}"><div class="table-top"><div class="table-icon">T${i}</div><span class="table-status ${state}">${status}</span></div><div class="table-name">Table ${i}</div><div class="table-hint">${hint}</div>${o?`<div class="table-order">${o.items.reduce((n,it)=>n+it.quantity,0)} item${o.items.reduce((n,it)=>n+it.quantity,0)===1?'':'s'}</div>`:''}</button>`;
-  }
-  document.getElementById('tables-container').innerHTML=h;
-}
-function renderFullHistory(){
-  const q=(document.getElementById('history-search')?.value||'').trim().toLowerCase();
-  const filter=document.getElementById('history-filter')?.value||'ALL';
-  const rows=latestHistory.filter(o=>(filter==='ALL'||o.status===filter)&&(!q||String(o.order_number).toLowerCase().includes(q)||String(o.table_number).toLowerCase().includes(q)));
-  const body=document.getElementById('full-history'); if(!body)return;
-  body.innerHTML=rows.length?rows.map(o=>{const count=o.items.reduce((n,it)=>n+it.quantity,0);return `<tr><td><strong>${esc(o.order_number)}</strong></td><td>${esc(o.table_number)}</td><td><span class="status ${statusClass(o.status)}">${esc(o.status)}</span></td><td class="history-items">${count} item${count===1?'':'s'}</td><td class="history-date">${new Date(o.updated_at||o.created_at).toLocaleString([], {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</td><td style="text-align:right"><strong>${money(o.subtotal)}</strong></td></tr>`}).join(''):`<tr><td colspan="6" class="history-empty-row">No matching orders found.</td></tr>`;
-}
-
-async function fetchMenu(){if(!menuData){try{menuData=await api('/api/menu')}catch(e){toast(e.message)}}}
-async function openOrderModal(tableNum){manualOrderTable=tableNum;manualOrderCart={};document.getElementById('order-modal-title').textContent='New Order · '+tableNum;await fetchMenu();renderOrderMenu();updateOrderTotal();document.getElementById('order-modal').classList.add('open')}
+  async function openOrderModal(tableNum=null,type='DINE_IN'){manualOrderTable=tableNum?String(tableNum):null;manualOrderType=type;manualOrderCart={};document.getElementById('order-search-input').value='';document.getElementById('manual-customer-phone').value='';document.getElementById('manual-customer-name').value='';document.getElementById('manual-customer-note').textContent='';setManualOrderType(type);await fetchMenu();renderOrderMenu();updateOrderTotal();document.getElementById('order-modal').classList.add('open')}
 function closeOrderModal(){document.getElementById('order-modal').classList.remove('open')}
-function renderOrderMenu(){if(!menuData)return;const c=document.getElementById('order-modal-items');let h='';menuData.categories.forEach((cat,idx)=>{h+=`<div class="eyebrow" style="margin:${idx?18:0}px 0 8px">${esc(cat.category_name)}</div>`;cat.items.forEach(item=>Object.keys(item.pricing).forEach(tier=>{const key=`${item.item_name}|${tier}`,qty=manualOrderCart[key]?.quantity||0,price=item.pricing[tier];h+=`<div class="menu-item"><div><div class="menu-item-name">${esc(item.item_name)}</div><div class="menu-item-meta">${esc(tier)} · ${money(price)}</div></div><div class="qty"><button onclick="updateCart('${esc(item.item_name)}','${esc(tier)}',${price},-1)">−</button><span>${qty}</span><button onclick="updateCart('${esc(item.item_name)}','${esc(tier)}',${price},1)">+</button></div></div>`}))});c.innerHTML=h}
+function setManualOrderType(type){manualOrderType=type;document.querySelectorAll('[data-order-type]').forEach(b=>b.classList.toggle('active',b.dataset.orderType===type));document.getElementById('delivery-source').classList.toggle('hidden',type!=='DELIVERY');const suffix=type==='DINE_IN'?`Table ${manualOrderTable||''}`:type==='TAKEAWAY'?'Counter pickup':'Delivery';document.getElementById('order-modal-title').textContent='New '+type.replace('_',' ')+' Order · '+suffix}
+function renderOrderMenu(){if(!menuData)return;const q=document.getElementById('order-search-input').value.trim().toLowerCase(),c=document.getElementById('order-modal-items'),sc=document.getElementById('category-shortcuts');let h='',shortcuts='';menuData.categories.forEach((cat,idx)=>{const items=cat.items.filter(i=> i.available !== false && (!q||i.item_name.toLowerCase().includes(q)||Object.keys(i.pricing).some(t=>t.toLowerCase().includes(q))));if(!items.length)return;shortcuts+=`<button type="button" class="cat-shortcut" onclick="document.getElementById('cat-${idx}').scrollIntoView({behavior:'smooth',block:'start'})">${esc(cat.category_name)}</button>`;h+=`<div class="eyebrow" id="cat-${idx}" style="margin:${h?18:0}px 0 8px">${esc(cat.category_name)}</div>`;items.forEach(item=>Object.keys(item.pricing).forEach(tier=>{const key=`${item.item_name}|${tier}`,qty=manualOrderCart[key]?.quantity||0,price=item.pricing[tier];h+=`<div class="menu-item"><div><div class="menu-item-name">${esc(item.item_name)}</div><div class="menu-item-meta">${esc(tier)} · ${money(price)}</div></div><div class="qty"><button onclick="updateCart(${JSON.stringify(item.item_name)},${JSON.stringify(tier)},${price},-1)">−</button><span>${qty}</span><button onclick="updateCart(${JSON.stringify(item.item_name)},${JSON.stringify(tier)},${price},1)">+</button></div></div>`}))});c.innerHTML=h||'<div class="history-empty">No matching items found.</div>';sc.innerHTML=shortcuts}
 function updateCart(itemName,tier,price,delta){const key=`${itemName}|${tier}`;if(!manualOrderCart[key])manualOrderCart[key]={itemName,tier,price,quantity:0};manualOrderCart[key].quantity+=delta;if(manualOrderCart[key].quantity<=0)delete manualOrderCart[key];renderOrderMenu();updateOrderTotal()}
-function updateOrderTotal(){document.getElementById('order-modal-total').textContent=money(Object.values(manualOrderCart).reduce((t,i)=>t+i.price*i.quantity,0))}
-async function submitManualOrder(){const items=Object.values(manualOrderCart);if(!items.length)return toast('Cart is empty.');try{await api('/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({table_number:manualOrderTable,notes:'Manual order via Staff Portal',items:items.map(i=>({item_name:i.itemName,tier:i.tier,quantity:i.quantity}))})});toast('Order placed successfully');closeOrderModal();refresh()}catch(e){toast(e.message)}}
-async function loadInventory(){try{const data=await api('/api/inventory');const tbody=document.getElementById('inventory-list');tbody.innerHTML=data.length?data.map(item=>`<tr><td><strong>${esc(item.item_name)}</strong></td><td><input class="stock-input" type="number" min="0" value="${item.stock}" onchange="updateStock(${item.id},this.value)"></td><td style="color:#89929c;font-weight:700;text-transform:uppercase;font-size:8px;letter-spacing:.08em">${esc(item.unit)}</td><td style="text-align:right"><button class="btn" onclick="updateStock(${item.id},this.closest('tr').querySelector('input').value)">Save</button></td></tr>`).join(''):`<tr><td colspan="4"><div class="history-empty">Inventory is empty. Add your first item.</div></td></tr>`}catch(e){toast(e.message)}}
-async function updateStock(id,val){try{await api(`/api/inventory/${id}`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({stock:parseInt(val)||0})});toast('Stock updated');loadInventory()}catch(e){toast(e.message)}}
-function openInventoryModal(){document.getElementById('inv-name').value='';document.getElementById('inv-stock').value='0';document.getElementById('inv-unit').value='units';document.getElementById('inventory-modal').classList.add('open')}
-function closeInventoryModal(){document.getElementById('inventory-modal').classList.remove('open')}
-async function submitInventoryItem(){const name=document.getElementById('inv-name').value.trim();if(!name)return toast('Item name required.');try{await api('/api/inventory',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({item_name:name,stock:parseInt(document.getElementById('inv-stock').value)||0,unit:document.getElementById('inv-unit').value.trim()||'units'})});toast('Inventory item added');closeInventoryModal();loadInventory()}catch(e){toast(e.message)}}
-async function loadInsights(){const timeframe=document.getElementById('insights-timeframe').value;try{const data=await api(`/api/insights?timeframe=${timeframe}`);animateNumber(document.getElementById('insight-revenue'),data.revenue,'₹ ');animateNumber(document.getElementById('insight-orders'),data.orders);animateNumber(document.getElementById('insight-aov'),data.avg_order_value,'₹ ')}catch(e){toast(e.message)}}
-renderTables([]);renderOverviewTables([]);document.getElementById('refresh').onclick=refresh;document.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName))return;if(e.key.toLowerCase()==='r')refresh();if(e.key.toLowerCase()==='o')showView('overview');if(e.key.toLowerCase()==='m')showView('manual');if(e.key.toLowerCase()==='i')showView('inventory');if(e.key.toLowerCase()==='h')showView('history')});
-setInterval(()=>document.querySelectorAll('.elapsed').forEach(e=>e.textContent=elapsed(e.dataset.created)),1000);refresh();setInterval(refresh,5000);
+function updateOrderTotal(){document.getElementById('order-modal-total').textContent=money(Object.values(manualOrderCart).reduce((total,item)=>total+item.price*item.quantity,0))}
+async function lookupManualCustomer(){const phone=document.getElementById('manual-customer-phone').value.replace(/\D/g,'');if(!phone)return;if(phone.length!==10){document.getElementById('manual-customer-note').textContent='Enter a 10-digit mobile number.';return}try{const customer=await api('/api/customers/'+phone);if(customer.name)document.getElementById('manual-customer-name').value=customer.name;document.getElementById('manual-customer-note').textContent=customer.is_new?'New customer':`Returning customer · favourites: ${customer.favorites.map(f=>f.item_name).join(', ')||'none yet'}`}catch(e){document.getElementById('manual-customer-note').textContent=e.message}}
+async function submitManualOrder(){const items=Object.values(manualOrderCart);if(!items.length)return toast('Cart is empty.');try{const o=await api('/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({table_number:manualOrderType==='DINE_IN'?manualOrderTable:null,order_type:manualOrderType,source:manualOrderType==='DELIVERY'?document.getElementById('delivery-source').value:'WALK_IN',customer_phone:document.getElementById('manual-customer-phone').value,customer_name:document.getElementById('manual-customer-name').value,notes:'Manual order via Staff Portal',items:items.map(i=>({item_name:i.itemName,tier:i.tier,quantity:i.quantity}))})});toast(`Token #${o.token_number} created`);closeOrderModal();refresh()}catch(e){toast(e.message)}}
+async function findCustomer(){const phone=document.getElementById('customer-search').value.replace(/\D/g,'');if(phone.length!==10)return toast('Enter a 10-digit mobile number.');try{const c=await api('/api/customers/'+phone),result=document.getElementById('customer-result');if(c.is_new){result.innerHTML=`<div class="history-empty">No previous orders for ${esc(phone)}. The customer is saved when their first order is placed.</div>`;return}result.innerHTML=`<div class="customer-name">${esc(c.name||'Unnamed customer')}</div><div class="customer-meta">${esc(c.phone)} · ${c.orders.length} recent orders</div><div class="eyebrow" style="margin-top:18px">Favourite items</div><div class="favorite-list">${c.favorites.length?c.favorites.map(f=>`<span class="favorite-chip">${esc(f.item_name)} · ${f.times_ordered}×</span>`).join(''):'<span class="customer-meta">No favourites yet</span>'}</div><div class="eyebrow" style="margin-top:18px">Recent orders</div><div class="favorite-list">${c.orders.map(o=>`<span class="favorite-chip">#${esc(o.token_number)} · ${money(orderTotal(o))}</span>`).join('')}</div>`}catch(e){toast(e.message)}}
+async function render86List() {
+        if(!menuData) await fetchMenu();
+        const container = document.getElementById('86list-container');
+        if(!container) return;
+        
+        // Render tabs
+        let html = `<div style="display:flex; gap:8px; overflow-x:auto; padding-bottom:12px; margin-bottom:16px; border-bottom:1px solid #e2e8f0;">`;
+        menuData.categories.forEach((cat, idx) => {
+            html += `<button onclick="document.querySelectorAll('.cat-panel').forEach(p=>p.style.display='none'); document.getElementById('cat-panel-${idx}').style.display='block'; document.querySelectorAll('.cat-tab').forEach(t=>t.style.background='#f1f5f9'); this.style.background='#e2e8f0';" class="cat-tab" style="padding:8px 16px; border:none; border-radius:8px; background:${idx===0?'#e2e8f0':'#f1f5f9'}; font-weight:700; cursor:pointer; white-space:nowrap;">${esc(cat.category_name)}</button>`;
+        });
+        html += `</div>`;
+        
+        // Render panels
+        menuData.categories.forEach((cat, idx) => {
+            html += `<div id="cat-panel-${idx}" class="cat-panel" style="display:${idx===0?'block':'none'};">`;
+            cat.items.forEach(item => {
+                const available = item.available !== false;
+                html += `<div style="display:flex; justify-content:space-between; padding:6px 12px; border:1px solid #e2e8f0; border-radius:8px; align-items:center; background:#fff; margin-bottom:6px;">
+                    <span style="font-size:14px; font-weight:700; color:${available ? '#1e293b' : '#94a3b8'};">${esc(item.item_name)}</span>
+                    <label style="position:relative; display:inline-block; width:44px; height:24px;">
+                        <input type="checkbox" style="opacity:0; width:0; height:0;" ${available ? 'checked' : ''} onchange="toggle86('${esc(item.item_name)}', this.checked)">
+                        <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:${available ? '#10b981' : '#ef4444'}; border-radius:24px; transition:.2s;">
+                            <span style="position:absolute; content:''; height:18px; width:18px; left:${available ? '22px' : '3px'}; bottom:3px; background-color:white; border-radius:50%; transition:.2s;"></span>
+                        </span>
+                    </label>
+                </div>`;
+            });
+            html += `</div>`;
+        });
+        container.innerHTML = html;
+    }
+  async function toggle86(itemName, makeAvailable) {
+      try {
+          await api(`/api/menu/${encodeURIComponent(itemName)}/toggle?available=${makeAvailable}`, {method: 'PATCH'});
+          toast(makeAvailable ? 'Item Enabled' : 'Item Disabled');
+          menuData = null; // force refetch
+          await fetchMenu();
+          render86List();
+      } catch(e) {
+          toast(e.message);
+      }
+  }
+
+  async function loadSettings(){try{const s=await api('/api/settings');appSettings=s;document.getElementById('setting-tax-rate').value=s.tax_rate;document.getElementById('setting-service-rate').value=s.service_charge_rate;document.getElementById('setting-printer-name').value=s.printer_name;document.getElementById('setting-printer-station').value=s.printer_station}catch(e){toast(e.message)}}
+async function saveSettings(){try{appSettings=await api('/api/settings',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({tax_rate:Number(document.getElementById('setting-tax-rate').value),service_charge_rate:Number(document.getElementById('setting-service-rate').value),printer_name:document.getElementById('setting-printer-name').value,printer_station:document.getElementById('setting-printer-station').value})});toast('Settings saved. New orders use the updated charges.') }catch(e){toast(e.message)}}
+async function loadInsights() {
+      try {
+          const t = await api('/api/revenue/till');
+          const isClosed = t.closed === 1;
+          const hasFloat = t.opening_float > 0;
+          
+          document.getElementById('till-open-panel').classList.toggle('hidden', hasFloat && !isClosed);
+          document.getElementById('till-close-panel').classList.toggle('hidden', !hasFloat);
+          
+          if(hasFloat) {
+              document.getElementById('till-display-float').textContent = money(t.opening_float);
+              document.getElementById('till-opening-float').value = t.opening_float;
+          }
+          
+          if(isClosed) {
+              document.getElementById('till-actual-cash').value = t.actual_cash;
+              document.getElementById('till-actual-cash').disabled = true;
+              document.getElementById('btn-close-register').classList.add('hidden');
+              document.getElementById('till-results').classList.remove('hidden');
+              document.getElementById('till-expected').textContent = money(t.actual_cash - t.variance);
+              const v = document.getElementById('till-variance');
+              v.textContent = money(t.variance);
+              v.style.color = t.variance < 0 ? '#ef4444' : (t.variance > 0 ? '#10b981' : '#64748b');
+          }
+      } catch(e) { toast(e.message); }
+  }
+  
+  async function openRegister() {
+      const v = Number(document.getElementById('till-opening-float').value);
+      if(v <= 0) return toast('Enter a valid float');
+      await api('/api/revenue/open-register', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({opening_float:v})});
+      toast('Register opened');
+      loadInsights();
+  }
+  
+  async function closeRegister() {
+      const v = Number(document.getElementById('till-actual-cash').value);
+      if(isNaN(v)) return toast('Enter actual cash counted');
+      const res = await api('/api/revenue/close-register', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({actual_cash:v})});
+      toast('Register closed');
+      loadInsights();
+      // Optionally print Z-Report here
+      printRequest({ token_number: 'Z-REPORT', grand_total: res.expected_cash, items: [], notes: 'Variance: ' + res.variance }, 'BILL');
+  }
+let eventSocket=null,eventPingTimer=null;const autoPrintedOrderIds=new Set();
+function orderLocation(order){return order.order_type==='DINE_IN'?`Table ${order.table_number}`:(order.order_label||`Token #${order.token_number}`)}
+function autoPrintPrepaidKot(order){if(!order?.id||autoPrintedOrderIds.has(order.id))return;autoPrintedOrderIds.add(order.id);printRequest(order,'KOT');toast(`KOT Auto-Printed for ${orderLocation(order)}`)}
+function connectEventStream(){const protocol=location.protocol==='https:'?'wss':'ws';eventSocket=new WebSocket(`${protocol}://${location.host}/ws/events`);eventSocket.onopen=()=>{clearInterval(eventPingTimer);eventPingTimer=setInterval(()=>{if(eventSocket?.readyState===WebSocket.OPEN)eventSocket.send('ping')},25000)};eventSocket.onmessage=event=>{try{const message=JSON.parse(event.data),order=message.data||{},token=order.token_number?`Token #${order.token_number}`:'Order';if(message.event==='order.created'&&order.payment_status==='PREPAID')autoPrintPrepaidKot(order);if(message.event==='order.payment_confirmed')toast(`Payment Received: ${orderLocation(order)}`);else if(message.event==='order.payment_received')toast(`${token} payment received`);else if(message.event==='order.status_changed')toast(`${token} is now ${order.status}`);else if(message.event==='kot.auto_printed')toast(`${token} KOT queued for kitchen`);refresh()}catch{}};eventSocket.onclose=()=>{clearInterval(eventPingTimer);setTimeout(connectEventStream,3000)}}
+renderTables([]);renderOverviewTables([]);document.getElementById('refresh').onclick=refresh;document.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName))return;if(e.key.toLowerCase()==='r')refresh();if(e.key.toLowerCase()==='o')showView('overview');if(e.key.toLowerCase()==='m')showView('manual');if(e.key.toLowerCase()==='h')showView('history')});setInterval(()=>document.querySelectorAll('.elapsed').forEach(e=>e.textContent=elapsed(e.dataset.created)),1000);refresh();connectEventStream();setInterval(refresh,5000);
 </script>
 </body>
 </html>

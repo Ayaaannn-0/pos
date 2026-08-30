@@ -2,3 +2,7 @@
 pos.db
 __pycache__/
 *.pyc
+node_modules/
+print_queue/
+*.log
+.pytest_cache/

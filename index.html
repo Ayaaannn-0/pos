@@ -484,7 +484,8 @@ function buildCategorySection(category) {
       escapeHtml(category.note) +
       "</p>"
     : "";
-  var itemsHtml = category.items.map(buildItemCard).join("");
+  var itemsHtml = category.items.filter(i => i.available !== false).map(buildItemCard).join("");
+  if(!itemsHtml) return "";
   return (
     '<section class="pt-2">' +
     '<div class="flex items-center gap-4">' +
